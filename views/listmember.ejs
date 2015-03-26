@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+</style>
+<title>Video Library</title>
+
+<link href="/stylesheets/templatemo_style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+	<div id="templatemo_background_section_top">
+    
+    	<div class="templatemo_container">
+		
+        	<div id="templatemo_header">
+				<div id="templatemo_logo_section">            
+		        	<h1><a href="/">Video Library</a></h1>            
+					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
+				</div>
+				<div id="templatemo_user_section">            
+		        	Welcome <%= userDet.firstname %>!!
+		        	<a href="/sign-out?nocache=1">Sign Out</a>
+				</div>
+         	</div><!-- end of headder -->
+               <div id="templatemo_menu_panel"> 
+    		<div id="templatemo_menu_section">
+                
+            		<ul>
+						  <li><a href="/createmember?nocache=1">Create member    </a></li>
+						  <li><a href="/listmember?nocache=1">List Members   </a></li>
+						  <li><a href="/createmovie?nocache=1">Create Movie   </a></li>
+						  <li><a href="/listmovie?nocache=1">List Movies   </a></li>
+						  <li><a href="/issuemovie?nocache=1">Issue Movie   </a></li>
+						  <li><a href="/submitmovie?nocache=1">Submit Movie  </a></li>  
+						  <li><a href="/generatebill?nocache=1">Generate Bill  </a></li> 
+					</ul>  
+                    
+				</div>
+             </div> <!-- end of menu -->
+		</div><!-- end of container-->
+        
+	</div><!-- end of templatemo_background_section_top-->
+    
+    <div id="templatemo_background_section_middle">
+    
+    	<div class="templatemo_container">
+        
+        	<div id="templatemo_left_section">
+            	
+                <div class="templatemo_post">
+                
+                	<div class="templatemo_post_top">
+                    	<h1>List Members: This Section lists all the members and allows to edit and delete the same</h1>
+                    </div>
+                    <div class="templatemo_post_mid">
+                    <form method="POST" action="/listmember-submit">
+						<p>Filter members based on criteria below</p>
+						<table style="margin-left:50px"><tr><td>
+							<table border="0">
+							<tbody>
+							
+							<tr>
+							<td><label for="name">Member type: </label> </td>
+							<td><input type="radio" name="memType" value="S">Simple
+								<input type="radio" name="memType" value="P">Premium </td>
+							</tr>
+							
+							<tr>
+							<td><label for="fname">First Name: </label> </td>
+							<td><input id="fname" maxlength="45" name="fname" type="text" /> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="lname">Last Name: </label> </td>
+							<td><input id="lname" maxlength="45" name="lname" type="text" /> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="membershipNo">Membership Number: </label> </td>
+							<td><input id="membershipNo" maxlength="75" name="membershipNo" type="text"/></td>
+							</tr>
+							</tbody></table>
+						</td>
+						<td>
+							<table border="0">
+							<tbody>
+							
+							<tr>
+							<td><label for="email">Email Address: </label> </td>
+							<td><input id="email" maxlength="75" name="email" type="text" style="width:275px;"/></td>
+							</tr>
+							
+							<tr>
+							<td><label for="city">City*: </label> </td>
+							<td><input id="city" maxlength="50" name="city" type="text" /> </td>
+							</tr>
+							<tr>
+							<td><label for="state">State: </label> </td>
+							<td><!--<input id="state" maxlength="50" name="state" type="text" /> -->
+							
+							<select id="state" name="state">
+								<option value="">Select</option>
+							<% for(var i=0;i<states.length;i++) { %>
+								<option value="<%=states[i] %>"><%=states[i] %></option>
+								<% } %>
+							</select>
+							</td>
+							</tr>
+							
+							<tr>
+							<td><label for="zip1">Zip Code*: </label> </td>
+							<td><input id="zip1" maxlength="50" name="zip1" type="text" style="width:50px"/> - <input id="zip2" maxlength="50" name="zip2" type="text" style="width:50px"/> </td>
+							</tr>
+							
+							<tr><td></td>
+							</tr>
+							</tbody></table>
+						</tr></table>
+                        <table>
+						</table> 
+						<br/>
+						<div><input name="Filter" type="submit" value="Filter" style="width:50px; align:right; margin-left:800px"/></div>
+                    	</form>
+                    	<br/>
+						<br/>
+                    <!-- Listing members -->
+                    <table class="listData" border=1>
+                    <tr>
+                    <th style="color:white;">Sr. No.</th>
+                    <th style="color:white;">Membership No.</th>
+                    <th style="color:white;">First Name</th>
+                    <th style="color:white;">Last Name</th>
+                    <th style="color:white;">Outstanding Movies</th>
+                    <th style="color:white;">Member Type</th>
+                    <th style="color:white;">Balance Amount</th>
+                    <th style="color:white;">View</th>
+                    <th style="color:white;">Edit</th>
+                    <th style="color:white;">Delete</th>
+                    </tr>
+                    <% if(members != null && members.length > 0) {
+              
+                    	for(var i=0;i<members.length;i++) {
+                    	//console.log(members[i].membership_no);
+                    %>
+	                    <tr>
+	                    <td><%= i+1 %></td>
+	                    <td><%= members[i].membership_no %></td>
+	                    <td><%= members[i].firstname %></td>
+	                    <td><%= members[i].lastname %></td>
+	                    <td><%= members[i].outstanding_movies %></td>
+	                    <td width="30px">
+	                    <% if(members[i].member_type == "S") { %>
+	                    Simple
+	                    <% } else { %>
+	                    Premium
+	                    <% } %>
+	                    </td>
+	                    <td><%= members[i].balance_amount %></td>
+	                    <td><a href="/member/<%=members[i].user_id %>?nocache=1">View</a></td>
+	                    <td><a href="/editmember/<%=members[i].user_id %>?nocache=1">Edit</a></td>
+	                    <td><a href="/deletemember/<%=members[i].user_id %>?nocache=1">Delete</a></td>
+	                    </tr>
+	                    <% } } %>
+                    </table>
+                    </div>
+                    <div class="templatemo_post_bottom">
+                    
+             
+                    </div>
+                    
+				</div><!-- end of templatemo_post-->
+                
+            </div><!-- end of left section-->
+            
+            
+        </div><!-- end of container-->
+	</div><!-- end of background middle-->
+    
+     
+</body>
+
+</html>

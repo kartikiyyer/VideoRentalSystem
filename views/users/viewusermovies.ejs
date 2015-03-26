@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+</style>
+<title>Video Library</title>
+
+<link href="/stylesheets/templatemo_style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+	<div id="templatemo_background_section_top">
+    
+    	<div class="templatemo_container">
+		
+        	<div id="templatemo_header">
+				<div id="templatemo_logo_section">            
+		        	<h1><a href="/">Video Library</a></h1>            
+					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
+				</div>
+				<div id="templatemo_user_section">            
+		        	Welcome <a href="/user/<%= userDet.userId%>?nocache=1"><%= userDet.firstname %></a>!!
+		        	<a href="/sign-out?nocache=1">Sign Out</a>
+				</div>
+         	</div><!-- end of headder -->
+            <div id="templatemo_menu_panel"> 
+				<div id="templatemo_menu_section">
+					
+					<ul>
+						   
+					  <li><a href="/">Home    </a></li>
+					  <li><a href="/viewusermovies?nocache=1">View Movies   </a></li>
+					  <li><a href="/changepassword?nocache=1">Change Password   </a></li>	
+					  <li><a href="/user/<%= userDet.userId%>?nocache=1">My Account</a></li>
+					</ul> 
+						
+				</div>
+           </div> <!-- end of menu -->
+		</div><!-- end of container-->
+        
+	</div><!-- end of templatemo_background_section_top-->
+    
+	<div id="templatemo_background_section_middle">
+    
+    	<div class="templatemo_container">
+        
+        	<div id="templatemo_left_section">
+            	
+                <div class="templatemo_post">
+                
+                	<div class="templatemo_post_top">
+                    	<h1>View Movies: This Section lists all the movies and allows to filter and view Individual One</h1>
+                    </div>
+                    <div class="templatemo_post_mid">
+                    <form method="POST" action="/viewusermovies-submit">
+						<p>Filter movies based on criteria below</p>     
+						<table style="margin-left:150px"><tr><td>
+							<table border="0">
+							<tbody>
+							
+							<tr>
+							<td><label for="mname">Movie Name: </label> </td>
+							<td><input id="mname" maxlength="100" name="mname" type="text" /> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="banner">Movie Banner: </label> </td>
+							<td><input id="banner" maxlength="45" name="banner" type="text" /> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="releasedate">Release Year: </label> </td>
+							<td><input id="releasedate" name="releasedate" type="text" style="width:45px;"/></td>
+							</tr>
+							<tr><td></td>
+							</tr>
+							</tbody></table>
+						</td>
+						<td>
+							<table border="0">
+							<tbody>
+							
+							<tr>
+							<td><label for="category">Category: </label> </td>
+							<td><!--<input id="category" maxlength="75" name="category" type="text" />-->
+								<select id ="category" name="category">
+								<option value="">Select</option>
+								<% for(var i=0;i<categories.length;i++) { %>
+									<option value="<%=categories[i]%>"><%=categories[i]%></option>
+								<% } %>
+								</select>
+							 </td>
+							</tr>
+							
+							<tr>
+							<td><label for="rentamount">Rent Amount: </label> </td>
+							<td><input id="rentamountmin" placeholder="min" maxlength="25" name="rentamountmin" type="number" style="width:80px"/>
+							<input id="rentamountmax" placeholder="max" maxlength="25" name="rentamountmax" type="number" style="width:80px"/> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="copies">Is Available: </label> </td>
+							<td><input type="checkbox" name="isAvailable" value="isAvailable" checked> </td>
+							</tr>
+							
+							<tr><td></td>
+							</tr>
+							</tbody></table>
+						</tr></table>
+                        
+						<div><input name="Filter" type="submit" value="Filter" style="width:50px; align:right; margin-left:800px"/></div>
+						</form>
+						<br/>
+						<br/>
+						<!-- List to display -->
+                    <table class="listData" border=1>
+                    <tr>
+                    <th style="color:white;">Movie Name</th>
+                    <th style="color:white;">Banner</th>
+                    <th style="color:white;">Release Year</th>
+                    <th style="color:white;">Rent Amount</th>
+                    <th style="color:white;">Available Copies</th>
+                    <th style="color:white;">Category</th>
+                    <th style="color:white;">View</th>
+                    </tr>
+                    <% if(movies != null && movies.length > 0) {
+              
+                    	for(var i=0;i<movies.length;i++) {
+                    	//console.log(movies[i].movie_id);
+                    %>
+	                    <tr>
+	                    <td><%= movies[i].movie_name %></td>
+	                    <td><%= movies[i].movie_banner %></td>
+	                    <td><%= movies[i].release_date %></td>
+	                    <td><%= movies[i].rent_amount %></td>
+	                    <td><%= movies[i].available_copies %></td>
+	                    <td width="30px"><%= movies[i].category %></td>
+	                    <td><a href="/usermovie/<%=movies[i].movie_id %>?nocache=1">View</a></td>
+	                    </tr>
+	                    <% } } %>
+                    </table>	
+                    </div>
+					
+                    <div class="templatemo_post_bottom">
+                    
+                   
+                    </div>
+                    
+				</div><!-- end of templatemo_post-->
+                
+            </div><!-- end of left section-->
+        
+     
+
+
+</html>

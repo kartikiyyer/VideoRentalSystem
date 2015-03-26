@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+</style>
+<title>Video Library</title>
+
+<link href="/stylesheets/templatemo_style.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+
+   function allnumeric(inputtxt)  
+   {  
+	 
+	 var numbers = /^[0-9]+$/;  
+	 if(inputtxt.match(numbers))  
+	 {  
+	  return true;  
+	 }  
+	 else  
+	 {
+	  return false;  
+	 }  
+   }
+   
+
+	function validateGenerateBill()   
+   {
+     if(document.generateBill.membershipNo.value ==null ||document.generateBill.membershipNo.value == ''){
+			alert('Membership No. cannot be blank');
+			return false;
+		} 
+	else if(!allnumeric(document.generateBill.membershipNo.value))
+	{
+		alert("Membership No. should be numeric");
+		return false;
+	}
+	else if(document.generateBill.membershipNo.value.length != 9 ) 
+	{
+		alert("Membership No. should be 9 Digits.");
+		return false;
+	}
+	else
+	{
+		
+		return true;
+	}
+    }
+</script>
+</head>
+
+<body>
+	<div id="templatemo_background_section_top">
+    
+    	<div class="templatemo_container">
+		
+        	<div id="templatemo_header">
+				<div id="templatemo_logo_section">            
+		        	<h1><a href="/">Video Library</a></h1>           
+					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
+				</div>
+				<div id="templatemo_user_section">            
+		        	Welcome <%= userDet.firstname %>!!
+		        	<a href="/sign-out?nocache=1">Sign Out</a>
+				</div>
+         	</div><!-- end of headder -->
+            <div id="templatemo_menu_panel"> 
+				<div id="templatemo_menu_section">
+					
+					<ul>
+					  <li><a href="/createmember?nocache=1">Create member    </a></li>
+					  <li><a href="/listmember?nocache=1">List Members   </a></li>
+					  <li><a href="/createmovie?nocache=1">Create Movie   </a></li>
+					  <li><a href="/listmovie?nocache=1">List Movies   </a></li>
+					  <li><a href="/issuemovie?nocache=1">Issue Movie   </a></li>
+					  <li><a href="/submitmovie?nocache=1">Submit Movie  </a></li>  
+					  <li><a href="/generatebill?nocache=1">Generate Bill  </a></li> 							
+					</ul>                     
+				</div>
+            </div> <!-- end of menu -->
+		</div><!-- end of container-->
+        
+	</div><!-- end of templatemo_background_section_top-->
+    
+    <div id="templatemo_background_section_middle">
+    
+    	<div class="templatemo_container">
+        
+        	<div id="templatemo_left_section">
+            	
+                <div class="templatemo_post">
+                
+                	<div class="templatemo_post_top">
+                    	<h1>Generate Bill</h1>
+                    </div>
+                    <div class="templatemo_post_mid">
+						
+						<div>
+						<form name="generateBill" action="/generatebill-submit" method="POST" onsubmit="return validateGenerateBill()">
+							<div style="color:yellow; font-weight:bold;" align="center">
+				<% if(fetchResult != null) {%>
+				<%= fetchResult %>
+				<% } %>
+				</div>
+				<br/>
+							<div align='center'>
+							<table><tbody>                        
+								<tr>
+									<td><label for="membershipNo">Membership Number: </label> </td>
+									<td><input id="membershipNo" maxlength="75" name="membershipNo" type="text"/></td>
+								</tr>
+							</tbody></table>
+							<br/>
+							<div><input name="Submit" type="submit" value="Submit" style="width:70px; align:right; margin-left:100px"/></div></div>
+							</form>
+						</div>
+						<%
+							if(member !=null ){
+								%>
+						<div align="center">
+						
+						<h4 style="color:yellow;">User Info</h4>
+							
+								<table class="listUserInfo" border=1 align = "center">
+									<tr>
+										<th>Membership No:</th>
+										<td><%= member.membership_no %>    </td>		
+
+									</tr>
+									<tr>
+										<th>First Name:</th>
+										<td><%= member.firstname %>    </td>		
+									</tr>
+									<tr>
+										<th>Last Name:</th>
+										<td><%= member.lastname %>    </td>		
+									</tr>
+									
+								</table>
+								
+						
+						<h4 style="color:yellow;">Rented Movies</h4>
+						<%if(member.member_type == "S") { %>
+						<% 
+						if(movies !=null && movies.length > 0){
+							%>
+							<table class="listUserInfo" border=1 align = "center">
+								<tr>
+									<th>Movie Name:</th>
+									<th>Category:</th>
+									<th>Issue Date:</th>
+									<th>Rent Amount:</th>
+									<th>Copies:</th>
+									<th>Total:</th>
+								</tr>
+								<% for(var i=0;i< movies.length;i++) {%>
+								<tr>
+								
+									<td><%= movies[i].movie_name %></td>
+									<td><%= movies[i].category %></td>
+									<td><%= movies[i].issue_date %></td>
+									<td><%= movies[i].rent_amount %></td>
+										
+									<td><%= movies[i].movie_count %></td>
+									
+									<td><% 
+									
+									var total = 0;
+									total = movies[i].movie_count * movies[i].rent_amount;									
+									 %>
+									 <%= total %></td>						
+															
+								</tr>
+								<% } %>
+								<tr>
+								<td colspan="5" style="color:yellow;text-align:right;font-weight:bold" >
+								Grand Total:
+								</td>
+								<td style="color:yellow;font-weight:bold"><%=member.balance_amount %></td>
+								</tr>
+								
+							</table>
+							<%
+						}
+					else{
+						%>
+						<h5 style="color:yellow;">No movies rented.</h5>
+						<%
+					} } else {
+					%>
+					<% 
+						if(movies !=null && movies.length > 0){
+							%>
+							<table class="listUserInfo" border=1 align = "center">
+								<tr>
+									<th>Movie Name:</th>
+									<th>Category:</th>
+									<th>Issue Date:</th>
+									<th>Rent Amount:</th>
+									<th>Copies:</th>
+								</tr>
+								<% for(var i=0;i< movies.length;i++) {%>
+								<tr>
+								
+									<td><%= movies[i].movie_name %></td>
+									<td><%= movies[i].category %></td>
+									<td><%= movies[i].issue_date %></td>
+									<td><%= movies[i].rent_amount %></td>										
+									<td><%= movies[i].movie_count %></td>						
+															
+								</tr>
+								<% } %>	
+							</table>
+							<%
+						}
+					else{
+						%>
+						<h5 style="color:yellow;">No movies rented.</h5>
+						<%
+					} %>
+				<br/>
+				
+				<h4 style="color:yellow;">Subscription Details</h4>
+				
+						<table class="listUserInfo" border=1 align = "center" style="font-weight:bolder">
+								<tr>
+									<th>Description:</th>
+									<th>Amount:</th>
+									
+								</tr>
+								<tr>								
+									<td>Monthly Subscription</td>
+									<td><%= member.balance_amount %></td>
+								</tr>
+						</table>
+					<% } %>
+						</div>
+						<%
+							}
+						
+						%>
+						
+                        
+                        <div class="clear"></div>
+                        
+                    </div>
+                    <div class="templatemo_post_bottom">
+                    
+                    	
+                    </div>
+                    
+				</div><!-- end of templatemo_post-->
+                
+            </div><!-- end of left section-->
+            
+            
+        </div><!-- end of container-->
+	</div><!-- end of background middle-->
+    
+     
+</body>
+
+</html>

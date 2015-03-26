@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<title>Video Library</title>
+
+	<link href="/stylesheets/templatemo_style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+	<div id="templatemo_background_section_top">
+
+		<div class="templatemo_container">
+
+			<div id="templatemo_header">
+				<div id="templatemo_logo_section">            
+					<h1><a href="/">Video Library</a></h1>            
+					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
+				</div>
+				<div id="templatemo_user_section">        
+					Welcome <%= userDet.firstname %>!!
+					<a href="/sign-out?nocache=1">Sign Out</a>	
+				</div>
+			</div><!-- end of headder -->
+			<div id="templatemo_menu_panel"> 
+				<div id="templatemo_menu_section">
+					
+					<ul>
+
+						<li><a href="/createmember?nocache=1">Create member    </a></li>
+						<li><a href="/listmember?nocache=1">List Members   </a></li>
+						<li><a href="/createmovie?nocache=1">Create Movie   </a></li>
+						<li><a href="/listmovie?nocache=1">List Movies   </a></li>
+						<li><a href="/issuemovie?nocache=1">Issue Movie   </a></li>
+						<li><a href="/submitmovie?nocache=1">Submit Movie  </a></li>  
+						<li><a href="/generatebill?nocache=1">Generate Bill  </a></li>   		
+					</ul> 
+
+				</div>
+			</div> <!-- end of menu -->
+		</div><!-- end of container-->
+
+	</div><!-- end of templatemo_background_section_top-->
+
+	<div id="templatemo_background_section_middle">
+
+		<div class="templatemo_container">
+
+			<div id="templatemo_left_section">
+
+				<div class="templatemo_post">
+
+					<div class="templatemo_post_top">
+						<h1>Welcome to the Video Library: The Store for all type of Movie VCDs & DVDs</h1>
+					</div>
+					<div class="templatemo_post_mid">
+						<!-- List Movie Details -->
+						<div align="center">                     
+							<h4 style="color:yellow;">Movie Info</h4>
+							<%
+							if(movie !=null ){
+								%>
+								<table class="listUserInfo" border=1 align="center">
+
+
+									<tr>
+										<th >Movie Name</th>
+										<td><%= movie.movie_name %></td>
+									</tr>
+									<tr>
+										<th >Banner</th>
+										<td><%= movie.movie_banner %></td>
+									</tr>
+									<tr>
+										<th>Release Year</th>
+										<td><%= movie.release_date %></td>
+									</tr>
+									<tr>
+										<th>Rent Amount</th>
+										<td><%= movie.rent_amount %></td>
+									</tr>
+									<tr>
+										<th>Available Copies</th>
+										<td><%= movie.available_copies %></td>
+									</tr>
+									<tr>
+										<th>Category</th>
+										<td width="30px"><%= movie.category %></td>
+									</tr>
+								</table>
+								<%
+							}
+						else{
+							%>
+							<h5 style="color:yellow;">Movie Details Not Found</h5>
+							<%
+						}
+						%>
+						<br/><br/>
+
+						<%
+						if(users !=null ){
+							%>
+							<table class="listUserInfo" border=1 align="center">
+								<tr>
+									<th style="color:yellow;">
+										Users Who Rented this Movie
+									</th>
+								</tr>
+								<%
+								if(users != null && users.length > 0){ 
+									for(var i=0;i<users.length;i++){ %>
+									<tr>
+
+										<td>
+											<%= users[i].firstname %> <%= users[i].lastname %>
+										</td>
+
+									</tr>
+									<% }}
+								else{
+									%>
+									<tr>
+
+										<td>
+											No User Rented this movie yet.
+										</td>
+
+									</tr>
+									<%
+								}
+								%>
+							</table>
+							<%
+						}
+					else{
+						%>
+						<h5 style="color:yellow;">User Rental Details Not Found</h5>
+						<%
+					}
+					%>
+				</div>      
+
+				<div class="clear"></div>
+
+			</div>
+			<div class="templatemo_post_bottom">
+
+			</div>
+
+		</div><!-- end of templatemo_post-->
+
+	</div><!-- end of left section-->
+
+
+</div><!-- end of container-->
+</div><!-- end of background middle-->
+
+</body>
+
+</html>

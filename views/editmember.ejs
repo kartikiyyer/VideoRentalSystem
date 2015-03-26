@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+<script type="text/javascript">
+
+   function allnumeric(inputtxt)  
+   {  
+	 
+	 var numbers = /^[0-9]+$/;  
+	 if(inputtxt.match(numbers))  
+	 {  
+	  return true;  
+	 }  
+	 else  
+	 {
+	  return false;  
+	 }  
+   }
+   
+   function validateEmail(mail)   
+	{  
+	 if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))  
+	  {  
+		return (true);
+	  }  
+	  return (false);
+	}  
+
+
+	function validateCreateMember()   
+   {
+   
+	
+     if(document.createmember.fname.value==null ||document.createmember.fname.value == ''){
+			alert('Member First Name cannot be blank');
+			return false;
+		} 
+		if(document.createmember.lname.value==null ||document.createmember.lname.value == ''){
+			alert('Member Last Name cannot be blank');
+			return false;
+		}
+		if(document.createmember.email.value==null ||document.createmember.email.value == ''){
+			alert('Email Address cannot be blank');
+			return false;
+		} else if(!validateEmail(document.createmember.email.value)){
+			alert('Enter valid Email address of the member');
+			return false;
+		} 
+		if(document.createmember.address.value==null ||document.createmember.address.value == ''){
+			alert('Address Line 1 cannot be blank');
+			return false;
+		}
+		if(document.createmember.city.value==null ||document.createmember.city.value == ''){
+			alert('City value cannot be blank');
+			return false;
+		}
+
+		if(document.createmember.zip1.value==null ||document.createmember.zip1.value == ''){
+			alert('Please enter Zip Code');
+			return false;
+		}else if(!allnumeric(document.createmember.zip1.value) || document.createmember.zip1.value.length != 5){
+			alert('Enter valid Zip Code for the entered Record. Zip code should be numeric in the following format XXXXX OR XXXXX-XXXX');
+			return false;
+		}
+		
+		if(document.createmember.zip2.value != '' && (!allnumeric(document.createmember.zip2.value) || document.createmember.zip2.value.length!=4)){
+			alert('Enter valid Zip Code extension for the entered Record. Zip code should be numeric in the following format XXXXX OR XXXXX-XXXX');
+			return false;
+		}
+    }
+</script>
+<title>Video Library</title>
+
+<link href="/stylesheets/templatemo_style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+	<div id="templatemo_background_section_top">
+    
+    	<div class="templatemo_container">
+		
+        	<div id="templatemo_header">
+				<div id="templatemo_logo_section">            
+		        	<h1><a href="/">Video Library</a></h1>           
+					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
+				</div>
+				<div id="templatemo_user_section">            
+		        	Welcome <%= userDet.firstname %>!!
+		        	<a href="/sign-out?nocache=1">Sign Out</a>
+				</div>
+         	</div><!-- end of headder -->
+               <div id="templatemo_menu_panel"> 
+				<div id="templatemo_menu_section">
+					
+						<ul>
+						  <li><a href="/createmember?nocache=1">Create member    </a></li>
+						  <li><a href="/listmember?nocache=1">List Members   </a></li>
+						  <li><a href="/createmovie?nocache=1">Create Movie   </a></li>
+						  <li><a href="/listmovie?nocache=1">List Movies   </a></li>	
+						  <li><a href="/issuemovie?nocache=1">Issue Movie   </a></li>
+						  <li><a href="/submitmovie?nocache=1">Submit Movie  </a></li>  
+						  <li><a href="/generatebill?nocache=1">Generate Bill  </a></li> 
+						</ul> 
+						
+					</div>
+             </div> <!-- end of menu -->
+		</div><!-- end of container-->
+        
+	</div><!-- end of templatemo_background_section_top-->
+    
+    <div id="templatemo_background_section_middle">
+    
+    	<div class="templatemo_container">
+        
+        	<div id="templatemo_left_section">
+            	
+                <div class="templatemo_post">
+                
+                	<div class="templatemo_post_top">
+                    	<h1>Edit Member</h1>
+                    </div>
+                    <div class="templatemo_post_mid">
+					<form action="/editmember-submit" onsubmit="return validateCreateMember()" method="post">
+                    	<div style="color:yellow; font-weight:bold;" align="center">
+				<% if(editedResults != null) {%>
+				<%= editedResults %>
+				<% } %>
+				</div>
+				<br/>
+				<table border="0">
+							<tbody>
+							<input type="hidden" name="memberId" value=""/>
+							<tr>
+							<td><label for="mno">Membership Number: </label> </td>
+							<td><input id="mno" maxlength="45" name="mno" type="text" disabled="true" value="<%=member.membership_no%>"/> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="name">Member type: </label> </td>
+							<td>
+							<% if(member.member_type == "S") { %>
+								<input type="radio" name="memType" value="S" checked>Simple
+								<input type="radio" name="memType" value="P">Premium </td>
+							<% } else { %>
+								<input type="radio" name="memType" value="S">Simple
+								<input type="radio" name="memType" value="P" checked>Premium </td>
+							<% } %>
+							</tr>
+							
+							<tr>
+							<td><label for="fname">First Name*: </label> </td>
+							<td><input id="fname" maxlength="45" name="fname" type="text" value="<%=member.firstname%>"/> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="lname">Last Name*: </label> </td>
+							<td><input id="lname" maxlength="45" name="lname" type="text" value="<%=member.lastname%>"/> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="email">Email Address*: </label> </td>
+							<td><input id="email" maxlength="175" name="email" type="text" style="width:275px;" value="<%=member.email%>"/></td>
+							</tr>
+
+							<tr>
+							<td><label for="address">Address Line 1*: </label> </td>
+							<td><input id="address" maxlength="50" name="address" type="text" value="<%=member.address%>"/> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="address2">Address Line 2: </label> </td>
+							<td><input id="address2" maxlength="50" name="address2" type="text" value="<%=member.address2%>"/> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="city">City*: </label> </td>
+							<td><input id="city" maxlength="50" name="city" type="text" value="<%=member.city%>"/> </td>
+							</tr>
+							<tr>
+							<td><label for="state">State*: </label> </td>
+							<td><!--<input id="state" maxlength="50" name="state" type="text" value="<%=member.state%>"/>-->
+							
+							<select id="state" name="state">
+							<% for(var i=0;i<states.length;i++) { %>
+							<% if(states[i] == member.state) { %>
+								<option value="<%=states[i] %>" selected><%=states[i] %></option>
+							<% } else { %>
+								<option value="<%=states[i] %>"><%=states[i] %></option>
+							<% } } %>
+							</select>
+							
+							</td>
+							</tr>
+							
+							<tr>
+							<td><label for="zip1">Zip Code*: </label> </td>
+							<td><input id="zip1" maxlength="50" name="zip1" type="text" style="width:50px" value="<%=member.zip%>"/> - <input id="zip2" maxlength="50" name="zip2" type="text" style="width:50px" value="<%=member.zipext%>"/> </td>
+							</tr>
+							
+							<tr><td></td>
+							</tr>
+							<tr>
+							<td align="right"><input name="Submit" type="submit" value="Submit" /></td>
+							</tr>
+
+							</tbody></table>
+							<input type="hidden" name="userId" value="<%=member.user_id%>"/>
+							</form>
+							
+                    </div>
+                    <div class="templatemo_post_bottom">
+                    
+                    	
+                    </div>
+                    
+				</div><!-- end of templatemo_post-->
+                
+            </div><!-- end of left section-->
+            
+            
+        </div><!-- end of container-->
+	</div><!-- end of background middle-->
+    
+     
+</body>
+
+</html>

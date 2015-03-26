@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+</style>
+<title>Video Library</title>
+
+<link href="/stylesheets/templatemo_style.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+
+   function allnumeric(inputtxt)  
+   {  
+	 
+	 var numbers = /^[0-9]+$/;  
+	 if(inputtxt.match(numbers))  
+	 {  
+	  return true;  
+	 }  
+	 else  
+	 {
+	  return false;  
+	 }  
+   }
+   
+   function decimalNumbers(inputtxt)  
+   {  
+	 
+	 var numbers = /^[0-9]+\.[0-9]+$/;
+	 var numbers1 = /^[0-9]+$/;
+	 if(inputtxt.match(numbers) || inputtxt.match(numbers1)) 
+	 {  
+	  return true;  
+	 }  
+	 else  
+	 {
+	  return false;  
+	 }  
+   }
+
+
+	function validateCreateMovie(createmovie)   
+   {
+     var error = "";
+     if(createmovie.mname.value==null ||createmovie.mname.value == ''){
+     		error += 'Movie Name field cannot be blank<br/>';
+		
+		} 
+		if(createmovie.banner.value==null ||createmovie.banner.value == ''){
+			error += 'Banner cannot be blank<br/>';
+		}
+		if(createmovie.releasedate.value==null ||createmovie.releasedate.value == ''){
+			error += 'Release Year cannot be blank<br/>';
+		} else if(!allnumeric(createmovie.releasedate.value)){
+			error += 'Enter valid number for Release Year<br/>';
+		} else if(createmovie.releasedate.value.length != 4){
+			error += 'Enter valid Release Year<br/>';
+		}
+		if(createmovie.category.value==null ||createmovie.category.value == ''){
+			error += 'Category cannot be blank<br/>';
+		}
+		if(createmovie.rentamount.value==null ||createmovie.rentamount.value == ''){
+			error += 'Rent Amount cannot be blank<br/>';
+		}else if(!decimalNumbers(createmovie.rentamount.value)){
+			error += 'Enter valid number for Rent amount<br/>';
+		}
+		if(createmovie.copies.value==null ||createmovie.copies.value == ''){
+			error += 'Number of Copies cannot be blank<br/>';
+		}else if(!allnumeric(createmovie.copies.value)){
+			error += 'Enter valid number for Number of copies<br/>';
+		}
+		
+		if(error != "") {
+			document.getElementById("error").innerHTML = error;
+			return false;
+		}
+    }
+</script>
+
+</head>
+
+<body>
+	<div id="templatemo_background_section_top">
+    
+    	<div class="templatemo_container">
+		
+        	<div id="templatemo_header">
+				<div id="templatemo_logo_section">            
+		        	<h1><a href="/">Video Library</a></h1>               
+					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
+				</div>
+				<div id="templatemo_user_section">            
+		        	Welcome <%= userDet.firstname %>!!
+		        	<a href="/sign-out?nocache=1">Sign Out</a>
+				</div>
+         	</div><!-- end of headder -->
+               <div id="templatemo_menu_panel"> 
+				<div id="templatemo_menu_section">
+					
+						<ul>
+						  <li><a href="/createmember?nocache=1">Create member    </a></li>
+						  <li><a href="/listmember?nocache=1">List Members   </a></li>
+						  <li><a href="/createmovie?nocache=1">Create Movie   </a></li>
+						  <li><a href="/listmovie?nocache=1">List Movies   </a></li>
+						  <li><a href="/issuemovie?nocache=1">Issue Movie   </a></li>
+						  <li><a href="/submitmovie?nocache=1">Submit Movie  </a></li>  
+						  <li><a href="/generatebill?nocache=1">Generate Bill  </a></li> 
+							
+						</ul> 
+						
+					</div>
+             </div> <!-- end of menu -->
+		</div><!-- end of container-->
+        
+	</div><!-- end of templatemo_background_section_top-->
+    
+    <div id="templatemo_background_section_middle">
+    
+    	<div class="templatemo_container">
+        
+        	<div id="templatemo_left_section">
+            	
+                <div class="templatemo_post">
+                
+                	<div class="templatemo_post_top">
+                    	<h1>Edit Movie</h1>
+                    </div>
+                    <div class="templatemo_post_mid">
+                    
+                      <h3 id="error" style="color:yellow;"></h3>
+                  
+                    	<form method="POST" id="createmovie" action="/editmovie-submit" onsubmit="return validateCreateMovie(this)">
+                    	<div style="color:yellow; font-weight:bold;" align="center">
+				<% if(editedresults != null) {%>
+				<%= editedresults %>
+				<% } %>
+				</div>
+				<br/>
+                    	<table border="0">
+							<tbody>
+							
+							<tr>
+							<td><label for="mname">Movie Name*: </label> </td>
+							<td><input id="mname" maxlength="100" name="mname" type="text" value="<%=movie.movie_name%>"/> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="banner">Movie Banner: </label> </td>
+							<td><input id="banner" maxlength="45" name="banner" type="text" value="<%=movie.movie_banner%>"/> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="releasedate">Release Date: </label> </td>
+							<td><input id="releasedate" name="releasedate" type="text" value="<%=movie.release_date%>"/></td>
+							</tr>
+
+							<tr>
+							<td><label for="category">Category: </label> </td>
+							<td><!--<input id="category" maxlength="75" name="category" type="text" />-->
+							
+							<select id ="category" name="category">
+							<option value="">Select</option>
+							<% for(var i=0;i<categories.length;i++) { 
+								if(movie.category == categories[i]) {
+								%>	<option value="<%=categories[i]%>" selected><%=categories[i]%></option>
+								<% } else { %>
+								<option value="<%=categories[i]%>"><%=categories[i]%></option>
+							<% } } %>
+							</select>
+							
+							 </td>
+							</tr>
+							
+							<tr>
+							<td><label for="rentamount">Rent Amount: </label> </td>
+							<td><input id="rentamount" maxlength="25" name="rentamount" type="text" style="width:80px" value="<%=movie.rent_amount%>"/> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="copies">Number of Copies: </label> </td>
+							<td><input id="copies" maxlength="5" name="copies" type="text" style="width:40px" value="<%=movie.available_copies%>"/> </td>
+							</tr>
+							
+							<tr><td></td>
+							</tr>
+							<tr>
+							<td align="right"><input name="Submit" type="submit" value="Submit" /></td>
+							</tr>
+				
+							</tbody></table>
+                			<input type="hidden" name="movieId" value="<%=movie.movie_id%>"/>
+                           </form>
+                          
+                           
+                                           
+                    </div>
+                    <div class="templatemo_post_bottom">
+                    
+                    
+                    </div>
+                    
+				</div><!-- end of templatemo_post-->
+                
+            </div><!-- end of left section-->
+            
+            
+        </div><!-- end of container-->
+	</div><!-- end of background middle-->
+    
+     
+</body>
+
+</html>

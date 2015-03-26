@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<style>
+.small_bottom{
+    float:left;
+    height:50px;
+    width:50px;
+    margin:5px;
+}
+</style>
+<title>Video Library</title>
+
+<link href="/stylesheets/templatemo_style.css" rel="stylesheet" type="text/css" />
+<script src="/js/jquery-1.10.2.js"></script>
+<!--<script src="/js/jquery.jscroll.js"></script>-->
+
+</head>
+
+<body>
+	<div id="templatemo_background_section_top">
+    
+    	<div class="templatemo_container">
+		
+        	<div id="templatemo_header">
+				<div id="templatemo_logo_section">            
+		        	<h1><a href="/">Video Library</a></h1>          
+					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
+				</div>
+				<div id="templatemo_user_section">            
+		        	Welcome <%= userDet.firstname %>!!
+		        	<a href="/sign-out?nocache=1">Sign Out</a>
+				</div>
+         	</div><!-- end of headder -->
+               <div id="templatemo_menu_panel"> 
+				<div id="templatemo_menu_section">
+					
+					<ul>
+					  <li><a href="/createmember?nocache=1">Create member    </a></li>
+					  <li><a href="/listmember?nocache=1">List Members   </a></li>
+					  <li><a href="/createmovie?nocache=1">Create Movie   </a></li>
+					  <li><a href="/listmovie?nocache=1">List Movies   </a></li>
+					  <li><a href="/issuemovie?nocache=1">Issue Movie   </a></li>
+					  <li><a href="/submitmovie?nocache=1">Submit Movie  </a></li>  
+					  <li><a href="/generatebill?nocache=1">Generate Bill  </a></li> 							
+					</ul> 
+						
+					</div>
+             </div> <!-- end of menu -->
+		</div><!-- end of container-->
+        
+	</div><!-- end of templatemo_background_section_top-->
+    
+    <div id="templatemo_background_section_middle">
+    
+    	<div class="templatemo_container">
+        
+        	<div id="templatemo_left_section">
+            	
+                <div class="templatemo_post">
+                
+                	<div class="templatemo_post_top">
+                    	<h1>List Movies: This Section lists all the movies and allows to issue the same</h1>
+                    </div>
+                    <div class="templatemo_post_mid">
+                    <form method="POST" action="/issuemovielist-submit">
+						<p>Filter movies based on criteria below</p>     
+						<table style="margin-left:150px"><tr><td>
+							<table border="0">
+							<tbody>
+							
+							<tr>
+							<td><label for="mname">Movie Name: </label> </td>
+							<td><input id="mname" maxlength="100" name="mname" type="text" /> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="banner">Movie Banner: </label> </td>
+							<td><input id="banner" maxlength="45" name="banner" type="text" /> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="releasedate">Release Year: </label> </td>
+							<td><!--<input id="releasedate" name="releasedate" type="date"/>-->
+							<select id ="releasedate" name="releasedate">
+							<option value="">Select</option>
+							<% for(var i=0;i<releaseDates.length;i++) { %>
+								<option value="<%=releaseDates[i].release_date %>"><%=releaseDates[i].release_date %></option>
+							<% } %>
+							</select>
+							</td>
+							</tr>
+							<tr><td></td>
+							</tr>
+							</tbody></table>
+						</td>
+						<td>
+							<table border="0">
+							<tbody>
+							
+							<tr>
+							<td><label for="category">Category: </label> </td>
+							<td><!--<input id="category" maxlength="75" name="category" type="text" />--> 
+							<select id ="category" name="category">
+							<option value="">Select</option>
+							<% for(var i=0;i<categories.length;i++) { %>
+								<option value="<%=categories[i]%>"><%=categories[i]%></option>
+							<% } %>
+							</select>
+							</td>
+							</tr>
+							
+							<tr>
+							<td><label for="rentamount">Rent Amount: </label> </td>
+							<td><input id="rentamountmin" placeholder="min" maxlength="25" name="rentamountmin" type="number" style="width:80px"/>
+							<input id="rentamountmax" placeholder="max" maxlength="25" name="rentamountmax" type="number" style="width:80px"/> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="copies">Is Available: </label> </td>
+							<td><input id="isAvailable" type="checkbox" name="isAvailable" checked/> </td>
+							</tr>
+							
+							<tr><td></td>
+							</tr>
+							</tbody></table>
+						</tr></table>
+                        <table>
+						</table>
+						 <input type="hidden" name="membershipNo" value="<%=membershipNo%>"/> 
+						<div><input name="Filter" type="submit" value="Filter" style="width:50px; align:right; margin-left:800px"/></div>
+					</form>	
+					<br/>
+					<br/>
+                    <!-- List to display -->
+                   <div style="color:yellow; font-weight:bold;" align="center">
+				<% if(checkoutError != null) {%>
+				<%= checkoutError %>
+				<% } %>
+				</div>
+				<br/>
+                    <table class="listData" border=1>
+                    <tr>
+                    <th style="color:white;">Sr. No.</th>
+                    <th style="color:white;">Movie Name</th>
+                    <th style="color:white;">Banner</th>
+                    <th style="color:white;">Release Year</th>
+                    <th style="color:white;">Rent Amount</th>
+                    <th style="color:white;">Available Copies</th>
+                    <th style="color:white;">Category</th>
+                    <th style="color:white;">Select</th>
+                    </tr>
+                    <% if(movies != null && movies.length > 0) {
+              
+                    	for(var i=0;i<movies.length;i++) {
+                    	//console.log(movies[i].movie_id);
+                    %>
+	                    <tr>
+	                    <td><%= i+1 %></td>
+	                    <td><%= movies[i].movie_name %></td>
+	                    <td><%= movies[i].movie_banner %></td>
+	                    <td><%= movies[i].release_date %></td>
+	                    <td><%= movies[i].rent_amount %></td>
+	                    <td><%= movies[i].available_copies %></td>
+	                    <td width="30px"><%= movies[i].category %></td>
+	                    <td>
+	                     <form action="/issuemovieselect-submit" method="POST">
+	                          <input type="hidden" name="membershipNo" value="<%=membershipNo%>"/>
+	                          <input type="hidden" name="movieId" value="<%=movies[i].movie_id%>"/>
+	                          <% if(movies[i].available_copies > 0) { %>
+                   			<input type="submit" value="Issue >>"/> 
+                   			<%} else { %>
+                   			<input type="submit" value="Issue >>" disabled/> 
+                   			<%} %>
+                   		</form>       
+	                    </td>
+	                    </tr>
+	                    <% } } %>
+                    </table>
+                    </div>
+                    <div class="templatemo_post_bottom">
+                    
+                    
+                    </div>
+                    
+				</div><!-- end of templatemo_post-->
+                
+            </div><!-- end of left section-->
+            
+            
+        </div><!-- end of container-->
+	</div><!-- end of background middle-->
+    
+     
+</body>
+
+<script type="text/javascript">
+//$(document).ready(function(){
+//$('.infinite-scroll').jscroll();
+//});
+
+</script>
+
+
+</html>

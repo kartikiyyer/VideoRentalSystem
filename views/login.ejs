@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+
+	<meta charset="utf-8">
+
+	<title>Login</title>
+	<link href="/stylesheets/styleLogin.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Varela+Round">
+	<script>
+	function fixmemberId(txtBox) {
+       if (txtBox == null) { 
+           return '' }
+       
+       if (txtBox.value.length == 9) {
+           txtBox.value = txtBox.value.substring(0, 3) + '-' + txtBox.value.substring(3, 5) + '-' + txtBox.value.substring(5, 9)
+       }
+       
+       return txtBox.value;
+   	}
+   	function validateLogin(login)   
+   {
+	 var pattern = /^\d{3}-\d{2}-\d{4}$/;
+     if(login.membershipNo.value==null ||login.membershipNo.value == ''){
+			alert('Membership number cannot be empty');
+			return false;
+	 }else if(!login.membershipNo.value.match(pattern)){
+	 	alert('Membership number is in invalid format. It should be XXXX-XX-XXX and all numbers');
+		return false;
+	 }
+	if(login.password.value==null ||login.password.value == ''){
+		alert('Password cannot be empty');
+		return false;
+	}
+		login.membershipNo.value=login.membershipNo.value.replace('-','');
+		login.membershipNo.value=login.membershipNo.value.replace('-','');
+		return true;
+	}
+	</script>
+</head>
+
+<body>
+
+	<div id="login">
+
+		<h2><span class="fontawesome-lock"></span>Sign In</h2>
+
+		<form action="/validateLogin" method="POST" onsubmit="return validateLogin(this);">
+
+			<fieldset>
+
+				<div style="color:red; font-weight:bold;" align="center">
+				<% if(error != null) {%>
+				<%= error %>
+				<% } %>
+				</div>
+				<br/>
+				
+				<p><label for="memNo">Membership number</label></p>
+				<p><input type="memNo" name = "membershipNo" id="membershipNo" onBlur="fixmemberId(this);"></p>
+
+				<p><label for="password">Password</label></p>
+				<p><input type="password" name ="password" id="password"></p>
+
+				<p><input type="submit" value="Sign In"></p>
+
+			</fieldset>
+
+		</form>
+
+	</div> <!-- end login -->
+
+</body>	
+</html>
