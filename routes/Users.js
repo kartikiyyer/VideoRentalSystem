@@ -36,7 +36,9 @@ exports.signOut = function(req, res) {
 
 exports.createmember = function(req, res){
 	//console.log("hi create");
-	if(req.session.userdetails != null && req.session.userdetails != "") {		
+	
+	res.render("createmember",{"insertedresults":null, "states":lookUp.getStates()});
+	/*if(req.session.userdetails != null && req.session.userdetails != "") {		
 		var user = JSON.parse(req.session.userdetails);
 		if(user !=null && user.roleName == "ADMIN") {
 			Userdb.selectRole(function(results,error) {
@@ -50,15 +52,14 @@ exports.createmember = function(req, res){
 				{Location: "/login"}			
 		);
 		res.end();
-	}
+	}*/
 };
 
 
-exports.createMemberSubmit = function(req,res) 
+exports.createMemberSubmit = function(req,res)
 {
-	if(req.session.userdetails != null && req.session.userdetails != "") {
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		if(user !=null && user.roleName == "ADMIN"){
 			//var user = [];
 			var userInfo= [];
 			var userId;
@@ -93,8 +94,11 @@ exports.createMemberSubmit = function(req,res)
 							member.balanceAmount=0;
 							member.roleId=req.body.role;
 							member.email = req.body.email;
-							member.address = req.body.address;
-							member.address2 = req.body.address2;
+							member.areacode = req.body.areacode;
+							member.citycode = req.body.citycode;
+							member.phonenum = req.body.phonenum;
+							member.line1 = req.body.address;
+							member.line2 = req.body.address2;
 							member.city = req.body.city;
 							member.state = req.body.state;
 							member.zip = req.body.zip1;
@@ -102,22 +106,21 @@ exports.createMemberSubmit = function(req,res)
 							if(member.zipext == "") {
 								member.zipext = 0;
 							}
-							// In case of premium member we need to set the balance amount to monthly subscription.
+							
 							if(member.memberType == "P") {
 								member.balanceAmount = 25;
 							}
-							Userdb.insertUser(function(results,err)
+							Userdb.insertUser(function(insertSucessfullFlag)
 									{
-								if(err)
+								if(!insertSucessfullFlag)
 								{
-									console.log(err);
+									console.log("InsertUser Failed");
 								}
 								else
 								{
-
+									console.log("Insert:"+insertSucessfullFlag);
 
 									res.render("createmember",{"userDet" : user,"insertedresults":"User details inserted with membership no."+membershipNum,"roles": roles,"states":lookUp.getStates()});
-
 
 								}
 									},member);
@@ -125,12 +128,10 @@ exports.createMemberSubmit = function(req,res)
 					}
 						},req.body.email);
 			});
-		} else {
-			res.render("accessdenied");	
-		}
+		
 	} else {
 		res.writeHead(301,
-				{Location: "/login"}			
+				{Location: "/login"}		
 		);
 		res.end();
 	}
@@ -139,7 +140,7 @@ exports.createMemberSubmit = function(req,res)
 exports.index = function(req, res) {
 	if(req.session.userdetails != null && req.session.userdetails != "") {
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		if(user !=null && user.roleName == "admin") {
 			res.render('index', {userDet : user});
 		} else {
 			res.render('\\users\\userindex', {"userDet": user});
@@ -147,7 +148,7 @@ exports.index = function(req, res) {
 
 	} else {
 		res.writeHead(301,
-				{Location: "/login"}			
+				{Location: "/login"}
 		);
 		res.end();
 	}
@@ -170,14 +171,14 @@ exports.validateLogin = function(req, res){
 				res.render('login');*/
 				req.session.error = "Invalid credentials.";
 				res.writeHead(301,
-						{Location: "/login"}			
+						{Location: "/login"}
 				);
 				res.end();
 			}else if(results.length > 0) {
 				//console.log("query result fetched");
-				req.session.userdetails = JSON.stringify({userId : results[0].user_id, membershipNo : results[0].membership_no, firstname :  results[0].firstname, lastname : results[0].lastname, issuedMovies : results[0].issued_movies, outstandingMovies : results[0].outstanding_movies, memberTypes : results[0].member_types, balanceAmount : results[0].balance_amount, roleId : results[0].role_id,  roleName : results[0].role_name});
+				req.session.userdetails = JSON.stringify({membershipNo : results[0].membership_no, firstname :  results[0].first_name, lastname : results[0].last_name, memberTypes : results[0].member_type, email: results[0].email,role: results[0].role_id, role_name: results[0].role_name});
 				//console.log(req.session.userdetails);
-				if(results[0].role_name == "ADMIN")
+				if(results[0].role_name == "admin")
 				{
 					console.log("ADMIN LOGIN");
 					/*res.render('index',
@@ -434,10 +435,10 @@ exports.generateBillSubmit = function(req,res) {
 		}
 	} else {
 		res.writeHead(301,
-				{Location: "/"}			
+				{Location: "/"}
 		);
 		res.end();
-	}		
+	}	
 };
 
 /**
