@@ -138,7 +138,7 @@
 							<input type="hidden" name="memberId" value=""/>
 							<tr>
 							<td><label for="mno">Membership Number: </label> </td>
-							<td><input id="mno" maxlength="45" name="mno" type="text" disabled="true" value="<%=member.membership_no%>"/> </td>
+							<td><input id="membershipNo" maxlength="45" name="membershipNo" type="text" disabled="true" value="<%=member.membership_no%>"/> </td>
 							</tr>
 							
 							<tr>
@@ -155,12 +155,12 @@
 							
 							<tr>
 							<td><label for="fname">First Name*: </label> </td>
-							<td><input id="fname" maxlength="45" name="fname" type="text" value="<%=member.firstname%>"/> </td>
+							<td><input id="fname" maxlength="45" name="fname" type="text" value="<%=member.first_name%>"/> </td>
 							</tr>
 							
 							<tr>
 							<td><label for="lname">Last Name*: </label> </td>
-							<td><input id="lname" maxlength="45" name="lname" type="text" value="<%=member.lastname%>"/> </td>
+							<td><input id="lname" maxlength="45" name="lname" type="text" value="<%=member.last_name%>"/> </td>
 							</tr>
 							
 							<tr>
@@ -170,12 +170,12 @@
 
 							<tr>
 							<td><label for="address">Address Line 1*: </label> </td>
-							<td><input id="address" maxlength="50" name="address" type="text" value="<%=member.address%>"/> </td>
+							<td><input id="address" maxlength="50" name="address" type="text" value="<%=member.line1%>"/> </td>
 							</tr>
 							
 							<tr>
 							<td><label for="address2">Address Line 2: </label> </td>
-							<td><input id="address2" maxlength="50" name="address2" type="text" value="<%=member.address2%>"/> </td>
+							<td><input id="address2" maxlength="50" name="address2" type="text" value="<%=member.line2%>"/> </td>
 							</tr>
 							
 							<tr>
@@ -202,7 +202,10 @@
 							<td><label for="zip1">Zip Code*: </label> </td>
 							<td><input id="zip1" maxlength="50" name="zip1" type="text" style="width:50px" value="<%=member.zip%>"/> - <input id="zip2" maxlength="50" name="zip2" type="text" style="width:50px" value="<%=member.zipext%>"/> </td>
 							</tr>
-							
+							<tr>
+							<td><label for="zip1">Phone*: </label> </td>
+							<td><input id="areacode" maxlength="3" name="areacode" type="text" value="<%=member.area_code%>" style="width:50px"/> - <input id="citycode" maxlength="3" name="citycode" type="text" value="<%=member.city_code%>" style="width:50px"/> <input id="phonenum" maxlength="4" name="phonenum" value="<%=member.number%>" type="text" style="width:50px"/></td>
+							</tr>
 							<tr><td></td>
 							</tr>
 							<tr>
@@ -210,7 +213,7 @@
 							</tr>
 
 							</tbody></table>
-							<input type="hidden" name="userId" value="<%=member.user_id%>"/>
+							<input type="hidden" name="memberId" value="<%=member.membership_no%>"/>
 							</form>
 							
                     </div>

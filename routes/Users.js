@@ -38,12 +38,12 @@ exports.createmember = function(req, res){
 	//console.log("hi create");
 	
 	res.render("createmember",{"insertedresults":null, "states":lookUp.getStates()});
-	/*if(req.session.userdetails != null && req.session.userdetails != "") {		
+	if(req.session.userdetails != null && req.session.userdetails != "") {		
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		if(user !=null && user.role_name == "admin") {
 			Userdb.selectRole(function(results,error) {
 				res.render("createmember",{"userDet" : user,"insertedresults":null, "roles": results,"states":lookUp.getStates()});	
-			});	
+			});
 		} else {
 			res.render("accessdenied");	
 		}
@@ -52,17 +52,16 @@ exports.createmember = function(req, res){
 				{Location: "/login"}			
 		);
 		res.end();
-	}*/
+	}
 };
 
 
 exports.createMemberSubmit = function(req,res)
 {
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN"){
+		if(user !=null && user.role_name == "admin"){
 			//var user = [];
 			var userInfo= [];
-			var userId;
 			var roles;
 			Userdb.selectRole(function(results,error) {
 				roles = results;
@@ -140,7 +139,7 @@ exports.createMemberSubmit = function(req,res)
 exports.index = function(req, res) {
 	if(req.session.userdetails != null && req.session.userdetails != "") {
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "admin") {
+		if(user !=null && user.role_name == "admin") {
 			res.render('index', {userDet : user});
 		} else {
 			res.render('\\users\\userindex', {"userDet": user});
@@ -180,10 +179,8 @@ exports.validateLogin = function(req, res){
 				//console.log(req.session.userdetails);
 				if(results[0].role_name == "admin")
 				{
-					console.log("ADMIN LOGIN");
-					/*res.render('index',
-				{userDet : results[0]},
-				function(err, result) {
+					console.log("admin LOGIN");
+					res.render('index',{userDet : results[0]},function(err, result) {
 			// render on success
 			if (!err) {
 				res.end(result);
@@ -193,13 +190,12 @@ exports.validateLogin = function(req, res){
 				res.end('An error occurred');
 				console.log(err);
 
-			}		
-
-		});*/
-					res.writeHead(301,
+			}
+		});
+			/*		res.writeHead(301,
 							{Location: "/"}			
 					);
-					res.end();
+					res.end();*/
 				}
 				else {
 					console.log("USER LOGIN");
@@ -226,9 +222,11 @@ exports.validateLogin = function(req, res){
 
 
 exports.listMember = function(req, res){
+	console.log("Listmember.");
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		console.log(user);
+		if(user !=null && user.role_name == "admin") {
 			var members;
 			Userdb.selectUsers(function(results, error) {
 				members = results;
@@ -250,12 +248,12 @@ exports.listMember = function(req, res){
 exports.editMember = function(req, res){
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		if(user !=null && user.role_name == "admin") {
 			var member;
 			var memberId = req.params.id;
 			Userdb.selectUserById(function(results, error) {
 				member = results[0];
-				//console.log(member);
+				console.log("Edit Results:"+memberId);
 				res.render("editmember",{"userDet" : user,"member":member, "editedResults": null,"states":lookUp.getStates()});
 			},memberId);
 		} else {
@@ -272,26 +270,33 @@ exports.editMember = function(req, res){
 exports.editMemberSubmit = function(req, res){
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		
+		if(user !=null && user.role_name == "admin") {
 			var member = [];
 			
 			Userdb.selectUserById(function(results, error) {
+				console.log("Edit Member Submit");
+				console.log("Membership No:"+req.body.memberId);
+				console.log(results);
 				member = results[0];
-				member.firstname= req.body.fname;
-				member.lastname= req.body.lname;
+				member.first_name= req.body.fname;
+				member.last_name= req.body.lname;
 				member.member_type=req.body.memType;
 				member.email = req.body.email;
-				member.address = req.body.address;
-				member.address2 = req.body.address2;
+				member.line1 = req.body.address;
+				member.line2 = req.body.address2;
 				member.city = req.body.city;
 				member.state = req.body.state;
 				member.zip = req.body.zip1;
-				member.zipext = req.body.zip2;
-				
+				member.zip_ext = req.body.zip2;
+				member.city_code = req.body.citycode;
+				member.area_code = req.body.areacode;
+				member.number = req.body.phonenum;
 				Userdb.editUser(function(results, error) {
+					console.log("Edit User Callback");
 					res.render("editmember",{"userDet" : user,"member":member,"editedResults": "User edited successfully.","states":lookUp.getStates()});
 				},member);
-			},req.body.userId);
+			},req.body.memberId);
 		} else {
 			res.render("accessdenied");	
 		}
@@ -304,10 +309,12 @@ exports.editMemberSubmit = function(req, res){
 };
 
 exports.deleteMember = function(req, res){
+	console.log("Delete Member");
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		if(user !=null && user.role_name == "admin") {
 			var memberId = req.params.id;
+			console.log("MemberId:"+memberId);
 			Userdb.deleteUser(function(results, error) {
 				res.writeHead(301,
 						{Location: "/listmember"}			
@@ -328,7 +335,7 @@ exports.deleteMember = function(req, res){
 exports.searchMember = function(req, res){
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		if(user !=null && user.role_name == "admin") {
 			var members;
 			var membershipNum = req.body.membershipNo;
 			var firstname= req.body.fname;
@@ -363,7 +370,7 @@ exports.searchMember = function(req, res){
 exports.showMember = function(req,res) {
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		if(user !=null && user.role_name == "admin") {
 			var memberId = req.params.id;
 			Userdb.selectUserById(function(results,error) {
 				var member = null;
@@ -392,7 +399,7 @@ exports.showMember = function(req,res) {
 exports.generateBill = function(req,res) {
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		if(user !=null && user.role_name == "admin") {
 			res.render("generatebill",{"userDet":user,"fetchResult": null,"member":null,"movies":null});
 		} else {
 			res.render("accessdenied");	
@@ -408,7 +415,7 @@ exports.generateBill = function(req,res) {
 exports.generateBillSubmit = function(req,res) {
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		if(user !=null && user.role_name == "admin") {
 			var membershipNo = req.body.membershipNo;
 			Userdb.selectUserByMembershipNo(function(results,error) {
 				if(results != null && results.length > 0) {
@@ -447,7 +454,7 @@ exports.generateBillSubmit = function(req,res) {
 exports.submitMovie = function(req,res) {
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		if(user !=null && user.role_name == "admin") {
 			
 			res.render("submitmovie",{"userDet":user,"fetchResult": null});
 		} else {
@@ -467,7 +474,7 @@ exports.submitMovie = function(req,res) {
 exports.submitMovieList = function(req,res) {
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		if(user !=null && user.role_name == "admin") {
 			
 			var membershipNo = req.body.membershipNo;
 			console.log(membershipNo);
@@ -513,7 +520,7 @@ exports.submitMovieList = function(req,res) {
 exports.submitMovieSelectSubmit = function(req,res) {
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
-		if(user !=null && user.roleName == "ADMIN") {
+		if(user !=null && user.role_name == "admin") {
 			var membershipNo = req.body.membershipNo;
 			//console.log("taking from reuest object: " + req.body.moviemappingId);
 			//var userMovieId = req.body.moviemappingId;
@@ -629,6 +636,8 @@ exports.changePassword = function(req, res) {
 exports.changePasswordSubmit = function(req, res) {
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
+		console.log("ChangePassword");
+		console.log(user);
 		if(user !=null) {
 			var oldPassword = req.body.oldpwd;
 			var newPassword1 = req.body.newpwd1;
@@ -641,11 +650,11 @@ exports.changePasswordSubmit = function(req, res) {
 					if(!error && results != null && results.length > 0) {
 						Userdb.editUserPassword(function(results, error){
 							res.render("\\users\\changepassword",{"userDet":user,"editResults":"User's password changed successfully."});
-						}, user.userId, newPassword1);
+						}, user.membershipNo, newPassword1);
 					} else {
 						res.render("\\users\\changepassword",{"userDet":user,"editResults":"Old password not correct."});
 					}
-				},user.userId, oldPassword);
+				},user.membershipNo, oldPassword);
 			}
 		} else {
 			res.render("accessdenied");	

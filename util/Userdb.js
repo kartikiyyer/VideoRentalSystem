@@ -113,20 +113,47 @@ exports.insertUser = insertUser;
 
 
 function editUser(callback, user) {
+	console.log("Edit User.");
 	var connection = mysql.createdbConnection();
 	//var connection = mysql.getdbConnection();
 	//connection.query("UPDATE users SET firstname = '" + user.firstname + "', lastname = '" + user.lastname + "', member_type = '" + user.memberType + "', email = '" + user.email+ "', address = '" + user.address+ "' , address2 = '" + user.address2+ "' , city = '" + user.city+ "' , state = '" + user.state+ "', zip = '" + user.zip+ "', zipext = '" + user.zipext+ "', balance_amount = '" + user.balance_amount+ "', outstanding_movies = '" + user.outstanding_movies + "',issued_movies = '" + user.issued_movies +"' WHERE user_id  = " + user.userId, function(error, results) {
-	connection.query("UPDATE customer SET first_name = ?, last_name = ?,email = ? WHERE membership_no  = ?" , [user.firstname,user.lastname,user.email,user.membershipNo],function(error, results) {
+	connection.query("UPDATE customer,address,phone SET customer.first_name = ?, customer.last_name = ?,customer.email = ?, address.line1 = ?, address.line2 = ?, address.city=?,address.zip = ?, address.zip_ext=?, phone.city_code=? ,phone.area_code=?,phone.number=? WHERE customer.membership_no  = ? and customer.address_id = address.id and customer.membership_no = phone.membership_no" , [user.first_name,user.last_name,user.email,user.line1, user.line2, user.city, user.zip, user.zip_ext, user.city_code, user.area_code, user.number, user.membership_no],function(error, results) {
 		if(!error) {
 			//console.log(results);
 			if(results.length !== 0) {
-				console.log("Customer Name,last name and email details edited for " + user.membershipNo);
+				console.log("Customer Details edited for " + user.membership_no);
 				//update address
-				connection.query("UPDATE address SET line1 = ?, line2 = ?,city = ?, zip=?, zip_ext=?,state_id WHERE id  = ?" , [user.line1,user.line2,user.city,user.zip, user.zip_ext,state_id,id],function(error, results) {
+			}
+		} else {
+			console.log(error);
+		}
+		callback(results,error);
+	});
+	mysql.closedbConnection(connection);
+	//mysql.releasedbConnection(connection);
+}
+
+exports.editUser = editUser;
+
+
+
+
+function deleteUser(callback, membershipNo) {
+	console.log("Delete user.");
+	var connection = mysql.createdbConnection();
+	//var connection = mysql.getdbConnection();
+	//connection.query("DELETE FROM users WHERE user_id  = " + userId, function(error, results) {
+	connection.query("DELETE FROM customer WHERE membership_no  =  ?",[membershipNo], function(error, results) {
+		if(!error) {
+			//console.log(results);
+			if(results.length !== 0) {
+				console.log("Customer details deleted for: " + membershipNo);
+				connection.query("DELETE FROM phone WHERE membership_no  = ?",[membershipNo], function(error, results) {
 					if(!error) {
 						//console.log(results);
 						if(results.length !== 0) {
-							console.log("Customer Name,last name and email details edited for " + user.membershipNo);
+							console.log("Phone details deleted for " + membershipNo);
+							callback(results,error);
 						}
 					} else {
 						console.log(error);
@@ -142,37 +169,13 @@ function editUser(callback, user) {
 	//mysql.releasedbConnection(connection);
 }
 
-exports.editUser = editUser;
-
-
-
-
-function deleteUser(callback, userId) {
-	var connection = mysql.createdbConnection();
-	//var connection = mysql.getdbConnection();
-	//connection.query("DELETE FROM users WHERE user_id  = " + userId, function(error, results) {
-	connection.query("DELETE FROM users WHERE user_id  = ?",[userId], function(error, results) {	
-		if(!error) {
-			//console.log(results);
-			if(results.length !== 0) {
-				console.log("User details deleted for " + userId);
-			}
-		} else {
-			console.log(error);
-		}
-		callback(results,error);
-	});
-	mysql.closedbConnection(connection);
-	//mysql.releasedbConnection(connection);
-}
-
 exports.deleteUser = deleteUser;
 
 
 
 function selectRole(callback, userId) {
 	
-	var query = "SELECT role_id, role_name FROM role_master";
+	var query = "SELECT id, name FROM role";
 	cache.get(function(rows){
 		if(rows == null){
 			var connection = mysql.createdbConnection();
@@ -200,15 +203,19 @@ function selectRole(callback, userId) {
 exports.selectRole = selectRole;
 
 
-function selectUserById(callback, userId) {
+function selectUserById(callback, membershipNo) {
 	var connection = mysql.createdbConnection();
 	//var connection = mysql.getdbConnection();
 	//connection.query("SELECT user_id, membership_no, firstname, lastname,issued_movies, outstanding_movies, member_type, balance_amount, email, address,address2, city, state, zip, zipext FROM users WHERE user_id  = " + userId, function(error, results) {
-	connection.query("SELECT user_id, membership_no, firstname, lastname,issued_movies, outstanding_movies, member_type, balance_amount, email, address,address2, city, state, zip, zipext FROM users WHERE user_id  = ?" , [userId], function(error, results) {
+	console.log("In SelectUserById:<"+membershipNo+">");
+	var memberId = membershipNo.toString().replace(/[^\w\s]/gi, '');
+	console.log("After replace:"+memberId);
+	connection.query("SELECT cred.membership_no, cred.password, cust.first_name, cust.last_name,member.name as member_type,cust.email, a.line1,a.line2, a.zip, a.zip_ext, a.city, st.name as state, ph.city_code,ph.area_code, ph.number, r.name as role_name, r.id as role_id, active.id as active_id, active.name as active_name FROM customer_cred cred, customer cust, address a, member_type member, state st, phone ph, role r, active WHERE cred.membership_no  = ? and cust.membership_no = cred.membership_no and cust.address_id = a.id and cust.member_type_id = member.id and cred.membership_no = ph.membership_no and a.state_id = st.id and cust.role_id = r.id and cust.active_id = active.id" , [memberId], function(error, results) {
 		if(!error) {
-			//console.log(results);
+		
 			if(results.length !== 0) {
-				console.log("User details selected for " + userId);
+				console.log(results);
+				console.log("User details selected for " + membershipNo);
 			}
 		} else {
 			console.log(error);
@@ -221,15 +228,16 @@ function selectUserById(callback, userId) {
 
 exports.selectUserById = selectUserById;
 
-function selectUserByIdPassword(callback, userId, password) {
+function selectUserByIdPassword(callback, membershipNo, password) {
 	var connection = mysql.createdbConnection();
 	//var connection = mysql.getdbConnection();
 	//connection.query("SELECT user_id FROM users WHERE user_id  = " + userId + " AND password = MD5('" + password + "')", function(error, results) {
-	connection.query("SELECT user_id FROM users WHERE user_id  = ? AND password = MD5(?)" , [userId,password], function(error, results) {
+	console.log("In selectUserByIdPassword.");
+	connection.query("SELECT membership_no FROM customer_cred WHERE membership_no  = ? AND password = ?" , [membershipNo,password], function(error, results) {
 		if(!error) {
 			//console.log(results);
 			if(results.length !== 0) {
-				console.log("User details selected for " + userId);
+				console.log("User details selected for " + membershipNo);
 			}
 		} else {
 			console.log(error);
@@ -242,13 +250,13 @@ function selectUserByIdPassword(callback, userId, password) {
 
 exports.selectUserByIdPassword = selectUserByIdPassword;
 
-function editUserPassword(callback, userId, password) {
+function editUserPassword(callback, membershipNo, password) {
 	var connection = mysql.createdbConnection();
-	connection.query("UPDATE customer SET password = ? WHERE id  = ?" , [password, userId],function(error, results) {
+	connection.query("UPDATE customer_cred SET password = ? WHERE membership_no  = ?" , [password, membershipNo],function(error, results) {
 		if(!error) {
 			//console.log(results);
 			if(results.length !== 0) {
-				console.log("User details edited for " + userId);
+				console.log("User details edited for " + membershipNo);
 			}
 		} else {
 			console.log(error);
@@ -307,7 +315,7 @@ exports.selectCurrentlyIssuedMoviesByUser = selectCurrentlyIssuedMoviesByUser;
 
 function selectUserByEmail(callback, email) {
 	var connection = mysql.createdbConnection();
-	connection.query("SELECT user_id, membership_no, password, firstname, lastname,issued_movies, outstanding_movies, member_type, balance_amount, email, address, city, state, zip, zipext FROM users WHERE email  = ?",[email], function(error, results) {
+	connection.query("SELECT cred.membership_no, cred.password, cust.first_name, cust.last_name,member.name as member_type,cust.email, a.line1,a.line2, a.city, st.name as state, ph.city_code,ph.area_code, ph.number, r.name as role_name, r.id as role_id, active.id as active_id, active.name as active_name FROM customer_cred cred, customer cust, address a, member_type member, state st, phone ph, role r, active WHERE cust.email  = ? and cust.membership_no = cred.membership_no and cust.address_id = a.id and cust.member_type_id = member.id and cred.membership_no = ph.membership_no and a.state_id = st.id and cust.role_id = r.id and cust.active_id = active.id",[email], function(error, results) {
 		if(!error) {
 			//console.log(results);
 			if(results.length !== 0) {
@@ -330,7 +338,7 @@ function selectUserByMembershipNo(callback, membershipNo) {
 	var connection = mysql.createdbConnection();
 	//var connection = mysql.getdbConnection();
 	//connection.query("SELECT user_id, membership_no, password, firstname, lastname,issued_movies, outstanding_movies, member_type, balance_amount, email, address,address2, city, state, zip, zipext FROM users WHERE membership_no  = '" + membershipNo + "'" , function(error, results)
-	connection.query("SELECT user_id, membership_no, password, firstname, lastname,issued_movies, outstanding_movies, member_type, balance_amount, email, address, address2, city, state, zip, zipext FROM users WHERE membership_no  = ?" ,[ membershipNo ] , function(error, results)
+	connection.query("SELECT cred.membership_no, cred.password, cust.first_name, cust.last_name,member.name as member_type,cust.email, a.line1,a.line2, a.city, st.name as state, ph.city_code,ph.area_code, ph.number, r.name as role_name, r.id as role_id, active.id as active_id, active.name as active_name FROM customer_cred cred, customer cust, address a, member_type member, state st, phone ph, role r, active WHERE cred.membership_no  = ? and cust.membership_no = cred.membership_no and cust.address_id = a.id and cust.member_type_id = member.id and cred.membership_no = ph.membership_no and a.state_id = st.id and cust.role_id = r.id and cust.active_id = active.id" ,[ membershipNo ] , function(error, results)
 	{
 		if(!error)
 		{
@@ -374,7 +382,7 @@ function validateLogin(callback, membershipNo, password) {
 exports.validateLogin = validateLogin;
 
 function selectUsers(callback) {
-	var query = "SELECT cred.membership_no, cred.password, first_name, last_name, m.name as member_type_name FROM customer, member_type m, customer_cred cred WHERE customer.member_type_id = m.id and customer.membership_no = cred.membership_no and customer.role_id = (SELECT id FROM role WHERE name = 'user')";
+	var query = "SELECT cred.membership_no, cred.password, first_name, last_name, m.name as member_type_name, a.line1, a.line2, a.zip, a.zip_ext, ph.city_code, ph.area_code,ph.number FROM customer, member_type m, customer_cred cred, address a, phone ph WHERE customer.member_type_id = m.id and customer.membership_no = cred.membership_no and customer.address_id = a.id and customer.membership_no = ph.membership_no and customer.role_id = (SELECT id FROM role WHERE name = 'user')";
 	cache.get(function(rows){
 		//console.log(rows);
 		if(rows == null){
@@ -407,7 +415,7 @@ function selectUserBySearchCriteria(callback, membershipNo, firstname, lastname,
 	var count = 0;
 	var connection = mysql.createdbConnection();
 	//var connection = mysql.getdbConnection();
-	var query = "SELECT user_id, membership_no, password, firstname, lastname,issued_movies, outstanding_movies, member_type, balance_amount FROM users WHERE role_id = (SELECT role_id FROM role_master WHERE role_name = 'USER') ";
+	var query = "SELECT cred.membership_no, cred.password, first_name, last_name, m.name as member_type_name FROM customer, member_type m, customer_cred cred WHERE customer.member_type_id = m.id and customer.membership_no = cred.membership_no and customer.role_id = (SELECT id FROM role WHERE name = 'user')";
 	//var andFlag = false;
 	
 	if(membershipNo != "") {
@@ -421,7 +429,7 @@ function selectUserBySearchCriteria(callback, membershipNo, firstname, lastname,
 			query += " AND ";
 		//}
 		parameters[count++] = "%" + firstname + "%";	
-		query +=" firstname LIKE ?";
+		query +=" first_name LIKE ?";
 		//andFlag = true;
 	}
 	if(lastname != "") {
@@ -429,7 +437,7 @@ function selectUserBySearchCriteria(callback, membershipNo, firstname, lastname,
 			query += " AND ";
 		//}
 		parameters[count++] = "%" + lastname + "%";
-		query +=" lastname LIKE ?";
+		query +=" last_name LIKE ?";
 		//andFlag = true;
 	}
 	if(memberTypes != "") {
@@ -480,44 +488,6 @@ function selectUserBySearchCriteria(callback, membershipNo, firstname, lastname,
 		query +=" zipext LIKE ?";
 		//andFlag = true;
 	}
-	//if(!andFlag) {
-	//	query = "SELECT userid, membership_no, password, firstname, lastname,issued_movies, outstanding_movies, member_type, balance_amount FROM users WHERE role_id = (SELECT role_id FROM role_master WHERE role_name = 'USER') ";
-	//}
-	/*if(minIssuedMovies != "" && maxIssuedMovies != "") {
-		if(andFlag) {
-			query += " AND ";
-		}
-		query +=" issued_movies BETWEEN '" + minIssuedMovies + "' AND '" + maxIssuedMovies +"'";
-		andFlag = true;
-	}
-	if(minOutstandingMovies != "" && maxOutstandingMovies != "") {
-		if(andFlag) {
-			query += " AND ";
-		}
-		query +=" outstanding_movies BETWEEN '" + minOutstandingMovies + "' AND '" + maxOutstandingMovies +"'";
-		andFlag = true;
-	}
-	if(memberTypes != "") {
-		if(andFlag) {
-			query += " AND ";
-		}
-		query +=" member_types = '" + memberTypes + "'";
-		andFlag = true;
-	}
-	if(minBalanceAmount != "" && maxBalanceAmount != "") {
-		if(andFlag) {
-			query += " AND ";
-		}
-		query +=" balance_amount BETWEEN '" + minBalanceAmount + "' AND '" + maxBalanceAmount +"'";
-		andFlag = true;
-	}
-	if(roleId != "") {
-		if(andFlag) {
-			query += " AND ";
-		}
-		query +=" role_id = '" + roleId + "'";
-		andFlag = true;
-	}*/
 	
 	console.log("Query for selectUserbysearchcriteria" + query);
 	//connection.query(query, function(error, results) {

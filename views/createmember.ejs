@@ -64,7 +64,27 @@ $(".memberType").show();
 		} else if(!validateEmail(document.createmember.email.value)){
 			alert('Enter valid Email address of the member');
 			return false;
-		} 
+		}
+
+		if(document.createmember.areacode.value==null ||document.createmember.areacode.value == ''){
+			alert('Please enter Area Code');
+			return false;
+		}else if(!allnumeric(document.createmember.areacode.value) || document.createmember.areacode.value.length != 3){
+			alert('Enter valid Phone Number for the entered Record. Phone Number should be numeric in the following format XXX-XXX-XXXX');
+			return false;
+		}
+		
+		if(document.createmember.citycode.value != '' && (!allnumeric(document.createmember.citycode.value) || document.createmember.citycode.value.length!=3)){
+			alert('Enter valid city Code for the entered Record. Phone number should be numeric in the following format XXX-XXX-XXXX');
+			return false;
+		}
+
+
+		if(document.createmember.phonenum.value != '' && (!allnumeric(document.createmember.phonenum.value) || document.createmember.phonenum.value.length!=4)){
+			alert('Enter valid phone number for the entered Record. Phone number should be numeric in the following format XXX-XXX-XXXX');
+			return false;
+		}
+
 		if(document.createmember.address.value==null ||document.createmember.address.value == ''){
 			alert('Address Line 1 cannot be blank');
 			return false;
@@ -107,21 +127,15 @@ $(".memberType").show();
 					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
 				</div>
 				<div id="templatemo_user_section">            
-		        	Welcome <%= userDet.firstname %>!!
-		        	<a href="/sign-out?nocache=1">Sign Out</a>
+		        	
 				</div>
-         	</div><!-- end of headder -->
+         	</div><!-- end of header -->
                <div id="templatemo_menu_panel"> 
 				<div id="templatemo_menu_section">
 					
 						<ul>
 						  <li><a href="/createmember?nocache=1">Create member    </a></li>
-						  <li><a href="/listmember?nocache=1">List Members   </a></li>
-						  <li><a href="/createmovie?nocache=1">Create Movie   </a></li>
-						  <li><a href="/listmovie?nocache=1">List Movies   </a></li>	
-						  <li><a href="/issuemovie?nocache=1">Issue Movie   </a></li>
-						  <li><a href="/submitmovie?nocache=1">Submit Movie  </a></li>  
-						  <li><a href="/generatebill?nocache=1">Generate Bill  </a></li> 
+						  
 						</ul> 
 						
 					</div>
@@ -175,7 +189,10 @@ $(".memberType").show();
 							<td><label for="email">Email Address*: </label> </td>
 							<td><input id="email" maxlength="75" name="email" type="text" style="width:275px;"/></td>
 							</tr>
-
+							<tr>
+							<td><label for="zip1">Phone*: </label> </td>
+							<td><input id="areacode" maxlength="3" name="areacode" type="text" style="width:50px"/> - <input id="citycode" maxlength="3" name="citycode" type="text" style="width:50px"/> <input id="phonenum" maxlength="4" name="phonenum" type="text" style="width:50px"/></td>
+							</tr>
 							<tr>
 							<td><label for="address">Address Line 1*: </label> </td>
 							<td><input id="address" maxlength="50" name="address" type="text" /> </td>
@@ -209,15 +226,6 @@ $(".memberType").show();
 							<tr>
 							<td><label for="password">Password*:</label></td>
 							<td><input id="password" maxlength="45" name="password" type="password" /></td>
-							</tr>
-							
-							<tr>
-							<td><label for="role">Role*:</label></td>
-							<td><select id="role" name="role">
-							<% for(var i=0;i<roles.length;i++) { %>
-								<option value="<%=roles[i].role_id %>"><%=roles[i].role_name %></option>
-							<% } %>
-							</select></td>
 							</tr>
 							<tr><td></td>
 							</tr>

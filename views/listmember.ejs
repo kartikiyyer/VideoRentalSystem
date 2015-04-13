@@ -151,8 +151,8 @@
 	                    <tr>
 	                    <td><%= i+1 %></td>
 	                    <td><%= members[i].membership_no %></td>
-	                    <td><%= members[i].firstname %></td>
-	                    <td><%= members[i].lastname %></td>
+	                    <td><%= members[i].first_name %></td>
+	                    <td><%= members[i].last_name %></td>
 	                    <td><%= members[i].outstanding_movies %></td>
 	                    <td width="30px">
 	                    <% if(members[i].member_type == "S") { %>
@@ -162,9 +162,9 @@
 	                    <% } %>
 	                    </td>
 	                    <td><%= members[i].balance_amount %></td>
-	                    <td><a href="/member/<%=members[i].user_id %>?nocache=1">View</a></td>
-	                    <td><a href="/editmember/<%=members[i].user_id %>?nocache=1">Edit</a></td>
-	                    <td><a href="/deletemember/<%=members[i].user_id %>?nocache=1">Delete</a></td>
+	                    <td><a href="/member/<%=members[i].membership_no %>?nocache=1">View</a></td>
+	                    <td><a href="/editmember/<%=members[i].membership_no %>?nocache=1">Edit</a></td>
+	                    <td><a href="/deletemember/<%=members[i].membership_no %>?nocache=1">Delete</a></td>
 	                    </tr>
 	                    <% } } %>
                     </table>
