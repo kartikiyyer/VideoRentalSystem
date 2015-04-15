@@ -283,7 +283,7 @@ exports.selectUsersCurrentlyIssuedMovie = selectUsersCurrentlyIssuedMovie;
  * @param callback
  */
 function selectMovies(callback) {
-	var query = "SELECT video.id, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, certificate.name AS certification FROM video INNER JOIN certificate ON certificate.id = video.certification_id ";
+	var query = "SELECT video.id, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, certificate.name AS certification FROM video INNER JOIN certificate ON certificate.id = video.certification_id LIMIT 1000";
 	var success = 0;
 	cache.get(function(rows){
 		if(rows == null){
@@ -422,7 +422,7 @@ function selectMovieBySearchCriteria(callback, title, releaseYear, category, min
 		query = "SELECT DISTINCT(video.id) AS id, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, name AS certification FROM video INNER JOIN certificate ON certificate.id = video.certification_id ";
 		parameters = [];
 	}
-	query += " LIMIT 2000";
+	query += " LIMIT 1000";
 	console.log("Query for selectMoviebysearchcriteria: " + query + " " + parameters);
 	connection.query(query,parameters, function(error, results) {
 		if(!error) {
