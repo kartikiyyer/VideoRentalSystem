@@ -69,27 +69,63 @@
 
 									<tr>
 										<th >Movie Name</th>
-										<td><%= movie.movie_name %></td>
+										<td><%= movie.title %></td>
 									</tr>
 									<tr>
 										<th >Banner</th>
-										<td><%= movie.movie_banner %></td>
+										<td><%= movie.description %></td>
 									</tr>
 									<tr>
 										<th>Release Year</th>
-										<td><%= movie.release_date %></td>
+										<td><%= movie.release_year %></td>
 									</tr>
 									<tr>
 										<th>Rent Amount</th>
-										<td><%= movie.rent_amount %></td>
+										<td><%= movie.rental_rate %></td>
+									</tr>
+									<tr>
+										<th>Discount</th>
+										<td><%= movie.discount %></td>
 									</tr>
 									<tr>
 										<th>Available Copies</th>
 										<td><%= movie.available_copies %></td>
 									</tr>
 									<tr>
+										<th>Format</th>
+										<td><%= movie.format %></td>
+									</tr>
+									<tr>
+										<th>Language</th>
+										<td><%= movie.language %></td>
+									</tr>
+									<tr>
+										<th>Original Language</th>
+										<td><%= movie.original_language %></td>
+									</tr>
+									<tr>
+										<th>Length</th>
+										<td><%= movie.length %></td>
+									</tr>
+									<tr>
+										<th>Replacement Cost</th>
+										<td><%= movie.replacement_cost %></td>
+									</tr>
+									<tr>
+										<th>Rating</th>
+										<td><%= movie.rating %></td>
+									</tr>
+									<tr>
+										<th>Certification</th>
+										<td><%= movie.certification %></td>
+									</tr>
+									<tr>
+										<th>Actors</th>
+										<td width="30px"><%= movie.actors %></td>
+									</tr>
+									<tr>
 										<th>Category</th>
-										<td width="30px"><%= movie.category %></td>
+										<td width="30px"><%= movie.categories %></td>
 									</tr>
 								</table>
 								<%

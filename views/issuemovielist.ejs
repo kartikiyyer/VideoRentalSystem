@@ -74,22 +74,17 @@
 							<tbody>
 							
 							<tr>
-							<td><label for="mname">Movie Name: </label> </td>
-							<td><input id="mname" maxlength="100" name="mname" type="text" /> </td>
+							<td><label for="title">Movie Name: </label> </td>
+							<td><input id="title" maxlength="100" name="title" type="text" /> </td>
 							</tr>
 							
 							<tr>
-							<td><label for="banner">Movie Banner: </label> </td>
-							<td><input id="banner" maxlength="45" name="banner" type="text" /> </td>
-							</tr>
-							
-							<tr>
-							<td><label for="releasedate">Release Year: </label> </td>
+							<td><label for="releaseYear">Release Year: </label> </td>
 							<td><!--<input id="releasedate" name="releasedate" type="date"/>-->
-							<select id ="releasedate" name="releasedate">
+							<select id ="releaseYear" name="releaseYear">
 							<option value="">Select</option>
 							<% for(var i=0;i<releaseDates.length;i++) { %>
-								<option value="<%=releaseDates[i].release_date %>"><%=releaseDates[i].release_date %></option>
+								<option value="<%=releaseDates[i].release_year %>"><%=releaseDates[i].release_year %></option>
 							<% } %>
 							</select>
 							</td>
@@ -103,26 +98,27 @@
 							<tbody>
 							
 							<tr>
-							<td><label for="category">Category: </label> </td>
-							<td><!--<input id="category" maxlength="75" name="category" type="text" />--> 
-							<select id ="category" name="category">
-							<option value="">Select</option>
-							<% for(var i=0;i<categories.length;i++) { %>
-								<option value="<%=categories[i]%>"><%=categories[i]%></option>
+							<td><label for="categoryIds">Category: </label> </td>
+							<td><!--<input id="category" maxlength="75" name="category" type="text" />-->
+							
+							<select id ="categoryIds" name="categoryIds" multiple>
+							<% for(var i in categories) { %>
+								<option value="<%= categories[i]['id'] %>"><%=categories[i]["name"]%></option>
 							<% } %>
 							</select>
-							</td>
+							
+							 </td>
 							</tr>
 							
 							<tr>
-							<td><label for="rentamount">Rent Amount: </label> </td>
-							<td><input id="rentamountmin" placeholder="min" maxlength="25" name="rentamountmin" type="number" style="width:80px"/>
-							<input id="rentamountmax" placeholder="max" maxlength="25" name="rentamountmax" type="number" style="width:80px"/> </td>
+							<td><label for="rentalRate">Rental Rate: </label> </td>
+							<td><input id="rentalRateMin" placeholder="min" maxlength="25" name="rentalRateMin" type="number" style="width:80px"/>
+							<input id="rentalRateMax" placeholder="max" maxlength="25" name="rentalRateMax" type="number" style="width:80px"/> </td>
 							</tr>
 							
 							<tr>
-							<td><label for="copies">Is Available: </label> </td>
-							<td><input id="isAvailable" type="checkbox" name="isAvailable" checked/> </td>
+							<td><label for="isAvailable">Is Available: </label> </td>
+							<td><input id="isAvailable" type="checkbox" name="isAvailable" checked> </td>
 							</tr>
 							
 							<tr><td></td>
@@ -152,6 +148,7 @@
                     <th style="color:white;">Rent Amount</th>
                     <th style="color:white;">Available Copies</th>
                     <th style="color:white;">Category</th>
+                    <th style="color:white;">Actor</th>
                     <th style="color:white;">Select</th>
                     </tr>
                     <% if(movies != null && movies.length > 0) {
@@ -161,16 +158,17 @@
                     %>
 	                    <tr>
 	                    <td><%= i+1 %></td>
-	                    <td><%= movies[i].movie_name %></td>
-	                    <td><%= movies[i].movie_banner %></td>
-	                    <td><%= movies[i].release_date %></td>
-	                    <td><%= movies[i].rent_amount %></td>
+	                    <td><%= movies[i].title %></td>
+	                    <td><%= movies[i].description %></td>
+	                    <td><%= movies[i].release_year %></td>
+	                    <td><%= movies[i].rental_rate %></td>
 	                    <td><%= movies[i].available_copies %></td>
-	                    <td width="30px"><%= movies[i].category %></td>
+	                    <td width="30px"><%= movies[i].categories %></td>
+	                    <td width="30px"><%= movies[i].actors %></td>
 	                    <td>
 	                     <form action="/issuemovieselect-submit" method="POST">
 	                          <input type="hidden" name="membershipNo" value="<%=membershipNo%>"/>
-	                          <input type="hidden" name="movieId" value="<%=movies[i].movie_id%>"/>
+	                          <input type="hidden" name="movieId" value="<%=movies[i].id%>"/>
 	                          <% if(movies[i].available_copies > 0) { %>
                    			<input type="submit" value="Issue >>"/> 
                    			<%} else { %>

@@ -83,23 +83,21 @@
                     <th style="color:white;">Issued Copies</th>
                     <th style="color:white;">Select</th>
                     </tr>
-                    <% if(movies != null && movies.length > 0) {
+                    <% if(videos != null && videos.length > 0) {
               
-                    	for(var i=0;i<movies.length;i++) {
-                    	//console.log(movies[i].movie_id);
+                    	for(var i=0;i<videos.length;i++) {
                     %>
 	                    <tr>
 	                    <td><%= i+1 %></td>
-	                    <td><%= movies[i].movie_name %></td>
-	                    <td><%= movies[i].issue_date %></td>
+	                    <td><%= videos[i].title %></td>
+	                    <td><%= videos[i].rental_date %></td>
 	                    
-	                    <td><%= movies[i].movie_count %></td>
+	                    <td><%= videos[i].video_count %></td>
 	       				
 	                    <td>
 	                     <form action="/submitmovieselect-submit" method="POST">
 	                          <input type="hidden" name="membershipNo" value="<%=membershipNo%>"/>
-	                          <!--<input type="hidden" name="moviemappingId" value="<%=movies[i].user_movie_id%>"/>-->
-	                          <input type="hidden" name="movieId" value="<%=movies[i].movie_id%>"/>
+	                          <input type="hidden" name="videoId" value="<%=videos[i].video_id%>"/>
                    			  <input type="submit" value="Submit >>"/> 
                    		</form>       
 	                    </td>

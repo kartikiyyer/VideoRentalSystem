@@ -20,7 +20,7 @@
 		
         	<div id="templatemo_header">
 				<div id="templatemo_logo_section">            
-		        	<h1><a href="/">Video Library</a></h1>            
+		        	<h1><a href="/">Video Library</a></h1>           
 					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
 				</div>
 				<div id="templatemo_user_section">            
@@ -32,17 +32,15 @@
 				<div id="templatemo_menu_section">
 					
 					<ul>
-						   
-					 <li><a href="/">Home    </a></li>
+					  	<li><a href="/">Home    </a></li>
 						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>
 						<li><a href="/changepassword?nocache=1">Change Password   </a></li>	
 						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account</a></li>
 						<li><a href="/userissuemovie?nocache=1">Issue Movie   </a></li>
-						<li><a href="/usergeneratebill?nocache=1">Generate Bill  </a></li> 	
-					</ul> 
-						
+						<li><a href="/usergeneratebill?nocache=1">Generate Bill  </a></li> 							
+					</ul>                     
 				</div>
-           </div> <!-- end of menu -->
+            </div> <!-- end of menu -->
 		</div><!-- end of container-->
         
 	</div><!-- end of templatemo_background_section_top-->
@@ -56,22 +54,30 @@
                 <div class="templatemo_post">
                 
                 	<div class="templatemo_post_top">
-                    	<h1>Welcome to the Video Library: The Store for all type of Movie VCDs & DVDs</h1>
+                    	<h1>Checkout Summary</h1>
                     </div>
                     <div class="templatemo_post_mid">
-                    	                        
-                        <p><img alt="Blog" src="/stylesheets/images/template_1.jpg" /> </p>
+						<table class="listUserInfo" border=1 align="center">
+							<tr>
+								<th>Movie issued to:</th>
+								<td><%= member.membership_no %></td>
+								<th>Member first name:</th>
+								<td><%= member.first_name %></td>
+								<th>Member last name:</th>
+								<td><%= member.last_name %></td>
+								<th>Issued Movie:</th>
+								<td><%= movie.title %></td>
+							</tr>
+						</table>
 						
-						<p>Users are the members of the Video library store. They have options to view movies available in Video library. Users are allowed to change the password in the change Password section. All the transactions are available in the My Account Section of the User.</p>	
-
-						<p>Video Library is a store for renting movies of variant categories be it Comedy, Thriller, Action, Romantic or Documentary. Movies can be issued by approaching us at the store. We will lend you the movies on the rent assigned for the same. If you are a premium member in our store you can have more benefits. Please contact the store manager for Premium membership Details. </p>
+						
                         
                         <div class="clear"></div>
                         
                     </div>
                     <div class="templatemo_post_bottom">
                     
-            
+                    	
                     </div>
                     
 				</div><!-- end of templatemo_post-->

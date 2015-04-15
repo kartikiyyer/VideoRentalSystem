@@ -46,6 +46,7 @@
 
 	function validateCreateMovie(createmovie)   
    {
+   return true;
    var error = "";
      if(createmovie.mname.value==null ||createmovie.mname.value == ''){
      		error += 'Movie Name field cannot be blank<br/>';
@@ -95,7 +96,7 @@
 					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
 				</div>
 				<div id="templatemo_user_section">            
-		        	Welcome <%= userDet.firstname %>!!
+		        	Welcome <%= userDet.firstname %>!!!
 		        	<a href="/sign-out?nocache=1">Sign Out</a>
 				</div>
          	</div><!-- end of headder -->
@@ -146,28 +147,84 @@
 							<tbody>
 							
 							<tr>
-							<td><label for="mname">Movie Name*: </label> </td>
-							<td><input id="mname" maxlength="100" name="mname" type="text" /> </td>
+							<td><label for="title">Name*: </label> </td>
+							<td><input id="title" maxlength="100" name="title" type="text" /> </td>
 							</tr>
 							
 							<tr>
-							<td><label for="banner">Movie Banner: </label> </td>
-							<td><input id="banner" maxlength="45" name="banner" type="text" /> </td>
+							<td><label for="description">Description: </label> </td>
+							<td><input id="description" maxlength="45" name="description" type="text" /> </td>
 							</tr>
 							
 							<tr>
-							<td><label for="releasedate">Release Year: </label> </td>
-							<td><input id="releasedate" name="releasedate" type="text"/></td>
+							<td><label for="releaseYear">Release Year: </label> </td>
+							<td><input id="releaseYear" name="releaseYear" type="text"/></td>
+							</tr>
+							
+							<tr>
+							<td><label for="length">Length: </label> </td>
+							<td><input id="length" name="length" type="text"/></td>
+							</tr>
+							
+							<tr>
+							<td><label for="replacementCost">Replacement Cost: </label> </td>
+							<td><input id="replacementCost" name="replacementCost" type="text"/></td>
+							</tr>
+							
+							<tr>
+							<td><label for="discount">Discount: </label> </td>
+							<td><input id="discount" name="discount" type="text"/></td>
 							</tr>
 
 							<tr>
-							<td><label for="category">Category: </label> </td>
+							<td><label for="formatId">Format: </label> </td>
+							<td>
+							
+							<select id ="formatId" name="formatId">
+							<option value="">Select</option>
+							<% for(var i in formats) { %>
+								<option value="<%= formats[i]['id'] %>"><%=formats[i]["name"]%></option>
+							<% } %>
+							</select>
+							
+							 </td>
+							</tr>
+
+							<tr>
+							<td><label for="languageId">Language: </label> </td>
+							<td>
+							
+							<select id ="languageId" name="languageId">
+							<option value="">Select</option>
+							<% for(var i in languages) { %>
+								<option value="<%= languages[i]['id'] %>"><%=languages[i]["name"]%></option>
+							<% } %>
+							</select>
+							
+							 </td>
+							</tr>
+
+							<tr>
+							<td><label for="originalLanguageId">Original Language: </label> </td>
+							<td>
+							
+							<select id ="originalLanguageId" name="originalLanguageId">
+							<option value="">Select</option>
+							<% for(var i in languages) { %>
+								<option value="<%= languages[i]['id'] %>"><%=languages[i]["name"]%></option>
+							<% } %>
+							</select>
+							
+							 </td>
+							</tr>
+
+							<tr>
+							<td><label for="categoryIds">Category: </label> </td>
 							<td><!--<input id="category" maxlength="75" name="category" type="text" />-->
 							
-							<select id ="category" name="category">
-							<option value="">Select</option>
-							<% for(var i=0;i<categories.length;i++) { %>
-								<option value="<%=categories[i]%>"><%=categories[i]%></option>
+							<select id ="categoryIds" name="categoryIds" multiple>
+							<% for(var i in categories) { %>
+								<option value="<%= categories[i]['id'] %>"><%=categories[i]["name"]%></option>
 							<% } %>
 							</select>
 							
@@ -175,17 +232,53 @@
 							</tr>
 							
 							<tr>
-							<td><label for="rentamount">Rent Amount: </label> </td>
-							<td><input id="rentamount" maxlength="25" name="rentamount" type="text" style="width:80px"/> </td>
+							<td><label for="actorIds">Actors: </label> </td>
+							<td><!--<input id="category" maxlength="75" name="category" type="text" />-->
+							
+							<select id ="actorIds" name="actorIds" multiple>
+							<% for(var i in actors) { %>
+								<option value="<%= actors[i]['id'] %>"><%=actors[i]["first_name"]%> <%=actors[i]["last_name"]%></option>
+							<% } %>
+							</select>
+							
+							 </td>
 							</tr>
 							
 							<tr>
-							<td><label for="copies">Number of Copies: </label> </td>
-							<td><input id="copies" maxlength="5" name="copies" type="text" style="width:40px"/> </td>
+							<td><label for="rentalRate">Rental Rate: </label> </td>
+							<td><input id="rentalRate" maxlength="25" name="rentalRate" type="text" style="width:80px"/> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="availableCopies">Number of Copies: </label> </td>
+							<td><input id="availableCopies" maxlength="5" name="availableCopies" type="text" style="width:40px"/> </td>
 							</tr>
 							
 							<tr><td></td>
 							</tr>
+							
+							<tr>
+							<td><label for="rating">Rating: </label> </td>
+							<td>
+							<input id="rating" maxlength="5" name="rating" type="text" style="width:40px"/>
+							
+							 </td>
+							</tr>
+
+							<tr>
+							<td><label for="certificationId">Certification: </label> </td>
+							<td>
+							
+							<select id ="certificationId" name="certificationId">
+							<option value="">Select</option>
+							<% for(var i in certificates) { %>
+								<option value="<%= certificates[i]['id'] %>"><%=certificates[i]["name"]%></option>
+							<% } %>
+							</select>
+							
+							 </td>
+							</tr>							
+							
 							<tr>
 							<td align="right"><input name="Submit" type="submit" value="Submit" /></td>
 							</tr>

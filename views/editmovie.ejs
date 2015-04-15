@@ -46,6 +46,7 @@
 	function validateCreateMovie(createmovie)   
    {
      var error = "";
+     return true;
      if(createmovie.mname.value==null ||createmovie.mname.value == ''){
      		error += 'Movie Name field cannot be blank<br/>';
 		
@@ -144,31 +145,49 @@
 							<tbody>
 							
 							<tr>
-							<td><label for="mname">Movie Name*: </label> </td>
-							<td><input id="mname" maxlength="100" name="mname" type="text" value="<%=movie.movie_name%>"/> </td>
+							<td><label for="title">Title*: </label> </td>
+							<td><input id="title" maxlength="100" name="title" type="text" value="<%=movie.title%>"/> </td>
 							</tr>
 							
 							<tr>
-							<td><label for="banner">Movie Banner: </label> </td>
-							<td><input id="banner" maxlength="45" name="banner" type="text" value="<%=movie.movie_banner%>"/> </td>
+							<td><label for="description">Description: </label> </td>
+							<td><input id="description" maxlength="45" name="description" type="text" value="<%=movie.description%>"/> </td>
 							</tr>
 							
 							<tr>
-							<td><label for="releasedate">Release Date: </label> </td>
-							<td><input id="releasedate" name="releasedate" type="text" value="<%=movie.release_date%>"/></td>
+							<td><label for="releaseYear">Release Year: </label> </td>
+							<td><input id="releaseYear" name="releaseYear" type="text" value="<%=movie.release_year%>"/></td>
+							</tr>
+							
+							<tr>
+							<td><label for="rentalRate">Rental Rate: </label> </td>
+							<td><input id="rentalRate" name="rentalRate" type="text" value="<%=movie.rental_rate%>"/></td>
+							</tr>
+							
+							<tr>
+							<td><label for="discount">Discount: </label> </td>
+							<td><input id="discount" name="discount" type="text" value="<%=movie.discount%>"/></td>
 							</tr>
 
+
 							<tr>
-							<td><label for="category">Category: </label> </td>
-							<td><!--<input id="category" maxlength="75" name="category" type="text" />-->
+							<td><label for="availableCopies">Available Copies: </label> </td>
+							<td><input id="availableCopies" maxlength="5" name="availableCopies" type="text" style="width:40px" value="<%=movie.available_copies%>"/> </td>
+							</tr>
 							
-							<select id ="category" name="category">
+							<tr>
+							<td><label for="formatId">Format: </label> </td>
+							<td>
+							
+							<select id ="formatId" name="formatId">
 							<option value="">Select</option>
-							<% for(var i=0;i<categories.length;i++) { 
-								if(movie.category == categories[i]) {
-								%>	<option value="<%=categories[i]%>" selected><%=categories[i]%></option>
-								<% } else { %>
-								<option value="<%=categories[i]%>"><%=categories[i]%></option>
+							<% for(var i in formats) { 
+								if(movie.format_id == formats[i]["id"]) {
+							%>
+								<option value="<%= formats[i]['id'] %>" selected><%=formats[i]["name"]%></option>
+								<%	} else {
+								%>
+								<option value="<%= formats[i]['id'] %>"><%=formats[i]["name"]%></option>
 							<% } } %>
 							</select>
 							
@@ -176,14 +195,116 @@
 							</tr>
 							
 							<tr>
-							<td><label for="rentamount">Rent Amount: </label> </td>
-							<td><input id="rentamount" maxlength="25" name="rentamount" type="text" style="width:80px" value="<%=movie.rent_amount%>"/> </td>
+							<td><label for="languageId">Language: </label> </td>
+							<td>
+							
+							<select id ="languageId" name="languageId">
+							<option value="">Select</option>
+							<% for(var i in languages) { 
+								if(movie.language_id == languages[i]["id"]) {
+							%>
+								<option value="<%= languages[i]['id'] %>" selected><%=languages[i]["name"]%></option>
+								<%	} else {
+								%>
+								<option value="<%= languages[i]['id'] %>"><%=languages[i]["name"]%></option>
+							<% } } %>
+							</select>
+							
+							 </td>
 							</tr>
 							
 							<tr>
-							<td><label for="copies">Number of Copies: </label> </td>
-							<td><input id="copies" maxlength="5" name="copies" type="text" style="width:40px" value="<%=movie.available_copies%>"/> </td>
+							<td><label for="originalLanguageId">Original Language: </label> </td>
+							<td>
+							
+							<select id ="originalLanguageId" name="originalLanguageId">
+							<option value="">Select</option>
+							<% for(var i in languages) { 
+								if(movie.original_language_id == languages[i]["id"]) {
+							%>
+								<option value="<%= languages[i]['id'] %>" selected><%=languages[i]["name"]%></option>
+								<%	} else {
+								%>
+								<option value="<%= languages[i]['id'] %>"><%=languages[i]["name"]%></option>
+							<% } } %>
+							</select>
+							
+							 </td>
 							</tr>
+							
+							
+							<tr>
+							<td><label for="length">Length: </label> </td>
+							<td><input id="length" maxlength="5" name="length" type="text" style="width:40px" value="<%=movie.length%>"/> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="replacementCost">Replacement Cost: </label> </td>
+							<td><input id="replacementCost" maxlength="5" name="replacementCost" type="text" style="width:40px" value="<%=movie.replacement_cost%>"/> </td>
+							</tr>
+							
+							
+							<tr>
+							<td><label for="rating">Rating: </label> </td>
+							<td>
+							<input id="rating" maxlength="5" name="rating" type="text" style="width:40px" value="<%=movie.rating%>"/>
+							
+							 </td>
+							</tr>
+							
+							<tr>
+							<td><label for="certificationId">Certification: </label> </td>
+							<td>
+							
+							<select id ="certificationId" name="certificationId">
+							<option value="">Select</option>
+							<% for(var i in certificates) { 
+								if(movie.certification_id == certificates[i]["id"]) {
+							%>
+								<option value="<%= certificates[i]['id'] %>" selected><%=certificates[i]["name"]%></option>
+								<%	} else {
+								%>
+								<option value="<%= certificates[i]['id'] %>"><%=certificates[i]["name"]%></option>
+							<% } } %>
+							</select>
+							
+							 </td>
+							</tr>
+							
+							
+							<tr>
+							<td><label for="actorIds">Actors: </label> </td>
+							<td><!--<input id="category" maxlength="75" name="category" type="text" />-->
+							
+							<select id ="actorIds" name="actorIds" multiple>
+							<% for(var i in actors) { 
+								if(movie.actorIds.indexOf(actors[i]["id"]) != -1) {
+								%>	<option value="<%= actors[i]['id'] %>" selected><%=actors[i]["first_name"]%> <%=actors[i]["last_name"]%></option>
+								<% } else { %>
+								<option value="<%= actors[i]['id'] %>"><%=actors[i]["first_name"]%> <%=actors[i]["last_name"]%></option>
+							<% } } %>
+							</select>
+							
+							 </td>
+							</tr>
+							
+							
+							<tr>
+							<td><label for="categoryIds">Categories: </label> </td>
+							<td><!--<input id="category" maxlength="75" name="category" type="text" />-->
+							
+							<select id ="categoryIds" name="categoryIds" multiple>
+							<% for(var i in categories) { 
+								if(movie.categoryIds.indexOf(categories[i]["id"]) != -1) {
+								%>	<option value="<%=categories[i]['id']%>" selected><%=categories[i]["name"]%></option>
+								<% } else { %>
+								<option value="<%=categories[i]['id']%>"><%=categories[i]["name"]%></option>
+							<% } } %>
+							</select>
+							
+							 </td>
+							</tr>
+						
 							
 							<tr><td></td>
 							</tr>
@@ -192,7 +313,7 @@
 							</tr>
 				
 							</tbody></table>
-                			<input type="hidden" name="movieId" value="<%=movie.movie_id%>"/>
+                			<input type="hidden" name="movieId" value="<%=movie.id%>"/>
                            </form>
                           
                            

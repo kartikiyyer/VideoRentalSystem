@@ -72,13 +72,12 @@
 				<div id="templatemo_menu_section">
 					
 					<ul>
-					  <li><a href="/createmember?nocache=1">Create member    </a></li>
-					  <li><a href="/listmember?nocache=1">List Members   </a></li>
-					  <li><a href="/createmovie?nocache=1">Create Movie   </a></li>
-					  <li><a href="/listmovie?nocache=1">List Movies   </a></li>
-					  <li><a href="/issuemovie?nocache=1">Issue Movie   </a></li>
-					  <li><a href="/submitmovie?nocache=1">Submit Movie  </a></li>  
-					  <li><a href="/generatebill?nocache=1">Generate Bill  </a></li> 							
+					  <li><a href="/">Home    </a></li>
+						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>
+						<li><a href="/changepassword?nocache=1">Change Password   </a></li>	
+						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account</a></li>
+						<li><a href="/userissuemovie?nocache=1">Issue Movie   </a></li>
+						<li><a href="/usergeneratebill?nocache=1">Generate Bill  </a></li> 								
 					</ul>                     
 				</div>
             </div> <!-- end of menu -->
@@ -99,25 +98,6 @@
                     </div>
                     <div class="templatemo_post_mid">
 						
-						<div>
-						<form name="generateBill" action="/generatebill-submit" method="POST" onsubmit="return validateGenerateBill()">
-							<div style="color:yellow; font-weight:bold;" align="center">
-				<% if(fetchResult != null) {%>
-				<%= fetchResult %>
-				<% } %>
-				</div>
-				<br/>
-							<div align='center'>
-							<table><tbody>                        
-								<tr>
-									<td><label for="membershipNo">Membership Number: </label> </td>
-									<td><input id="membershipNo" maxlength="75" name="membershipNo" type="text"/></td>
-								</tr>
-							</tbody></table>
-							<br/>
-							<div><input name="Submit" type="submit" value="Submit" style="width:70px; align:right; margin-left:100px"/></div></div>
-							</form>
-						</div>
 						<%
 							if(member !=null ){
 								%>

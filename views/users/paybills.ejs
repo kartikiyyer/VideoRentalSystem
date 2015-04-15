@@ -24,7 +24,7 @@
 					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
 				</div>
 				<div id="templatemo_user_section">            
-		        	Welcome <a href="/user/<%= userDet.userId%>?nocache=1"><%= userDet.firstname %></a>!!
+		        	Welcome <%= userDet.firstname %>!!
 		        	<a href="/sign-out?nocache=1">Sign Out</a>
 				</div>
          	</div><!-- end of headder -->
@@ -32,12 +32,12 @@
 				<div id="templatemo_menu_section">
 					
 					<ul>
-						   
-					  <li><a href="/">Home    </a></li>
-					  <li><a href="/viewusermovies?nocache=1">View Movies   </a></li>
-					  <li><a href="/userhistory?nocache=1">View History   </a></li>
-					  <li><a href="/paybills?nocache=1">Pay Bills   </a></li>	
-					  <li><a href="/changepassword?nocache=1">Change Password   </a></li>
+						<li><a href="/">Home    </a></li>
+						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>
+						<li><a href="/changepassword?nocache=1">Change Password   </a></li>	
+						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account</a></li>
+						<li><a href="/userissuemovie?nocache=1">Issue Movie   </a></li>
+						<li><a href="/usergeneratebill?nocache=1">Generate Bill  </a></li> 	
 					</ul> 
 						
 				</div>

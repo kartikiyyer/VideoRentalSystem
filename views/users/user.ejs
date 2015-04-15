@@ -36,7 +36,9 @@
 						<li><a href="/">Home    </a></li>
 						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>
 						<li><a href="/changepassword?nocache=1">Change Password   </a></li>	
-						 <li><a href="/user/<%= userDet.userId%>?nocache=1">My Account</a></li>
+						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account</a></li>
+						<li><a href="/userissuemovie?nocache=1">Issue Movie   </a></li>
+						<li><a href="/usergeneratebill?nocache=1">Generate Bill  </a></li> 	
 					</ul> 
 
 				</div>
@@ -72,19 +74,19 @@
 									</tr>
 									<tr>
 										<th>First Name:</th>
-										<td><%= member.firstname %>    </td>		
+										<td><%= member.first_name %>    </td>		
 									</tr>
 									<tr>
 										<th>Last Name:</th>
-										<td><%= member.lastname %>    </td>		
+										<td><%= member.last_name %>    </td>		
 									</tr>
 									<tr>
 										<th>Address Line 1:</th>
-										<td><%= member.address %>    </td>		
+										<td><%= member.line1 %>    </td>		
 									</tr>
 									<tr>
 										<th>Address Line 2:</th>
-										<td><%= member.address2 %>    </td>		
+										<td><%= member.line2 %>    </td>		
 									</tr>
 									<tr>
 										<th>City:</th>
@@ -100,7 +102,7 @@
 									</tr>
 									<tr>
 										<th>Zip Ext:</th>
-										<td><%= member.zipext %>    </td>		
+										<td><%= member.zip_ext %>    </td>		
 									</tr>
 								</table>
 								<%
@@ -125,9 +127,9 @@
 								<% for(var i=0;i< movies.length;i++) {%>
 								<tr>
 								
-									<td><%= movies[i].movie_name %></td>
-									<td><%= movies[i].category %></td>
-									<td><%= movies[i].issue_date %></td>			
+									<td><%= movies[i].title %></td>
+									<td><%= movies[i].categories %></td>
+									<td><%= movies[i].rental_date %></td>			
 								</tr>
 								<% } %>
 							</table>

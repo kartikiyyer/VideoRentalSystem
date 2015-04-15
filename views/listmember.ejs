@@ -66,9 +66,27 @@
 							<tbody>
 							
 							<tr>
-							<td><label for="name">Member type: </label> </td>
-							<td><input type="radio" name="memType" value="S">Simple
-								<input type="radio" name="memType" value="P">Premium </td>
+							<td><label class="roleId" for="name">Role: </label> </td>
+							<td>
+							
+							<div class="roleId">
+							<% for(var i in roles) { %>
+							<input type="radio" name="roleId" value="<%=roles[i].id %>"><%=roles[i].name%>
+							<% } %>	
+							</td>
+							</div>
+							</tr>
+							
+							<tr>
+							<td><label class="memberTypeId" for="name">Member type: </label> </td>
+							<td>
+							
+							<div class="memberTypeId">
+							<% for(var i in memberTypes) { %>
+							<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>"><%=memberTypes[i].name%>
+							<% } %>	
+							</td>
+							</div>
 							</tr>
 							
 							<tr>
@@ -101,16 +119,16 @@
 							<td><input id="city" maxlength="50" name="city" type="text" /> </td>
 							</tr>
 							<tr>
-							<td><label for="state">State: </label> </td>
-							<td><!--<input id="state" maxlength="50" name="state" type="text" /> -->
-							
-							<select id="state" name="state">
-								<option value="">Select</option>
-							<% for(var i=0;i<states.length;i++) { %>
-								<option value="<%=states[i] %>"><%=states[i] %></option>
-								<% } %>
+							<td><label for="stateId">State*: </label> </td>
+							<td>
+							<select id="stateId" name="stateId">
+							<option value="">Select</option>
+							<% for(var i in states) { %>
+								<option value="<%=states[i].id %>"><%=states[i].name %></option>
+							<% } %>
 							</select>
-							</td>
+							
+							 </td>
 							</tr>
 							
 							<tr>
@@ -136,8 +154,9 @@
                     <th style="color:white;">Membership No.</th>
                     <th style="color:white;">First Name</th>
                     <th style="color:white;">Last Name</th>
-                    <th style="color:white;">Outstanding Movies</th>
+                    <th style="color:white;">Role</th>
                     <th style="color:white;">Member Type</th>
+                    <th style="color:white;">Outstanding Movies</th>
                     <th style="color:white;">Balance Amount</th>
                     <th style="color:white;">View</th>
                     <th style="color:white;">Edit</th>
@@ -153,14 +172,11 @@
 	                    <td><%= members[i].membership_no %></td>
 	                    <td><%= members[i].first_name %></td>
 	                    <td><%= members[i].last_name %></td>
-	                    <td><%= members[i].outstanding_movies %></td>
+	                    <td><%= members[i].role %></td>
 	                    <td width="30px">
-	                    <% if(members[i].member_type == "S") { %>
-	                    Simple
-	                    <% } else { %>
-	                    Premium
-	                    <% } %>
+	                    <%= members[i].member_type_name %>
 	                    </td>
+	                    <td><%= members[i].outstanding_movies %></td>
 	                    <td><%= members[i].balance_amount %></td>
 	                    <td><a href="/member/<%=members[i].membership_no %>?nocache=1">View</a></td>
 	                    <td><a href="/editmember/<%=members[i].membership_no %>?nocache=1">Edit</a></td>

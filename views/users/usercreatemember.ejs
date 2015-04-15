@@ -124,25 +124,18 @@ $(".memberType").show();
 		
         	<div id="templatemo_header">
 				<div id="templatemo_logo_section">            
-		        	<h1><a href="/">Video Library</a></h1>               
+		        	<h1><a href="/">Video Library</a></h1>           
 					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
 				</div>
 				<div id="templatemo_user_section">            
-		        	Welcome <%= userDet.firstname %>!!!
-		        	<a href="/sign-out?nocache=1">Sign Out</a>
+		        	
 				</div>
-         	</div><!-- end of headder -->
+         	</div><!-- end of header -->
                <div id="templatemo_menu_panel"> 
 				<div id="templatemo_menu_section">
 					
 						<ul>
-						  <li><a href="/createmember?nocache=1">Create member    </a></li>
-						  <li><a href="/listmember?nocache=1">List Members   </a></li>
-						  <li><a href="/createmovie?nocache=1">Create Movie   </a></li>
-						  <li><a href="/listmovie?nocache=1">List Movies   </a></li>	
-						  <li><a href="/issuemovie?nocache=1">Issue Movie   </a></li>
-						  <li><a href="/submitmovie?nocache=1">Submit Movie  </a></li>  
-						  <li><a href="/generatebill?nocache=1">Generate Bill  </a></li> 
+						  <li><a href="/usercreatemember?nocache=1">Create member    </a></li>
 						</ul> 
 						
 					</div>
@@ -163,7 +156,7 @@ $(".memberType").show();
                     	<h1>Create Member</h1>
                     </div>
                     <div class="templatemo_post_mid">
-                    <form name="createmember" onsubmit="return validateCreateMember()" action="/createmember-submit" method="post">
+                    <form name="createmember" onsubmit="return validateCreateMember()" action="/usercreatemember-submit" method="post">
                     	<div style="color:yellow; font-weight:bold;" align="center">
 				<% if(insertedresults != null) {%>
 				<%= insertedresults %>
@@ -174,27 +167,13 @@ $(".memberType").show();
 							<tbody>
 
 							<tr>
-							<td><label class="roleId" for="name">Role: </label> </td>
+							<td><label class="memberTypeId" for="name">Member type*: </label> </td>
 							<td>
-							
-							<div class="roleId">
-							<% for(var i in roles) { %>
-							<input type="radio" name="roleId" value="<%=roles[i].id %>"><%=roles[i].name%>
-							<% } %>	
-							</td>
-							</div>
-							</tr>
-							
-
-							<tr>
-							<td><label class="memberTypeId" for="name">Member type: </label> </td>
-							<td>
-							
 							<div class="memberTypeId">
 							<% for(var i in memberTypes) { %>
 							<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>"><%=memberTypes[i].name%>
 							<% } %>	
-							</td>
+								</td>
 							</div>
 							</tr>
 							

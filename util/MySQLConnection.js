@@ -13,7 +13,7 @@ function createdbConnection() {
 		var connection = mysql.createConnection({
 			host     : 'localhost',
 			user     : 'root',
-			password : '',
+			password : 'mysql',
 			port: '3306',
 			database: 'video_rental'
 		});
@@ -67,7 +67,7 @@ function createdbConnectionThread() {
 	var connection = mysql.createConnection({
 		host     : 'localhost',
 		user     : 'root',
-		password : '',
+		password : 'mysql',
 		port: '3306',
 		database: 'video_rental'
 	});

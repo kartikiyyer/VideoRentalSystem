@@ -74,22 +74,17 @@
 							<tbody>
 							
 							<tr>
-							<td><label for="mname">Movie Name: </label> </td>
-							<td><input id="mname" maxlength="100" name="mname" type="text" /> </td>
+							<td><label for="title">Title: </label> </td>
+							<td><input id="title" maxlength="100" name="title" type="text" /> </td>
 							</tr>
-							
+					
 							<tr>
-							<td><label for="banner">Movie Banner: </label> </td>
-							<td><input id="banner" maxlength="45" name="banner" type="text" /> </td>
-							</tr>
-							
-							<tr>
-							<td><label for="releasedate">Release Year: </label> </td>
+							<td><label for="releaseYear">Release Year: </label> </td>
 							<td><!--<input id="releasedate" name="releasedate" type="date"/>-->
-							<select id ="releasedate" name="releasedate">
+							<select id ="releaseYear" name="releaseYear">
 							<option value="">Select</option>
 							<% for(var i=0;i<releaseDates.length;i++) { %>
-								<option value="<%=releaseDates[i].release_date %>"><%=releaseDates[i].release_date %></option>
+								<option value="<%=releaseDates[i].release_year %>"><%=releaseDates[i].release_year %></option>
 							<% } %>
 							</select>
 							</td>
@@ -103,26 +98,41 @@
 							<tbody>
 							
 							<tr>
-							<td><label for="category">Category: </label> </td>
-							<td><!--<input id="category" maxlength="75" name="category" type="text" />--> 
-							<select id ="category" name="category">
-							<option value="">Select</option>
-							<% for(var i=0;i<categories.length;i++) { %>
-								<option value="<%=categories[i]%>"><%=categories[i]%></option>
+							<td><label for="categoryIds">Category: </label> </td>
+							<td><!--<input id="category" maxlength="75" name="category" type="text" />-->
+							
+							<select id ="categoryIds" name="categoryIds" multiple>
+							<% for(var i in categories) { %>
+								<option value="<%= categories[i]['id'] %>"><%=categories[i]["name"]%></option>
 							<% } %>
 							</select>
-							</td>
+							
+							 </td>
 							</tr>
 							
 							<tr>
-							<td><label for="rentamount">Rent Amount: </label> </td>
-							<td><input id="rentamountmin" placeholder="min" maxlength="25" name="rentamountmin" type="number" style="width:80px"/>
-							<input id="rentamountmax" placeholder="max" maxlength="25" name="rentamountmax" type="number" style="width:80px"/> </td>
+							<td><label for="certificationId">Certification: </label> </td>
+							<td><!--<input id="category" maxlength="75" name="category" type="text" />-->
+							
+							<select id ="certificationId" name="certificationId">
+							<option value="">Select</option>
+							<% for(var i in certificates) { %>
+								<option value="<%= certificates[i]['id'] %>"><%=certificates[i]["name"]%></option>
+							<% } %>
+							</select>
+							
+							 </td>
 							</tr>
 							
 							<tr>
-							<td><label for="copies">Is Available: </label> </td>
-							<td><input id="isAvaliable" type="checkbox" name="isAvailable" checked> </td>
+							<td><label for="rentalRate">Rental Rate: </label> </td>
+							<td><input id="rentalRateMin" placeholder="min" maxlength="25" name="rentalRateMin" type="number" style="width:80px"/>
+							<input id="rentalRateMax" placeholder="max" maxlength="25" name="rentalRateMax" type="number" style="width:80px"/> </td>
+							</tr>
+							
+							<tr>
+							<td><label for="isAvailable">Is Available: </label> </td>
+							<td><input id="isAvailable" type="checkbox" name="isAvailable" checked> </td>
 							</tr>
 							
 							<tr><td></td>
@@ -140,7 +150,7 @@
                     <tr>
                     
                     <th style="color:white;">Movie Name</th>
-                    <th style="color:white;">Banner</th>
+                    <th style="color:white;">Certification</th>
                     <th style="color:white;">Release Year</th>
                     <th style="color:white;">Rent Amount</th>
                     <th style="color:white;">Available Copies</th>
@@ -156,15 +166,15 @@
                     %>
 	                    <tr>
 	                    
-	                    <td><%= movies[i].movie_name %></td>
-	                    <td><%= movies[i].movie_banner %></td>
-	                    <td><%= movies[i].release_date %></td>
-	                    <td><%= movies[i].rent_amount %></td>
+	                    <td><%= movies[i].title %></td>
+	                    <td><%= movies[i].certification_id %></td>
+	                    <td><%= movies[i].release_year %></td>
+	                    <td><%= movies[i].rental_rate %></td>
 	                    <td><%= movies[i].available_copies %></td>
-	                    <td width="30px"><%= movies[i].category %></td>
-	                    <td><a href="/movie/<%=movies[i].movie_id %>?nocache=1">View</a></td>
-	                    <td><a href="/editmovie/<%=movies[i].movie_id %>?nocache=1">Edit</a></td>
-	                    <td><a href="/deletemovie/<%=movies[i].movie_id %>?nocache=1">Delete</a></td>
+	                    <td width="30px"><%= movies[i].categories %></td>
+	                    <td><a href="/movie/<%=movies[i].id %>?nocache=1">View</a></td>
+	                    <td><a href="/editmovie/<%=movies[i].id %>?nocache=1">Edit</a></td>
+	                    <td><a href="/deletemovie/<%=movies[i].id %>?nocache=1">Delete</a></td>
 	                    </tr>
 	                    <% } } %>
                     </table>

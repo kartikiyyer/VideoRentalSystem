@@ -69,6 +69,8 @@ app.post("/issuemovieselect-submit",movie.issueMovieSelectSubmit);
 
 
 // User side operations
+app.get('/usercreatemember', users.usercreatemember);
+app.post('/usercreatemember-submit', users.userCreateMemberSubmit);
 app.get("/viewusermovies",movie.listMovieUser);
 app.post("/viewusermovies-submit",movie.searchMovieUser);
 app.get("/usermovie/:id",movie.showMovieUser);
@@ -78,6 +80,13 @@ app.post("/changepassword-submit",users.changePasswordSubmit);
 app.get("/submitmovie",users.submitMovie);
 app.post("/submitmovie-submit",users.submitMovieList);
 app.post("/submitmovieselect-submit",users.submitMovieSelectSubmit);
+
+
+app.get("/usergeneratebill",users.usergenerateBill);
+
+app.get("/userissuemovie",movie.userissueMovie);
+app.post("/userissuemovielist-submit",movie.userissueSearchMovie);
+app.post("/userissuemovieselect-submit",movie.userissueMovieSelectSubmit);
 
 
 http.createServer(app).listen(app.get('port'), function(){
