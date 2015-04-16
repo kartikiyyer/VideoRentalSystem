@@ -11,14 +11,12 @@
 
 $(document).ready(function(){
 
-$(".roleId").click(function(){
-
-	if($(this).val() == 2) {
-	alert("In 1 " + $(this).val());
-		$("#memberTypeId").removeAttr("hidden");
-	} else if($(this).val() == 1) {
-	alert("In 2 " + $(this).val());
-		$("#memberTypeId").attr("hidden");
+$(".role").click(function(){
+	if($(this).val() == 1) {
+	
+		$("#memberType").attr("hidden","");
+	} else {
+		$("#memberType").removeAttr("hidden");
 	}
 });
 
@@ -52,6 +50,11 @@ $(".roleId").click(function(){
 
 	function validateCreateMember()   
    {
+   	
+   		if(document.createmember.roleId.value==null ||document.createmember.roleId.value == ''){
+			alert('Role cannot be blank');
+			return false;
+		} 
    		if(document.createmember.memberTypeId.value==null ||document.createmember.memberTypeId.value == ''){
 			alert('Member Type cannot be blank');
 			return false;
@@ -184,14 +187,14 @@ $(".roleId").click(function(){
 							
 							<div class="roleId">
 							<% for(var i in roles) { %>
-							<input type="radio" class="roleId" name="roleId" value="<%=roles[i].id %>"><%=roles[i].name%>
+							<input type="radio" class="role" name="roleId" value="<%=roles[i].id %>"><%=roles[i].name%>
 							<% } %>	
 							</td>
 							</div>
 							</tr>
 							
 
-							<tr id="memberTypeId">
+							<tr id="memberType">
 							<td><label for="name">Member type: </label> </td>
 							<td>
 							<% for(var i in memberTypes) { %>
