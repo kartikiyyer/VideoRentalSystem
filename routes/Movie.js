@@ -128,7 +128,7 @@ exports.searchMovie = function(req,res) {
 			var categoryIds = req.body.categoryIds;
 			var certificationId = req.body.certificationId;
 			var categoryIdsString = "";
-			for(var i in categoryIds) {
+			for(var i = 0; i < categoryIds.length;i++) {
 				categoryIdsString += categoryIds[i] + ",";
 			}
 			console.log(rentalRateMin  +  " " + rentalRateMax);

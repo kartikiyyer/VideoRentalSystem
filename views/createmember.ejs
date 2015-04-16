@@ -11,13 +11,15 @@
 
 $(document).ready(function(){
 
-$("#role").click(function(){
-if($(this).val() == 2) {
-$(".memberType").hide();
-} else {
-$(".memberType").show();
-}
+$(".roleId").click(function(){
 
+	if($(this).val() == 2) {
+	alert("In 1 " + $(this).val());
+		$("#memberTypeId").removeAttr("hidden");
+	} else if($(this).val() == 1) {
+	alert("In 2 " + $(this).val());
+		$("#memberTypeId").attr("hidden");
+	}
 });
 
 
@@ -50,8 +52,11 @@ $(".memberType").show();
 
 	function validateCreateMember()   
    {
-   return true;
-     if(document.createmember.fname.value==null ||document.createmember.fname.value == ''){
+   		if(document.createmember.memberTypeId.value==null ||document.createmember.memberTypeId.value == ''){
+			alert('Member Type cannot be blank');
+			return false;
+		} 
+     	if(document.createmember.fname.value==null ||document.createmember.fname.value == ''){
 			alert('Member First Name cannot be blank');
 			return false;
 		} 
@@ -179,23 +184,20 @@ $(".memberType").show();
 							
 							<div class="roleId">
 							<% for(var i in roles) { %>
-							<input type="radio" name="roleId" value="<%=roles[i].id %>"><%=roles[i].name%>
+							<input type="radio" class="roleId" name="roleId" value="<%=roles[i].id %>"><%=roles[i].name%>
 							<% } %>	
 							</td>
 							</div>
 							</tr>
 							
 
-							<tr>
-							<td><label class="memberTypeId" for="name">Member type: </label> </td>
+							<tr id="memberTypeId">
+							<td><label for="name">Member type: </label> </td>
 							<td>
-							
-							<div class="memberTypeId">
 							<% for(var i in memberTypes) { %>
 							<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>"><%=memberTypes[i].name%>
 							<% } %>	
 							</td>
-							</div>
 							</tr>
 							
 							<tr>

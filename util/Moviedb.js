@@ -185,7 +185,7 @@ function selectMovieById(callback, movieId) {
 						//console.log(results);
 						//if(results1.length !== 0) {
 							
-							console.log("Video Actor details selected for " + movieId);
+							//console.log("Video Actor details selected for " + movieId);
 							
 							connection.query("SELECT name, category_id FROM category INNER JOIN video_category ON category.id = video_category.category_id WHERE video_id = ?",[movieId], function(error2, results2) {
 								if(!error2) {
@@ -209,7 +209,7 @@ function selectMovieById(callback, movieId) {
 											
 									results[0].actors = results[0].actors.substr(0, results[0].actors.length-2);
 									
-										console.log("Video Category details selected for " + movieId);
+										//console.log("Video Category details selected for " + movieId);
 									//}
 								} else {
 									console.log(error2);
@@ -384,6 +384,7 @@ function selectMovieBySearchCriteria(callback, title, releaseYear, category, min
 		if(andFlag) {
 			query += " AND ";
 		}
+		console.log(category);
 		parameters[count++] = category;
 		query +=" video_category.category_id IN ( ? )";
 		andFlag = true;
@@ -435,7 +436,7 @@ function selectMovieBySearchCriteria(callback, title, releaseYear, category, min
 							//console.log(results);
 							//if(results1.length !== 0) {
 								
-								console.log("Video Actor details selected for " + results1[0].video_id);
+								//console.log("Video Actor details selected for " + results1[0].video_id);
 								
 								connection.query("SELECT video_id, name FROM category INNER JOIN video_category ON category.id = video_category.category_id WHERE video_id = ?",[results1[0].video_id], function(error2, results2) {
 									if(!error2) {
@@ -454,7 +455,7 @@ function selectMovieBySearchCriteria(callback, title, releaseYear, category, min
 												results[x3].actors = results[x3].actors.substr(0, results[x3].actors.length-2);
 												
 												success++;
-												console.log("Video Category details selected for " + results[x3].id);
+												//console.log("Video Category details selected for " + results[x3].id);
 												break;
 											}
 										}
