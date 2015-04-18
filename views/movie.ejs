@@ -80,6 +80,10 @@
 										<td><%= movie.release_year %></td>
 									</tr>
 									<tr>
+										<th>Video Type</th>
+										<td><%= movie.video_type %></td>
+									</tr>
+									<tr>
 										<th>Rent Amount</th>
 										<td><%= movie.rental_rate %></td>
 									</tr>
@@ -138,47 +142,26 @@
 						%>
 						<br/><br/>
 
-						<%
-						if(users !=null ){
-							%>
-							<table class="listUserInfo" border=1 align="center">
-								<tr>
-									<th style="color:yellow;">
-										Users Who Rented this Movie
-									</th>
-								</tr>
-								<%
-								if(users != null && users.length > 0){ 
-									for(var i=0;i<users.length;i++){ %>
-									<tr>
-
-										<td>
-											<%= users[i].firstname %> <%= users[i].lastname %>
-										</td>
-
-									</tr>
-									<% }}
-								else{
-									%>
-									<tr>
-
-										<td>
-											No User Rented this movie yet.
-										</td>
-
-									</tr>
-									<%
-								}
-								%>
-							</table>
-							<%
-						}
-					else{
-						%>
-						<h5 style="color:yellow;">User Rental Details Not Found</h5>
-						<%
-					}
-					%>
+						<% if(users != null && users.length > 0) { %>
+							<h4 style="color:yellow;">User who issued this video</h4>
+				        	<table class="listData" border=1>
+				                    <tr>
+				                    
+				                    <th style="color:white;">Membership No</th>
+				                    <th style="color:white;">First Name</th>
+				                    <th style="color:white;">Last Name</th>
+				                    </tr>
+				                    
+				            <% for(var i in users) { %>
+				            	
+				            	<td><%= users[i].membership_no %></td>
+				                <td><%= users[i].first_name %></td>
+				                <td><%= users[i].last_name %></td>
+				            
+				            <% } %>        
+				        <% } else { %>
+				        	<h4 style="color:yellow;">No users issued this movie</h4>
+				        <% } %>
 				</div>      
 
 				<div class="clear"></div>

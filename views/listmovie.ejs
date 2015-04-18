@@ -79,6 +79,18 @@
 							</tr>
 					
 							<tr>
+							<td><label for="videoTypeId">VideoType: </label> </td>
+							<td>
+							<select id ="videoTypeId" name="videoTypeId">
+							<option value="">Select</option>
+							<% for(var i=0;i<videoTypes.length;i++) { %>
+								<option value="<%=videoTypes[i].id %>"><%=videoTypes[i].name %></option>
+							<% } %>
+							</select>
+							</td>
+							</tr>
+							
+							<tr>
 							<td><label for="releaseYear">Release Year: </label> </td>
 							<td><!--<input id="releasedate" name="releasedate" type="date"/>-->
 							<select id ="releaseYear" name="releaseYear">
@@ -155,6 +167,7 @@
                     <th style="color:white;">Rent Amount</th>
                     <th style="color:white;">Available Copies</th>
                     <th style="color:white;">Category</th>
+                    <th style="color:white;">Video Type</th>
                     <th style="color:white;">View</th>
                     <th style="color:white;">Edit</th>
                     <th style="color:white;">Delete</th>
@@ -172,6 +185,7 @@
 	                    <td><%= movies[i].rental_rate %></td>
 	                    <td><%= movies[i].available_copies %></td>
 	                    <td width="30px"><%= movies[i].categories %></td>
+	                    <td><%= movies[i].video_type %></td>
 	                    <td><a href="/movie/<%=movies[i].id %>?nocache=1">View</a></td>
 	                    <td><a href="/editmovie/<%=movies[i].id %>?nocache=1">Edit</a></td>
 	                    <td><a href="/deletemovie/<%=movies[i].id %>?nocache=1">Delete</a></td>

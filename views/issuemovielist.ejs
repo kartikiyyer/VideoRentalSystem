@@ -89,6 +89,19 @@
 							</select>
 							</td>
 							</tr>
+							
+							<tr>
+							<td><label for="videoTypeId">VideoType: </label> </td>
+							<td>
+							<select id ="videoTypeId" name="videoTypeId">
+							<option value="">Select</option>
+							<% for(var i=0;i<videoTypes.length;i++) { %>
+								<option value="<%=videoTypes[i].id %>"><%=videoTypes[i].name %></option>
+							<% } %>
+							</select>
+							</td>
+							</tr>
+							
 							<tr><td></td>
 							</tr>
 							</tbody></table>

@@ -5,11 +5,10 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-var users = require("./routes/Users");
-var movie = require("./routes/Movie");
+var user = require("./routes/Users");
+var video = require("./routes/Movie");
 var app = express();
 var mysql = require("./util/MySQLConnection");
 mysql.createdbConnectionPool();
@@ -36,57 +35,59 @@ if ('development' == app.get('env')) {
 }
 
 
-app.get('/login', users.login);
-app.post('/validateLogin', users.validateLogin);
-app.get("/sign-out",users.signOut);
-app.get('/createmember', users.createmember);
-app.post('/createmember-submit', users.createMemberSubmit);
-app.get('/listmember', users.listMember);
-app.post("/listmember-submit",users.searchMember);
-app.get("/editmember/:id",users.editMember);
-app.post("/editmember-submit",users.editMemberSubmit);
-app.get("/deletemember/:id",users.deleteMember);
+app.get('/login', user.login);
+app.post('/validateLogin', user.validateLogin);
+app.get("/sign-out",user.signOut);
+app.get('/createmember', user.createmember);
+app.post('/createmember-submit', user.createMemberSubmit);
+app.get('/listmember', user.listMember);
+app.post("/listmember-submit",user.searchMember);
+app.get("/editmember/:id",user.editMember);
+app.post("/editmember-submit",user.editMemberSubmit);
+app.get("/deletemember/:id",user.deleteMember);
 
-//Movie related operations.
-app.get("/createmovie", movie.createmovie);
-app.post('/createmovie-submit', movie.createMovieSubmit);
-app.get("/listmovie",movie.listMovie);
-app.post("/listmovie-submit",movie.searchMovie);
-app.get("/movie/:id",movie.showMovie);
-app.get("/editmovie/:id",movie.editMovie);
-app.post("/editmovie-submit",movie.editMovieSubmit);
-app.get("/deletemovie/:id",movie.deleteMovie);
-app.get('/', users.index);
-app.get("/member/:id",users.showMember);
-app.get("/generatebill",users.generateBill);
-app.post("/generatebill-submit",users.generateBillSubmit);
+//Video related operations.
+app.get("/createmovie", video.createmovie);
+app.post('/createmovie-submit', video.createMovieSubmit);
+app.get("/listmovie",video.videoList);
+app.post("/listmovie-submit",video.searchMovie);
+app.get("/movie/:id",video.showMovie);
+app.get("/editmovie/:id",video.editMovie);
+app.post("/editmovie-submit",video.editMovieSubmit);
+app.get("/deletemovie/:id",video.deleteMovie);
+app.get('/', user.index);
+app.get("/member/:id",user.showMember);
+app.get("/generatebill",user.generateBill);
+app.post("/generatebill-submit",user.generateBillSubmit);
 
-app.get("/issuemovie",movie.issueMovie);
-app.post("/issuemovie-submit",movie.issueMovieSubmit);
-app.post("/issuemovielist-submit",movie.issueSearchMovie);
-app.post("/issuemovieselect-submit",movie.issueMovieSelectSubmit);
-
+app.get("/issuemovie",video.issueMovie);
+app.post("/issuemovie-submit",video.issueMovieSubmit);
+app.post("/issuemovielist-submit",video.issueSearchMovie);
+app.post("/issuemovieselect-submit",video.issueMovieSelectSubmit);
 
 
 // User side operations
-app.get('/usercreatemember', users.usercreatemember);
-app.post('/usercreatemember-submit', users.userCreateMemberSubmit);
-app.get("/viewusermovies",movie.listMovieUser);
-app.post("/viewusermovies-submit",movie.searchMovieUser);
-app.get("/usermovie/:id",movie.showMovieUser);
-app.get("/user/:id",users.user);
-app.get("/changepassword",users.changePassword);
-app.post("/changepassword-submit",users.changePasswordSubmit);
-app.get("/submitmovie",users.submitMovie);
-app.post("/submitmovie-submit",users.submitMovieList);
-app.post("/submitmovieselect-submit",users.submitMovieSelectSubmit);
+app.get('/usercreatemember', user.usercreatemember);
+app.post('/usercreatemember-submit', user.userCreateMemberSubmit);
+app.get("/usereditmember/:id",user.usereditMember);
+app.post("/usereditmember-submit",user.usereditMemberSubmit);
+app.get("/viewusermovies",video.listMovieUser);
+app.post("/viewusermovies-submit",video.searchMovieUser);
+app.get("/usermovie/:id",video.showMovieUser);
+app.get("/user/:id",user.user);
+app.get("/changepassword",user.changePassword);
+app.post("/changepassword-submit",user.changePasswordSubmit);
+app.get("/submitmovie",user.submitMovie);
+app.post("/submitmovie-submit",user.submitMovieList);
+app.post("/submitmovieselect-submit",user.submitMovieSelectSubmit);
 
 
-app.get("/usergeneratebill",users.usergenerateBill);
+app.get("/usergeneratebill",user.usergenerateBill);
 
-app.get("/userissuemovie",movie.userissueMovie);
-app.post("/userissuemovielist-submit",movie.userissueSearchMovie);
-app.post("/userissuemovieselect-submit",movie.userissueMovieSelectSubmit);
+app.get("/userissuemovie",video.userissueMovie);
+app.post("/userissuemovie",video.userissueMovie);
+app.post("/userissuemovielist-submit",video.userissueSearchMovie);
+app.post("/userissuemovieselect-submit",video.userissueMovieSelectSubmit);
 
 
 http.createServer(app).listen(app.get('port'), function(){

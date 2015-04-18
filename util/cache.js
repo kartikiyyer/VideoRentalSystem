@@ -12,7 +12,7 @@ exports.put = function(key,value,timeToKeep){
 	return null;
 	var oKey = key;
 	//var key = crypto.createHash('md5').update(key).digest('hex');
-	console.log('caching: '+key+' at '+currTime());
+	//console.log('caching: '+key+' at '+currTime());
 	value = JSON.stringify(value);
 	//var old = cache[key];
 	var old = client.hgetall(key);
@@ -48,8 +48,8 @@ exports.clear = function() {
 			if(rec != null) {
 				if(typeof rec != "undefined"){
 					if(rec.expireTime>=currTime()){
-						console.log("Returned "+key+" from cache at "+ currTime());
-						console.log(rec.value);
+						//console.log("Returned "+key+" from cache at "+ currTime());
+						//console.log(rec.value);
 						callback(JSON.parse(rec.value));
 					}
 					else {

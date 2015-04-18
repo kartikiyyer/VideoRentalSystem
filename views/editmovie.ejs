@@ -271,6 +271,24 @@
 							 </td>
 							</tr>
 							
+							<tr>
+							<td><label for="videoTypeId">Video Type: </label> </td>
+							<td>
+							
+							<select id ="videoTypeId" name="videoTypeId">
+							<option value="">Select</option>
+							<% for(var i in certificates) { 
+								if(movie.video_type_id == videoTypes[i]["id"]) {
+							%>
+								<option value="<%= videoTypes[i]['id'] %>" selected><%=videoTypes[i]["name"]%></option>
+								<%	} else {
+								%>
+								<option value="<%= videoTypes[i]['id'] %>"><%=videoTypes[i]["name"]%></option>
+							<% } } %>
+							</select>
+							
+							 </td>
+							</tr>
 							
 							<tr>
 							<td><label for="actorIds">Actors: </label> </td>

@@ -219,6 +219,20 @@
 							</tr>
 
 							<tr>
+							<td><label for="videoTypeId">Video Type: </label> </td>
+							<td>
+							
+							<select id ="videoTypeId" name="videoTypeId">
+							<option value="">Select</option>
+							<% for(var i in videoTypes) { %>
+								<option value="<%= videoTypes[i]['id'] %>"><%=videoTypes[i]["name"]%></option>
+							<% } %>
+							</select>
+							
+							 </td>
+							</tr>
+
+							<tr>
 							<td><label for="categoryIds">Category: </label> </td>
 							<td><!--<input id="category" maxlength="75" name="category" type="text" />-->
 							

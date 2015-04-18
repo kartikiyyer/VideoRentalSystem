@@ -53,9 +53,7 @@ exports.getdbConnection = getdbConnection;
 
 function releasedbConnection(connection) {
 	console.log("Releasing connection");
-	//console.log("Before" + queue.length);
 	queue.push(connection);
-	//console.log("After" + queue.length);
 }
 
 exports.releasedbConnection = releasedbConnection;

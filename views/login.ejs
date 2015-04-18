@@ -20,20 +20,15 @@
    	}
    	function validateLogin(login)   
    {
-	 var pattern = /^\d{3}-\d{2}-\d{4}$/;
-     if(login.membershipNo.value==null ||login.membershipNo.value == ''){
+	if(login.membershipNo.value==null ||login.membershipNo.value == ''){
 			alert('Membership number cannot be empty');
 			return false;
-	 }else if(!login.membershipNo.value.match(pattern)){
-	 	alert('Membership number is in invalid format. It should be XXXX-XX-XXX and all numbers');
-		return false;
 	 }
 	if(login.password.value==null ||login.password.value == ''){
 		alert('Password cannot be empty');
 		return false;
 	}
-		login.membershipNo.value=login.membershipNo.value.replace('-','');
-		login.membershipNo.value=login.membershipNo.value.replace('-','');
+		
 		return true;
 	}
 	</script>
@@ -57,7 +52,7 @@
 				<br/>
 				
 				<p><label for="memNo">Membership number</label></p>
-				<p><input type="memNo" name = "membershipNo" id="membershipNo" onBlur="fixmemberId(this);"></p>
+				<p><input type="memNo" name = "membershipNo" id="membershipNo"></p>
 
 				<p><label for="password">Password</label></p>
 				<p><input type="password" name ="password" id="password"></p>
