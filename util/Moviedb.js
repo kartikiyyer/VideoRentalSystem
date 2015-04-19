@@ -142,7 +142,7 @@ exports.deleteMovie = deleteMovie;
  */
 function selectMovieById(callback, movieId) {
 	var connection = mysql.createdbConnection();
-	connection.query("SELECT video.id, title, description, release_year, rental_rate, discount, available_copies, format_id, format.name AS format, language_id, language.name AS language, original_language_id, language1.name AS original_language, length, replacement_cost, rating, certification_id, certificate.name AS certification, video_type_id, video_type.name AS video_type FROM video INNER JOIN format ON format.id = video.format_id INNER JOIN language ON language.id = video.language_id INNER JOIN language AS language1 ON language1.id = video.original_language_id INNER JOIN certificate ON certificate.id = video.certification_id INNER JOIN video_type ON video_type.id = video.video_type_id WHERE video.id  = ?",[movieId], function(error, results) {
+	connection.query("SELECT video.id, title, description, release_year, rental_rate, discount, available_copies, format_id, format.name AS format, language_id, language.name AS language, original_language_id, language1.name AS original_language, length, replacement_cost, rating, certification_id, certificate.name AS certification, video_type_id, video_type.name AS video_type, poster FROM video INNER JOIN format ON format.id = video.format_id INNER JOIN language ON language.id = video.language_id INNER JOIN language AS language1 ON language1.id = video.original_language_id INNER JOIN certificate ON certificate.id = video.certification_id INNER JOIN video_type ON video_type.id = video.video_type_id WHERE video.id  = ?",[movieId], function(error, results) {
 		if(!error) {
 			if(results.length !== 0) {
 				console.log("Video details selected for " + movieId);
@@ -230,7 +230,7 @@ exports.selectUsersCurrentlyIssuedMovie = selectUsersCurrentlyIssuedMovie;
  * @param callback
  */
 function selectMovies(callback) {
-	var query = "SELECT video.id, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, certificate.name AS certification, video_type_id, video_type.name AS video_type FROM video INNER JOIN certificate ON certificate.id = video.certification_id INNER JOIN video_type ON video_type.id = video.video_type_id ORDER BY video.id LIMIT 1000";
+	var query = "SELECT video.id, poster, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, certificate.name AS certification, video_type_id, video_type.name AS video_type FROM video INNER JOIN certificate ON certificate.id = video.certification_id INNER JOIN video_type ON video_type.id = video.video_type_id ORDER BY video.id LIMIT 1000";
 	var success = 0;
 	cache.get(function(rows){
 		if(rows == null){
@@ -294,7 +294,7 @@ exports.selectMovies = selectMovies;
 
 function selectMovieBySearchCriteria(callback, title, releaseYear, category, minPrice, maxPrice, isAvailable, certificationId, videoTypeId) {
 	var connection = mysql.createdbConnection();
-	var query = "SELECT DISTINCT(video.id) AS id, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, certificate.name AS certification, video_type_id, video_type.name AS video_type FROM video INNER JOIN video_category ON video_category.video_id = video.id INNER JOIN certificate ON certificate.id = video.certification_id INNER JOIN video_type ON video_type.id = video.video_type_id WHERE ";
+	var query = "SELECT DISTINCT(video.id) AS id, poster, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, certificate.name AS certification, video_type_id, video_type.name AS video_type FROM video INNER JOIN video_category ON video_category.video_id = video.id INNER JOIN certificate ON certificate.id = video.certification_id INNER JOIN video_type ON video_type.id = video.video_type_id WHERE ";
 	var andFlag = false;
 	var parameters = [];
 	var count = 0;
@@ -360,7 +360,7 @@ function selectMovieBySearchCriteria(callback, title, releaseYear, category, min
 		andFlag = true;
 	}
 	if(!andFlag) {
-		query = "SELECT DISTINCT(video.id) AS id, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, name AS certification FROM video INNER JOIN certificate ON certificate.id = video.certification_id ";
+		query = "SELECT DISTINCT(video.id) AS id, poster, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, name AS certification FROM video INNER JOIN certificate ON certificate.id = video.certification_id ";
 		parameters = [];
 	}
 	query += " ORDER BY video.id LIMIT 1000";
