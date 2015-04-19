@@ -82,10 +82,16 @@ exports.searchMovie = function(req,res) {
 			var videoTypeId = req.body.videoTypeId;
 			var rentalRateMin = req.body.rentalRateMin;
 			var rentalRateMax = req.body.rentalRateMax;
-			var categoryIds = req.body.categoryIds;
 			var certificationId = req.body.certificationId;
 			var categoryIdsString = "";
+			var categoryIds = [];
 			if(categoryIds != null) {
+				if(Array.isArray(req.body.categoryIds)) {
+					categoryIds = req.body.categoryIds;
+				} else {
+					categoryIds[0] = req.body.categoryIds;
+				}	
+
 				for(var i = 0; i < categoryIds.length;i++) {
 					categoryIdsString += categoryIds[i] + ",";
 				}
@@ -176,9 +182,20 @@ exports.createMovieSubmit = function(req,res) {
 			movieDetails.rating = req.body.rating;
 			movieDetails.certificationId = req.body.certificationId;
 			movieDetails.videoTypeId = req.body.videoTypeId;
-			movieDetails.actorIds = req.body.actorIds;
-			movieDetails.categoryIds = req.body.categoryIds;
-				
+			if(Array.isArray(req.body.actorIds)) {
+				movieDetails.actorIds = req.body.actorIds;
+			} else {
+				movieDetails.actorIds = [];
+				movieDetails.actorIds[0] = req.body.actorIds;
+			}
+			
+			if(Array.isArray(req.body.categoryIds)) {
+				movieDetails.categoryIds = req.body.categoryIds;
+			} else {
+				movieDetails.categoryIds = [];
+				movieDetails.categoryIds[0] = req.body.categoryIds;
+			}	
+			
 			// Fetch categories from database
 			dbvideo.selectCategories(function(categories,error) {				
 				dbvideo.selectFormats(function(formats,error) {
@@ -266,8 +283,19 @@ exports.editMovieSubmit = function(req,res) {
 			movieDetails.rating = req.body.rating;
 			movieDetails.certificationId = req.body.certificationId;
 			movieDetails.videoTypeId = req.body.videoTypeId;
-			movieDetails.actorIds = req.body.actorIds;
-			movieDetails.categoryIds = req.body.categoryIds;
+			if(Array.isArray(req.body.actorIds)) {
+				movieDetails.actorIds = req.body.actorIds;
+			} else {
+				movieDetails.actorIds = [];
+				movieDetails.actorIds[0] = req.body.actorIds;
+			}
+			
+			if(Array.isArray(req.body.categoryIds)) {
+				movieDetails.categoryIds = req.body.categoryIds;
+			} else {
+				movieDetails.categoryIds = [];
+				movieDetails.categoryIds[0] = req.body.categoryIds;
+			}	
 			var categories = [];
 			// Fetch categories from database
 			dbvideo.selectCategories(function(categories,error) {
@@ -815,7 +843,14 @@ exports.searchMovieUser = function(req,res) {
 			var certificationId = req.body.certificationId;
 			var videoTypeId = req.body.videoTypeId;
 			var categoryIdsString = "";
+			var categoryIds = [];
 			if(categoryIds != null) {
+				if(Array.isArray(req.body.categoryIds)) {
+					categoryIds = req.body.categoryIds;
+				} else {
+					categoryIds[0] = req.body.categoryIds;
+				}	
+
 				for(var i = 0; i < categoryIds.length;i++) {
 					categoryIdsString += categoryIds[i] + ",";
 				}

@@ -18,7 +18,7 @@ function insertUser(callback,user) {
 					if(!error) {
 						if(results.length !== 0) {
 							console.log("Customer details inserted");
-							connection.query("INSERT INTO phone (city_code,area_code,number,membership_no) VALUES(?,?,?,?)",[user.areacode, user.citycode, user.phonenum, user.membershipNo], function(error, results) {
+							connection.query("INSERT INTO phone (city_code,area_code,number,membership_no) VALUES(?,?,?,?)",[user.citycode, user.areacode, user.phonenum, user.membershipNo], function(error, results) {
 								if(!error) {
 									if(results.length !== 0) {
 										console.log("Inserted into phone");

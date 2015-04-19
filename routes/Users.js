@@ -154,9 +154,9 @@ exports.createMemberSubmit = function(req,res) {
 									user.zipext = 0;
 								}
 								
-								if(user.memberTypeId == 2) {
+								/*if(user.memberTypeId == 2) {
 									user.balanceAmount = 25;
-								}
+								}*/
 								dbuser.insertUser(function(insertSucessfullFlag) {
 									if(!insertSucessfullFlag) {
 										console.log("InsertUser Failed");

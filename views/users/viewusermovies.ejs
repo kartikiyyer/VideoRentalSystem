@@ -1,181 +1,215 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE HTML>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-
-</style>
-<title>Video Library</title>
-
-<link href="/stylesheets/templatemo_style.css" rel="stylesheet" type="text/css" />
-
+	<title>Admin</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<script type="text/javascript" src="js/jquery-1.9.0.min.js"></script> 
+	<script type="text/javascript" src="js/move-top.js"></script>
+	<script type="text/javascript" src="js/easing.js"></script>
+	<script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
 </head>
-
 <body>
-	<div id="templatemo_background_section_top">
-    
-    	<div class="templatemo_container">
-		
-        	<div id="templatemo_header">
-				<div id="templatemo_logo_section">            
-		        	<h1><a href="/">Video Library</a></h1>            
-					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
-				</div>
-				<div id="templatemo_user_section">            
-		        	Welcome <%= userDet.firstname %>!!
-		        	<a href="/sign-out?nocache=1">Sign Out</a>
-				</div>
-         	</div><!-- end of headder -->
-            <div id="templatemo_menu_panel"> 
-				<div id="templatemo_menu_section">
-					
+	<div class="header">
+		<div class="headertop_desc">
+			<div class="wrap">
+				<div class="nav_list">
 					<ul>
-						   
-					  <li><a href="/">Home    </a></li>
-						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>
-						<li><a href="/changepassword?nocache=1">Change Password   </a></li>	
-						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account</a></li>
-						<li><a href="/userissuemovie?nocache=1">Issue Movie   </a></li>
-						<li><a href="/usergeneratebill?nocache=1">Generate Bill  </a></li> 	
-					</ul> 
-						
+						<li style="float:left;"><a href="homepage.html">Home</a></li>
+						<li><a href="createmember.html">Create Member</a></li>
+						<li><a href="listmembers.html">List Members</a></li>
+						<li><a href="createmovie.html">Create Movie</a></li>
+						<li><a href="listmovies.html">List Movies</a></li>
+						<li><a href="issuemovies.html">Issue Movies</a></li>
+						<li><a href="submitmovie.html">Submit Movie</a></li>
+						<li><a href="generatebill.html">Generate Bill</a></li>
+						<li style="float:right;"><a href="contact.html">Logout</a></li>
+					</ul>
 				</div>
-           </div> <!-- end of menu -->
-		</div><!-- end of container-->
-        
-	</div><!-- end of templatemo_background_section_top-->
-    
-	<div id="templatemo_background_section_middle">
-    
-    	<div class="templatemo_container">
-        
-        	<div id="templatemo_left_section">
-            	
-                <div class="templatemo_post">
-                
-                	<div class="templatemo_post_top">
-                    	<h1>View Movies: This Section lists all the movies and allows to filter and view Individual One</h1>
-                    </div>
-                    <div class="templatemo_post_mid">
-                    <form method="POST" action="/viewusermovies-submit">
-						<p>Filter movies based on criteria below</p>     
-						<table style="margin-left:150px"><tr><td>
-							<table border="0">
-							<tbody>
-							
-							<tr>
-							<td><label for="title">Title: </label> </td>
-							<td><input id="title" maxlength="100" name="title" type="text" /> </td>
-							</tr>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="wrap">
+			
+			<script type="text/javascript">
+			function DropDown(el) {
+				this.dd = el;
+				this.initEvents();
+			}
+			DropDown.prototype = {
+				initEvents : function() {
+					var obj = this;
 					
-							<tr>
-							<td><label for="releaseYear">Release Year: </label> </td>
-							<td><!--<input id="releasedate" name="releasedate" type="date"/>-->
-							<select id ="releaseYear" name="releaseYear">
-							<option value="">Select</option>
-							<% for(var i=0;i<releaseDates.length;i++) { %>
-								<option value="<%=releaseDates[i].release_year %>"><%=releaseDates[i].release_year %></option>
-							<% } %>
-							</select>
-							</td>
-							</tr>
-							<tr><td></td>
-							</tr>
-							</tbody></table>
-						</td>
-						<td>
-							<table border="0">
-							<tbody>
+					obj.dd.on('click', function(event){
+						$(this).toggleClass('active');
+						event.stopPropagation();
+					});	
+				}
+			}
+			
+			$(function() {
+				
+				var dd = new DropDown( $('#dd') );
+				
+				$(document).click(function() {
+										// all dropdowns
+										$('.wrapper-dropdown-2').removeClass('active');
+									});
+				
+			});
+			</script>    
+			<div class="header_bottom">
+				<div class="header_bottom_left">										
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!------------End Header ------------>
+
+	
+	<div class="main">
+		<div class="wrap">
+			<div class="content">
+				<div class="content_top">
+					<div class="heading">
+						<h3>List Videos: This Section lists all the videos and allows the admin to issue the same</h3>
+					</div>
+				</div>
+				<div class="section group">
+					<form method="POST" action="/issuemovielist-submit">
+						<div class="container">
+							<header>
+								<h1 align="center">Filter videos based on criteria below</h1>
+							</header>
+
+							<div class="fieldBlock">
+								<input id="title" maxlength="100" name="title" class="singleTextBox" placeholder="Video Name" type="text"></input>
+							</div>
+							<div class="fieldBlock">
+								<select  id ="videoTypeId" class="doubleTextBox" name="videoTypeId" style="width:300px;">
+									<option value="">Select</option>
+									<% for(var i=0;i<videoTypes.length;i++) { %>
+									<option value="<%=videoTypes[i].id %>"><%=videoTypes[i].name %></option>
+									<% } %>
+								</select>
+							</div>
+							<div class="fieldBlock">
+								<select  id ="releaseYear" class="doubleTextBox" name="releaseYear" style="width:300px;">
+									<option value="">Select</option>
+									<% for(var i=0;i<releaseDates.length;i++) { %>
+									<option value="<%=releaseDates[i].release_year %>"><%=releaseDates[i].release_year %></option>
+									<% } %>
+								</select>
+
+								<select style="width:300px;" id ="categoryIds" name="categoryIds" class="doubleTextBox" multiple>
+									<% for(var i in categories) { %>
+									<option value="<%= categories[i]['id'] %>"><%=categories[i]["name"]%></option>
+									<% } %>
+								</select>
+							</div>
 							
-							<tr>
-							<td><label for="categoryIds">Category: </label> </td>
-							<td><!--<input id="category" maxlength="75" name="category" type="text" />-->
-							
-							<select id ="categoryIds" name="categoryIds" multiple>
-							<% for(var i in categories) { %>
-								<option value="<%= categories[i]['id'] %>"><%=categories[i]["name"]%></option>
-							<% } %>
-							</select>
-							
-							 </td>
-							</tr>
-							
-							<tr>
-							<td><label for="certificationId">Certification: </label> </td>
-							<td><!--<input id="category" maxlength="75" name="category" type="text" />-->
-							
-							<select id ="certificationId" name="certificationId">
-							<option value="">Select</option>
-							<% for(var i in certificates) { %>
-								<option value="<%= certificates[i]['id'] %>"><%=certificates[i]["name"]%></option>
-							<% } %>
-							</select>
-							
-							 </td>
-							</tr>
-							
-							<tr>
-							<td><label for="rentalRate">Rental Rate: </label> </td>
-							<td><input id="rentalRateMin" placeholder="min" maxlength="25" name="rentalRateMin" type="number" style="width:80px"/>
-							<input id="rentalRateMax" placeholder="max" maxlength="25" name="rentalRateMax" type="number" style="width:80px"/> </td>
-							</tr>
-							
-							<tr>
-							<td><label for="isAvailable">Is Available: </label> </td>
-							<td><input id="isAvailable" type="checkbox" name="isAvailable" checked> </td>
-							</tr>
-							
-							<tr><td></td>
-							</tr>
-							</tbody></table>
-						</tr></table>
-                        <table>
-						</table> 
-						<div><input name="Filter" type="submit" value="Filter" style="width:50px; align:right; margin-left:800px"/></div>
-					</form>	
-						<br/>
-						<br/>
-						<!-- List to display -->
-                    <table class="listData" border=1>
-                    <tr>
-                    <th style="color:white;">Movie Name</th>
-                    <th style="color:white;">Certification</th>
-                    <th style="color:white;">Release Year</th>
-                    <th style="color:white;">Rent Amount</th>
-                    <th style="color:white;">Available Copies</th>
-                    <th style="color:white;">Category</th>
-                    <th style="color:white;">View</th>
-                    </tr>
-                    <% if(movies != null && movies.length > 0) {
-              
-                    	for(var i=0;i<movies.length;i++) {
-                    	//console.log(movies[i].movie_id);
-                    %>
-	                    <tr>
-	                    <td><%= movies[i].title %></td>
-	                    <td><%= movies[i].certification %></td>
-	                    <td><%= movies[i].release_year %></td>
-	                    <td><%= movies[i].rental_rate %></td>
-	                    <td><%= movies[i].available_copies %></td>
-	                    <td width="30px"><%= movies[i].categories %></td>
-	                    <td><a href="/usermovie/<%=movies[i].id %>?nocache=1">View</a></td>
-	                    </tr>
-	                    <% } } %>
-                    </table>	
-                    </div>
-					
-                    <div class="templatemo_post_bottom">
-                    
-                   
-                    </div>
-                    
-				</div><!-- end of templatemo_post-->
-                
-            </div><!-- end of left section-->
-        
-     
+							<div class="fieldBlock">
+								<select  id ="certificationId" class="doubleTextBox" name="certificationId" style="width:300px;">
+									<option value="">Select</option>
+									<% for(var i in certificates) { %>
+									<option value="<%= certificates[i]['id'] %>"><%=certificates[i]["name"]%></option>
+									<% } %>
+								</select>
+
+								
+							</div>
 
 
-</html>
+							<div class="fieldBlock">
+								<input class="tripleTextBox" id="rentalRateMin" placeholder="Rental Rate Min" maxlength="25" name="rentalRateMin" type="number"></input>
+								<input class="tripleTextBox" id="rentalRateMax" placeholder="Rental Rate Max" maxlength="25" name="rentalRateMax" type="number"></input>
+								
+								<div class="tripleTextBox" align="center" style="width:143px;">
+									<label for="isAvailable">Is Available: </label>
+									<input style="margin-top:17px" id="isAvailable" type="checkbox" name="isAvailable" checked></input>
+								</div>
+							</div>
+
+							<div class="fieldBlock" align="center">
+								<input name="Filter" class="loginButton singleTextBox" type="submit" value="Filter"/>
+								<!-- a href="login.html" class="loginButton singleTextBox">Filter</a-->
+							</div>
+
+						</div>
+
+					</div>
+
+				</form>
+
+				<div class="content_bottom">
+					<div class="heading">
+						<div class="header_bottom_center">
+						</div>
+						<h3>Video Listings</h3>
+					</div>
+				</div>
+				<%
+				if(movies != null && movies.length > 0) {
+				var numOfSections = (movies.length/5);
+				var videoIndex = 0;
+				var gridSize=5;
+				for(var i=0;i<=numOfSections;i++) {
+					%>
+					<div class="section group">
+						<%
+						for(var j=0;j<gridSize;j++)
+							{
+								%>
+								<div class="grid_1_of_5 images_1_of_5">
+									<a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><img src="images/end-game.jpg" alt="" /></a>
+									<h2><a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><%= movies[videoIndex].title %> (<%= movies[videoIndex].release_year %>)</a></h2>
+									<div class="price-details">
+										<div class="price-number">
+											<p><span class="rupees"><%= movies[videoIndex].rental_rate %></span></p>
+										</div>
+
+										<div class="clear"></div>
+									</div>
+									<%= movies[i].certification %>            			
+	                    			<%= movies[i].available_copies %>
+	                   				<%= movies[i].categories %>
+	                    			<%= movies[i].video_type %>
+									<a href="/usermovie/<%=movies[videoIndex].id %>?nocache=1">View</a>			 
+								</div>
+								<%
+								videoIndex++;
+								if(i== (numOfSections-1))
+									{
+										gridSize = (movies.length%5);
+									}
+								}
+								%>
+							</div>
+							<%
+						} }
+						%>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="copy_right">
+				<p>Company Name © All rights Reseverd | Design by  <a href="http://w3layouts.com">W3Layouts</a> </p>
+			</div>			
+		</div>
+		<script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+
+		});
+		</script>
+		<a href="#" id="toTop"><span id="`"> </span></a>
+	</body>
+	</html>
+

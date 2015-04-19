@@ -1,177 +1,185 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE HTML>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-    <title>Video Library</title>
-
-    <link href="/stylesheets/templatemo_style.css" rel="stylesheet" type="text/css" />
-
+	<title>Admin</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
+	<script type="text/javascript" src="/js/move-top.js"></script>
+	<script type="text/javascript" src="/js/easing.js"></script>
+	<script type="text/javascript" src="/js/jquery.nivo.slider.js"></script>
 </head>
-
 <body>
-	<div id="templatemo_background_section_top">
-
-     <div class="templatemo_container">
-
-         <div id="templatemo_header">
-            <div id="templatemo_logo_section">            
-               <h1><a href="/">Video Library</a></h1>            
-               <h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
-           </div>
-           <div id="templatemo_user_section">        
-               Welcome <%= userDet.firstname %>!!
-               <a href="/sign-out?nocache=1">Sign Out</a>	
-           </div>
-       </div><!-- end of headder -->
-       <div id="templatemo_menu_panel"> 
-        <div id="templatemo_menu_section">
-
-         <ul>
-
-          <li><a href="/">Home    </a></li>
-						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>
-						<li><a href="/changepassword?nocache=1">Change Password   </a></li>	
-						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account</a></li>
-						<li><a href="/userissuemovie?nocache=1">Issue Movie   </a></li>
-						<li><a href="/usergeneratebill?nocache=1">Generate Bill  </a></li> 	
-       </ul> 
-
-   </div>
-</div> <!-- end of menu -->
-</div><!-- end of container-->
-
-</div><!-- end of templatemo_background_section_top-->
-
-<div id="templatemo_background_section_middle">
-
- <div class="templatemo_container">
-
-     <div id="templatemo_left_section">
-
-        <div class="templatemo_post">
-
-         <div class="templatemo_post_top">
-             <h1>Welcome to the Video Library: The Store for all type of Movie VCDs & DVDs</h1>
-         </div>
-         <div class="templatemo_post_mid">
-            <div align="center">                     
-                <h4 style="color:yellow;">Movie Info</h4>
-                <%
-                if(movie !=null ){
-                    %>
-                    <table class="listUserInfo" border=1 align="center">
-                        <tr>
-								<th >Movie Name</th>
-								<td><%= movie.title %></td>
-							</tr>
-							<tr>
-								<th >Banner</th>
-								<td><%= movie.description %></td>
-							</tr>
-							<tr>
-								<th>Release Year</th>
-								<td><%= movie.release_year %></td>
-							</tr>
-							<tr>
-								<th>Rent Amount</th>
-								<td><%= movie.rental_rate %></td>
-							</tr>
-							<tr>
-								<th>Discount</th>
-								<td><%= movie.discount %></td>
-							</tr>
-							<tr>
-								<th>Available Copies</th>
-								<td><%= movie.available_copies %></td>
-							</tr>
-							<tr>
-								<th>Format</th>
-								<td><%= movie.format %></td>
-							</tr>
-							<tr>
-								<th>Language</th>
-								<td><%= movie.language %></td>
-							</tr>
-							<tr>
-								<th>Original Language</th>
-								<td><%= movie.original_language %></td>
-							</tr>
-							<tr>
-								<th>Length</th>
-								<td><%= movie.length %></td>
-							</tr>
-							<tr>
-								<th>Replacement Cost</th>
-								<td><%= movie.replacement_cost %></td>
-							</tr>
-							<tr>
-								<th>Rating</th>
-								<td><%= movie.rating %></td>
-							</tr>
-							<tr>
-								<th>Certification</th>
-								<td><%= movie.certification %></td>
-							</tr>
-							<tr>
-								<th>Actors</th>
-								<td width="30px"><%= movie.actors %></td>
-							</tr>
-							<tr>
-								<th>Category</th>
-								<td width="30px"><%= movie.categories %></td>
-							</tr>
-                    </table>
-                    <%
-                }
-            else{
-                %>
-                <h5 style="color:yellow;">Movie Details Not Found</h5>
-                <%
-            }
-            %>
-           
-        <% if(users != null && users.length > 0) { %>
-			<h4 style="color:yellow;">User who issued this video</h4>
-        	<table class="listData" border=1>
-                    <tr>
-                    
-                    <th style="color:white;">Membership No</th>
-                    <th style="color:white;">First Name</th>
-                    <th style="color:white;">Last Name Year</th>
-                    </tr>
-                    
-            <% for(var i in users) { %>
-            	
-            	<td><%= users[i].membership_no %></td>
-                <td><%= users[i].first_name %></td>
-                <td><%= users[i].last_name %></td>
-            
-            <% } %>        
-        <% } else { %>
-        	<h4 style="color:yellow;">No users issued this movie</h4>
-        <% } %>
-
- </div>   
-        <div class="clear"></div>
-
-    </div>
-    <div class="templatemo_post_bottom">
+	<div class="header">
+		<div class="headertop_desc">
+			<div class="wrap">
+				<div class="nav_list">
+					<ul>
+						<li style="float:left;"><a href="homepage.html">Home</a></li>
+						<li><a href="createmember.html">Create Member</a></li>
+						<li><a href="listmembers.html">List Members</a></li>
+						<li><a href="createmovie.html">Create Movie</a></li>
+						<li><a href="listmovies.html">List Movies</a></li>
+						<li><a href="issuemovies.html">Issue Movies</a></li>
+						<li><a href="submitmovie.html">Submit Movie</a></li>
+						<li><a href="generatebill.html">Generate Bill</a></li>
+						<li style="float:right;"><a href="contact.html">Logout</a></li>
+					</ul>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="wrap">
+			
+			<script type="text/javascript">
+			function DropDown(el) {
+				this.dd = el;
+				this.initEvents();
+			}
+			DropDown.prototype = {
+				initEvents : function() {
+					var obj = this;
+					
+					obj.dd.on('click', function(event){
+						$(this).toggleClass('active');
+						event.stopPropagation();
+					});	
+				}
+			}
+			
+			$(function() {
+				
+				var dd = new DropDown( $('#dd') );
+				
+				$(document).click(function() {
+										// all dropdowns
+										$('.wrapper-dropdown-2').removeClass('active');
+									});
+				
+			});
+			</script>    
+			<div class="header_bottom">
+				<div class="header_bottom_left">										
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!------------End Header ------------>
+	<div class="main">
+		<div class="wrap">
+			<div class="content">
+				<div class="content_top">
+					<div class="heading">
+						<h3>Video Details</h3>
+					</div>
+				</div>
+				<div class="section group">
+					<div align="center">
+						<div class="container" align = "center">
+							<header>
+								<h1 align="center">Video Information</h1>
+							</header>
+							<%
+							if(movie !=null ){
+								%>
+								<div class="fieldBlock">
+									<div class="imageBox" style="height=100%" ><img  src="images/end-game.jpg" alt="" /></div>
+								</div>
+								<div class="fieldBlock">
+									<div class="doubleTextBox">Video Title</div>
+									<div class="doubleTextBox"><%= movie.title %></div>
+								</div>
+								<div class="fieldBlock">
+									<div class="doubleTextBox">Description</div>
+									<div class="doubleTextBox"><%= movie.description %></div>		
+								</div>
+								<div class="fieldBlock">
+									<div class="doubleTextBox">Video Type</div>
+									<div class="doubleTextBox"><%= movie.video_type %></div>		
+								</div>
+								<div class="fieldBlock"> 
+									<div class="doubleTextBox">Release Year</div>
+									<div class="doubleTextBox"><%= movie.release_year %></div>		
+								</div>
+								<div class="fieldBlock">
+									<div class="doubleTextBox">Rent Amount</div>
+									<div class="doubleTextBox"><%= movie.rental_rate %></div>
+								</div>
+								<div class="fieldBlock">
+									<div class="doubleTextBox">Discount</div>
+									<div class="doubleTextBox"><%= movie.discount %></div>		
+								</div>
+								<div class="fieldBlock"> 
+									<div class="doubleTextBox">Available Copies</div>
+									<div class="doubleTextBox"><%= movie.available_copies %></div>		
+								</div>
+								<div class="fieldBlock"> 
+									<div class="doubleTextBox">Format</div>
+									<div class="doubleTextBox"><%= movie.format %></div>		
+								</div>
+								<div class="fieldBlock">
+									<div class="doubleTextBox">Language</div>
+									<div class="doubleTextBox"><%= movie.language %></div>
+								</div>
+								<div class="fieldBlock">
+									<div class="doubleTextBox">Original Language</div>
+									<div class="doubleTextBox"><%= movie.original_language %></div>		
+								</div>
+								<div class="fieldBlock"> 
+									<div class="doubleTextBox">Video Length(in minutes)</div>
+									<div class="doubleTextBox"><%= movie.length %></div>		
+								</div>
+								<div class="fieldBlock"> 
+									<div class="doubleTextBox">Replacement Cost</div>
+									<div class="doubleTextBox"><%= movie.replacement_cost %></div>		
+								</div>
+								<div class="fieldBlock"> 
+									<div class="doubleTextBox">Rating</div>
+									<div class="doubleTextBox"><%= movie.rating %></div>		
+								</div>
+								<div class="fieldBlock">
+									<div class="doubleTextBox">Certification</div>
+									<div class="doubleTextBox"><%= movie.certification %></div>
+								</div>
+								<div class="fieldBlock">
+									<div class="doubleTextBox">Actors</div>
+									<div class="doubleTextBox"><%= movie.actors %></div>		
+								</div>
+								<div class="fieldBlock"> 
+									<div class="doubleTextBox">Category</div>
+									<div class="doubleTextBox"><%= movie.categories %></div>		
+								</div>
 
 
- </div>
+								<%
+							}
+						else{
+							%>
+							<div class="fieldBlock">
+								<div class="singleTextBox">Video Details Not Found</div>
+							</div>
+							<%
+						}
+						%>
 
-</div><!-- end of templatemo_post-->
+					</div>
+				</div>
+			</div>
+</div>
+</div>
+</div>
 
-</div><!-- end of left section-->
+<script type="text/javascript">
+$(document).ready(function() {			
+	$().UItoTop({ easingType: 'easeOutQuart' });
 
-
-</div><!-- end of container-->
-</div><!-- end of background middle-->
-
-
+});
+</script>
+<a href="#" id="toTop"><span id="`"> </span></a>
 </body>
-
 </html>
+
