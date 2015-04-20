@@ -3,15 +3,15 @@
 	<title>Admin</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
-	<link href="css/slider.css" rel="stylesheet" type="text/css" media="all"/>
-	<link href="css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
-	<link href="css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
-	<script type="text/javascript" src="js/jquery-1.9.0.min.js"></script> 
-	<script type="text/javascript" src="js/move-top.js"></script>
-	<script type="text/javascript" src="js/easing.js"></script>
-	<script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
-	<script type="text/javascript" src="js/jquery.lightbox_me.js"></script>
+	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
+	<script type="text/javascript" src="/js/move-top.js"></script>
+	<script type="text/javascript" src="/js/easing.js"></script>
+	<script type="text/javascript" src="/js/jquery.nivo.slider.js"></script>
+	<script type="text/javascript" src="/js/jquery.lightbox_me.js"></script>
 </head>
 <body>
 	<div class="header">
@@ -19,15 +19,15 @@
 			<div class="wrap">
 				<div class="nav_list">
 					<ul>
-						<li style="float:left;"><a href="homepage.html">Home</a></li>
-						<li><a href="createmember.html">Create Member</a></li>
-						<li><a href="listmembers.html">List Members</a></li>
-						<li><a href="createmovie.html">Create Movie</a></li>
-						<li><a href="listmovies.html">List Movies</a></li>
-						<li><a href="issuemovies.html">Issue Movies</a></li>
-						<li><a href="submitmovie.html">Submit Movie</a></li>
-						<li><a href="generatebill.html">Generate Bill</a></li>
-						<li style="float:right;"><a href="contact.html">Logout</a></li>
+						<li style="float:left;"><a href="/">Home</a></li>
+						<li><a href="/createmember?nocache=1">Create Member    </a></li>
+						<li><a href="/listmember?nocache=1">List Members   </a></li>
+						<li><a href="/createmovie?nocache=1">Create Video   </a></li>
+						<li><a href="/listmovie?nocache=1">List Videos   </a></li>	
+						<li><a id="issueMovieLinkId">Issue Videos   </a></li>
+						<li><a id="submitMovieLinkId">Submit Videos  </a></li> 
+						<li><a href="/generatebill?nocache=1">Generate Bill  </a></li>
+						<li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
 					</ul>
 				</div>
 				<div class="clear"></div>
@@ -36,6 +36,68 @@
 		<div class="wrap">
 			
 			<script type="text/javascript">
+			
+			function allnumeric(inputtxt)  
+			   {  
+				 
+				 var numbers = /^[0-9]+$/;  
+				 if(inputtxt.match(numbers))  
+				 {  
+				  return true;  
+				 }  
+				 else  
+				 {
+				  return false;  
+				 }  
+			   }
+			   
+
+				function validateIssueMovie()   
+			   {
+			     if(document.issuemovie.membershipNo.value ==null ||document.issuemovie.membershipNo.value == ''){
+						alert('Membership No. cannot be blank');
+						return false;
+					} 
+				else if(!allnumeric(document.issuemovie.membershipNo.value))
+				{
+					alert("Membership No. should be numeric");
+					return false;
+				}
+				else if(document.issuemovie.membershipNo.value.length != 9 ) 
+				{
+					alert("Membership No. should be 9 Digits.");
+					return false;
+				}
+				else
+				{
+					
+					return true;
+				}
+			    }
+				
+				function validateReturnMovie()   
+				   {
+				     if(document.returnmovie.membershipNo.value ==null ||document.returnmovie.membershipNo.value == ''){
+							alert('Membership No. cannot be blank');
+							return false;
+						} 
+					else if(!allnumeric(document.returnmovie.membershipNo.value))
+					{
+						alert("Membership No. should be numeric");
+						return false;
+					}
+					else if(document.returnmovie.membershipNo.value.length != 9 ) 
+					{
+						alert("Membership No. should be 9 Digits.");
+						return false;
+					}
+					else
+					{
+						
+						return true;
+					}
+				    }
+				
 			function DropDown(el) {
 				this.dd = el;
 				this.initEvents();
@@ -94,11 +156,11 @@
 	<!------------Popoups ------------>
 	<div id="issueMoviePopup" style="display:none">
 
-		<h1 align="center">Issue Movie </h1>
+		<h1 align="center">Issue Videos </h1>
 
 		<form style="margin-top: 13px;" action="/issuemovie-submit" method="Post" name ="issuemovie" onsubmit="return validateIssueMovie()">
 			<div class="fieldBlock">
-				<input id="membershipNoIM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNoIM" type="text"/>
+				<input id="membershipNoIM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
 			</div>
 
 			<div class="fieldBlock">
@@ -108,10 +170,10 @@
 	</div>
 
 	<div id="submitMoviePopup" style="display:none">
-		<h1 align="center">Submit Movie </h1>
+		<h1 align="center">Submit Videos </h1>
 		<form style="margin-top: 13px;" action="/submitmovie-submit" method="POST" name="returnmovie" onsubmit="return validateReturnMovie()">
 			<div class="fieldBlock">
-				<input id="membershipNoSM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNoIM" type="text"/>
+				<input id="membershipNoSM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
 			</div>
 			<div class="fieldBlock">
 				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
@@ -156,7 +218,7 @@
 							</div>
 							<div class="fieldBlock">
 								<select  id ="videoTypeId" class="doubleTextBox" name="videoTypeId" style="width:300px;">
-									<option value="">Select</option>
+									<option value="">Video Type</option>
 									<% for(var i=0;i<videoTypes.length;i++) { %>
 									<option value="<%=videoTypes[i].id %>"><%=videoTypes[i].name %></option>
 									<% } %>
@@ -164,7 +226,7 @@
 							</div>
 							<div class="fieldBlock">
 								<select  id ="releaseYear" class="doubleTextBox" name="releaseYear" style="width:300px;">
-									<option value="">Select</option>
+									<option value="">Release Year</option>
 									<% for(var i=0;i<releaseDates.length;i++) { %>
 									<option value="<%=releaseDates[i].release_year %>"><%=releaseDates[i].release_year %></option>
 									<% } %>
@@ -179,7 +241,7 @@
 							
 							<div class="fieldBlock">
 								<select  id ="certificationId" class="doubleTextBox" name="certificationId" style="width:300px;">
-									<option value="">Select</option>
+									<option value="">Certification</option>
 									<% for(var i in certificates) { %>
 									<option value="<%= certificates[i]['id'] %>"><%=certificates[i]["name"]%></option>
 									<% } %>
@@ -220,8 +282,12 @@
 				<%
 				if(movies != null && movies.length > 0) {
 					var numOfSections = (movies.length/5);
+					numOfSections = Math.floor(numOfSections);
 					var videoIndex = 0;
 					var gridSize=5;
+					if(movies.length < gridSize) {
+						gridSize = movies.length;
+					}
 					for(var i=0;i<=numOfSections;i++) {
 						%>
 						<div class="section group">
@@ -255,7 +321,7 @@
 										<div align="center">
 											<form action="/issuemovieselect-submit" method="POST">
 												<input type="hidden" name="membershipNo" value="<%=membershipNo%>"/>
-												<input type="hidden" name="movieId" value="<%=movies[i].id%>"/>
+												<input type="hidden" name="movieId" value="<%=movies[videoIndex].id%>"/>
 												<% if(movies[i].available_copies > 0) { %>
 												<input type="submit" value="Issue >>"/> 
 												<%} else { %>

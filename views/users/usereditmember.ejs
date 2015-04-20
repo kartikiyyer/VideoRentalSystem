@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="/js/move-top.js"></script>
 	<script type="text/javascript" src="/js/easing.js"></script>
 	<script type="text/javascript" src="/js/jquery.nivo.slider.js"></script>
-	<script type="text/javascript" src="js/jquery.lightbox_me.js"></script>
+	<script type="text/javascript" src="/js/jquery.lightbox_me.js"></script>
 	
 </head>
 <body>
@@ -20,15 +20,14 @@
 			<div class="wrap">
 				<div class="nav_list">
 					<ul>
-						<li style="float:left;"><a href="homepage.html">Home</a></li>
-
-						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>	 
-						<li><a href="/userissuemovie?nocache=1">Rent Video  </a></li>
+						<li style="float:left;"><a href="/">Home</a></li>
+						<li><a href="/viewusermovies?nocache=1">View Videos   </a></li>	 
+						<li><a href="/userissuemovie?nocache=1">Rent Videos  </a></li>
 						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account  </a></li>
 						<li><a href="/usergeneratebill?nocache=1">View Bill  </a></li>
 						<li><a href="/changepassword?nocache=1">Change Password   </a></li>
 						<li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
-					</ul>
+					</ul> 
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -75,10 +74,7 @@
 			function validateCreateMember()   
 			{
 
-				if(document.createmember.roleId.value==null ||document.createmember.roleId.value == ''){
-					alert('Role cannot be blank');
-					return false;
-				} 
+				
 				if(document.createmember.memberTypeId.value==null ||document.createmember.memberTypeId.value == ''){
 					alert('Member Type cannot be blank');
 					return false;
@@ -135,7 +131,7 @@
 					return false;
 				}
 
-				if(document.createmember.zip2.value != '' && (!allnumeric(document.createmember.zip2.value) || document.createmember.zip2.value.length!=4)){
+				if((document.createmember.zip2.value != '' && document.createmember.zip2.value != 0) && (!allnumeric(document.createmember.zip2.value) || document.createmember.zip2.value.length!=4)){
 					alert('Enter valid Zip Code extension for the entered Record. Zip code should be numeric in the following format XXXXX OR XXXXX-XXXX');
 					return false;
 				}
@@ -203,21 +199,13 @@
 							<% } %>
 							
 						</div>
-						<form name="createmember" onsubmit="return validateCreateMember()" action="/editmember-submit" method="post">
+						<form name="createmember" onsubmit="return validateCreateMember()" action="/usereditmember-submit" method="post">
 
 							<div class="fieldBlock">
 								<div class="doubleTextBox" align="center">
-									<div style="padding:0.5cm 0.5cm 0.5cm 0.5cm;">
-										<% for(var i in roles) { %>
-										<% if(roles[i].id == member.role_id) { %>
-										<input type="radio" name="roleId" value="<%=roles[i].id %>" checked><%=roles[i].name%>
-										<% } else { %>
-										<input type="radio" name="roleId" value="<%=roles[i].id %>"><%=roles[i].name%>
-										<% } } %>	
-									</div>
-								</div>
+									
 								
-								<div id="memberType" class="doubleTextBox" align="center" hidden>
+								<div id="memberType" class="doubleTextBox" align="center">
 									<div style="padding:0.5cm 0.5cm 0.5cm 0.5cm;">
 										<% for(var i in memberTypes) { %>
 										<% if(memberTypes[i].id == member.member_type_id) { %>
@@ -232,8 +220,8 @@
 								<input id="membershipNo" maxlength="45" name="membershipNo" class="singleTextBox" type="text" disabled="true" value="Membership No:<%=member.membership_no%>"/>
 							</div>
 							<div class="fieldBlock">
-								<input id="fname" name="firstname" class="doubleTextBox" placeholder="First Name" type="text" value="<%=member.first_name%>"></input>
-								<input id="lname" name="lastname" class="doubleTextBox"  value="<%=member.last_name%>" placeholder="Last Name" type="text"></input>
+								<input id="fname" name="fname" class="doubleTextBox" placeholder="First Name" type="text" value="<%=member.first_name%>"></input>
+								<input id="lname" name="lname" class="doubleTextBox"  value="<%=member.last_name%>" placeholder="Last Name" type="text"></input>
 							</div>
 							
 							<div class="fieldBlock">

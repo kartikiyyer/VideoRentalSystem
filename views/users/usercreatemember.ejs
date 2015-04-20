@@ -17,7 +17,7 @@
 			<div class="wrap">
 				<div class="nav_list">
 					<ul>
-						<li align="center"><a href="homepage.html">Home</a></li>
+						<li align="center"><a href="/">Home</a></li>
 					</ul>
 				</div>
 				<div class="clear"></div>
@@ -175,12 +175,11 @@
 							<%= insertedresults %>
 							<% } %>
 						</div>
-						<form name="createmember" onsubmit="return validateCreateMember()" action="/createmember-submit" method="post">
-							<div class="fieldBlock">
-								<% for(var i in memberTypes) { %>
+						<form name="createmember" onsubmit="return validateCreateMember()" action="/usercreatemember-submit" method="post">
+							<% for(var i in memberTypes) { %>
 								<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>"><%=memberTypes[i].name%>
-								<% } %>
-							</div>
+							<% } %>
+							
 							<div class="fieldBlock">
 								<input id="fname" name="firstname" class="doubleTextBox" placeholder="First Name" type="text"></input>
 								<input id="lname" name="lastname" class="doubleTextBox" placeholder="Last Name" type="text"></input>
@@ -207,6 +206,7 @@
 							<div class="fieldBlock">
 								<input class="doubleTextBox" id="city" maxlength="50" name="city" placeholder="City" type="text"></input>
 								<select id="stateId" name="stateId" style="width:300px;"class="doubleTextBox">
+									<option value="">State</option>
 									<% for(var i in states) { %>
 									<option value="<%=states[i].id %>"><%=states[i].name %></option>
 									<% } %>

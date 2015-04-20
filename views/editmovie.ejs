@@ -24,15 +24,15 @@
 			<div class="wrap">
 				<div class="nav_list">
 					<ul>
-						<li style="float:left;"><a href="homepage.html">Home</a></li>
-						<li><a href="createmember.html">Create Member</a></li>
-						<li><a href="listmembers.html">List Members</a></li>
-						<li><a href="createmovie.html">Create Movie</a></li>
-						<li><a href="listmovies.html">List Movies</a></li>
-						<li><a id="issueMovieLinkId">Issue Movies</a></li>
-						<li><a id="submitMovieLinkId">Submit Movie</a></li>
-						<li><a id="generateBillLinkId">Generate Bill</a></li>
-						<li style="float:right;"><a href="contact.html">Logout</a></li>
+						<li style="float:left;"><a href="/">Home</a></li>
+						<li><a href="/createmember?nocache=1">Create Member    </a></li>
+						  <li><a href="/listmember?nocache=1">List Members   </a></li>
+						  <li><a href="/createmovie?nocache=1">Create Video   </a></li>
+						  <li><a href="/listmovie?nocache=1">List Videos   </a></li>	
+						  <li><a id="issueMovieLinkId">Issue Videos   </a></li>
+						  <li><a id="submitMovieLinkId">Submit Videos  </a></li>  
+						  <li><a href="/generatebill?nocache=1">Generate Bill  </a></li>
+						  <li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
 					</ul>
 				</div>
 				<div class="clear"></div>
@@ -55,6 +55,55 @@
 				 }  
 			   }
 			   
+			
+
+				function validateIssueMovie()   
+			   {
+			     if(document.issuemovie.membershipNo.value ==null ||document.issuemovie.membershipNo.value == ''){
+						alert('Membership No. cannot be blank');
+						return false;
+					} 
+				else if(!allnumeric(document.issuemovie.membershipNo.value))
+				{
+					alert("Membership No. should be numeric");
+					return false;
+				}
+				else if(document.issuemovie.membershipNo.value.length != 9 ) 
+				{
+					alert("Membership No. should be 9 Digits.");
+					return false;
+				}
+				else
+				{
+					
+					return true;
+				}
+			    }
+				
+				function validateReturnMovie()   
+				   {
+				     if(document.returnmovie.membershipNo.value ==null ||document.returnmovie.membershipNo.value == ''){
+							alert('Membership No. cannot be blank');
+							return false;
+						} 
+					else if(!allnumeric(document.returnmovie.membershipNo.value))
+					{
+						alert("Membership No. should be numeric");
+						return false;
+					}
+					else if(document.returnmovie.membershipNo.value.length != 9 ) 
+					{
+						alert("Membership No. should be 9 Digits.");
+						return false;
+					}
+					else
+					{
+						
+						return true;
+					}
+				    }
+				
+			
 			   function decimalNumbers(inputtxt)  
 			   {  
 				 
@@ -76,7 +125,12 @@
 			     var error = "";
 			     return true;
 			     if(createmovie.mname.value==null ||createmovie.mname.value == ''){
-			     		error += 'Movie Name field cannot be blank<br/>';
+			     		error += 'Video Name field cannot be blank<br/>';
+					
+					} 
+			     
+			     if(createmovie.poster.value==null ||createmovie.poster.value == ''){
+			     		error += 'Image field cannot be blank<br/>';
 					
 					} 
 					if(createmovie.banner.value==null ||createmovie.banner.value == ''){
@@ -160,10 +214,10 @@
 	<!------------End Header ------------>
 	<!------------Popoups ------------>
 	<div id="issueMoviePopup" style="display:none">
-		<h1 align="center">Issue Movie </h1>
+		<h1 align="center">Issue Videos </h1>
 		<form style="margin-top: 13px;" action="/issuemovie-submit" method="Post" name ="issuemovie" onsubmit="return validateIssueMovie()">
 			<div class="fieldBlock">
-				<input id="membershipNoIM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNoIM" type="text"/>
+				<input id="membershipNoIM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
 			</div>
 
 			<div class="fieldBlock">
@@ -173,10 +227,10 @@
 	</div>
 
 	<div id="submitMoviePopup" style="display:none">
-		<h1 align="center">Submit Movie </h1>
+		<h1 align="center">Submit Videos </h1>
 		<form style="margin-top: 13px;" action="/submitmovie-submit" method="POST" name="returnmovie" onsubmit="return validateReturnMovie()">
 			<div class="fieldBlock">
-				<input id="membershipNoSM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNoIM" type="text"/>
+				<input id="membershipNoSM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
 			</div>
 			<div class="fieldBlock">
 				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
@@ -208,10 +262,27 @@
 						</div>
 						<div class="container">
 							<header>
-								<h1 align="center">Edit a Movie Listing</h1>
+								<h1 align="center">Edit a Video Listing</h1>
 							</header>
 							<div class="fieldBlock">
 								<input id="title" class="singleTextBox" placeholder="Video Name" maxlength="100" name="title" value="<%=movie.title%>" type="text" /></input>
+							</div>
+							<div class="fieldBlock">
+								<select class="doubleTextBox" id="videoTypeId" name="videoTypeId" style="width:300px;">
+									<option value="">Video Type</option>
+									<% for(var i in videoTypes) { 
+										if(movie.video_type_id == videoTypes[i]["id"]) {
+									%>
+										<option value="<%= videoTypes[i]['id'] %>" selected><%=videoTypes[i]["name"]%></option>
+										<%	} else {
+										%>
+										<option value="<%= videoTypes[i]['id'] %>"><%=videoTypes[i]["name"]%></option>
+									<% } } %>
+								</select>
+								<input class="doubleTextBox" placeholder="Rental Rate" id="rentalRate" maxlength="25" name="rentalRate" value="<%=movie.rental_rate%>" type="text"></input>
+							</div>
+							<div class="fieldBlock">
+								<input id="poster" class="singleTextBox" placeholder="Poster" maxlength="45" name="poster" value="<%=movie.poster%>"></input>
 							</div>
 
 							<div class="fieldBlock">
@@ -265,7 +336,7 @@
 																<% }} %>
 															</select>
 
-															<select id ="originalLanguageId" name="originalLanguageId" style="width:300px;"class="doubleTextBox" multiple>
+															<select id ="originalLanguageId" name="originalLanguageId" style="width:300px;"class="doubleTextBox">
 																<% for(var i in languages) { 
 																	if(movie.original_language_id == languages[i]["id"]) {
 																		%>
@@ -273,21 +344,6 @@
 																		<% }} %>
 																	</select>
 																</div>
-
-																<div class="fieldBlock">
-																	<select id ="videoTypeId" name="videoTypeId">
-																		<option value="">Select</option>
-																		<% for(var i in videoTypes) { 
-																			if(movie.video_type_id == videoTypes[i]["id"]) {
-																		%>
-																			<option value="<%= videoTypes[i]['id'] %>" selected><%=videoTypes[i]["name"]%></option>
-																			<%	} else {
-																			%>
-																			<option value="<%= videoTypes[i]['id'] %>"><%=videoTypes[i]["name"]%></option>
-																		<% } } %>
-																	</select>
-																</div>		
-
 																<div class="fieldBlock">
 																	<select id="actorIds" name="actorIds" style="width:300px;"class="doubleTextBox" multiple>
 																		<% for(var i in actors) { 
@@ -311,8 +367,7 @@
 																</div>
 
 																<div class="fieldBlock">
-																	<input class="tripleTextBox" placeholder="Rating" id="rating"  value="<%=movie.rating%>" maxlength="5" name="rating" type="text"></input>
-																	<input class="tripleTextBox" placeholder="Rental Rate" id="rentalRate" maxlength="25" value="<%=movie.rental_rate%>" name="rentalRate" type="text"></input>
+																	<input class="doubleTextBox" placeholder="Rating" id="rating"  value="<%=movie.rating%>" maxlength="5" name="rating" type="text"></input>
 																	<input class="tripleTextBox" style="width:140px" placeholder="Number of Copies:" id="availableCopies" maxlength="5"  value="<%=movie.available_copies%>" name="availableCopies" type="text"></input>
 																</div>
 

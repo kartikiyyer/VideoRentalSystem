@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <head>
-	<title>Admin</title>
+	<title>User</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
@@ -19,15 +19,14 @@
 			<div class="wrap">
 				<div class="nav_list">
 					<ul>
-						<li style="float:left;"><a href="homepage.html">Home</a></li>
-
-						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>	 
-						<li><a href="/userissuemovie?nocache=1">Rent Video  </a></li>
+						<li style="float:left;"><a href="/">Home</a></li>
+						<li><a href="/viewusermovies?nocache=1">View Videos   </a></li>	 
+						<li><a href="/userissuemovie?nocache=1">Rent Videos  </a></li>
 						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account  </a></li>
 						<li><a href="/usergeneratebill?nocache=1">View Bill  </a></li>
 						<li><a href="/changepassword?nocache=1">Change Password   </a></li>
 						<li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
-					</ul>
+					</ul> 
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -92,7 +91,7 @@
 							</div>
 							<div class="fieldBlock">
 								<select  id ="videoTypeId" class="doubleTextBox" name="videoTypeId" style="width:300px;">
-									<option value="">Select</option>
+									<option value="">Video Type</option>
 									<% for(var i=0;i<videoTypes.length;i++) { %>
 									<option value="<%=videoTypes[i].id %>"><%=videoTypes[i].name %></option>
 									<% } %>
@@ -100,7 +99,7 @@
 							</div>
 							<div class="fieldBlock">
 								<select  id ="releaseYear" class="doubleTextBox" name="releaseYear" style="width:300px;">
-									<option value="">Select</option>
+									<option value="">Release Year</option>
 									<% for(var i=0;i<releaseDates.length;i++) { %>
 									<option value="<%=releaseDates[i].release_year %>"><%=releaseDates[i].release_year %></option>
 									<% } %>
@@ -115,7 +114,7 @@
 							
 							<div class="fieldBlock">
 								<select  id ="certificationId" class="doubleTextBox" name="certificationId" style="width:300px;">
-									<option value="">Select</option>
+									<option value="">Certification</option>
 									<% for(var i in certificates) { %>
 									<option value="<%= certificates[i]['id'] %>"><%=certificates[i]["name"]%></option>
 									<% } %>
@@ -156,8 +155,12 @@
 				<%
 				if(movies != null && movies.length > 0) {
 				var numOfSections = (movies.length/5);
+				numOfSections = Math.floor(numOfSections);
 				var videoIndex = 0;
 				var gridSize=5;
+				if(movies.length < gridSize) {
+					gridSize = movies.length;
+				}
 				for(var i=0;i<=numOfSections;i++) {
 					%>
 					<div class="section group">
@@ -166,29 +169,41 @@
 							{
 								%>
 								<div class="grid_1_of_5 images_1_of_5">
-									<a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><img src="<%=movies[videoIndex].poster%>" alt="" /></a>
-									<h2><a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><%= movies[videoIndex].title %> (<%= movies[videoIndex].release_year %>)</a></h2>
-									<div class="price-details">
-										<div class="price-number">
-											<p><span class="rupees"><%= movies[videoIndex].rental_rate %></span></p>
+										<a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><img src="<%=movies[videoIndex].poster%>" alt="" /></a>
+										<h2 style="font-size:20px"><a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><%= movies[videoIndex].title %> (<%= movies[videoIndex].release_year %>)</a></h2>
+										<div class="price-details">
+											<div class="price-number">
+												<p style="font-size:14px;display:inline;"><span class="rupees">$<%= movies[videoIndex].rental_rate %></span></p>
+											</div>
 										</div>
+										
+										<div style="display:inline;">
+											<p style="font-size:14px;color:red;float:right"><%= movies[videoIndex].certification %></p>
 
+										</div>
 										<div class="clear"></div>
+										<div style="display:inline;">
+											<p style="font-size:14px;color:purple">Available Copies:<%= movies[videoIndex].available_copies %></p>
+
+										</div>
+										<div class="clear"></div>
+										<div style="display:inline;">
+											<p style="font-size:14px;color:brown;"><%= movies[videoIndex].categories %></p>
+										</div>
+										<div class="clear"></div>
+										<div align="center">
+											<form action="/userissuemovieselect-submit" method="POST">
+												<input type="hidden" name="membershipNo" value="<%=membershipNo%>"/>
+												<input type="hidden" name="movieId" value="<%=movies[videoIndex].id%>"/>
+												<% if(movies[i].available_copies > 0) { %>
+												<input type="submit" value="Issue >>"/> 
+												<%} else { %>
+												<input type="submit" value="Issue >>" disabled/> 
+												<%} %>
+											</form>   
+
+										</div>			 
 									</div>
-									<%= movies[i].certification %>            			
-	                    			<%= movies[i].available_copies %>
-	                   				<%= movies[i].categories %>
-	                    			<%= movies[i].video_type %>
-									<form action="/userissuemovieselect-submit" method="POST">
-			                          <input type="hidden" name="membershipNo" value="<%=membershipNo%>"/>
-			                          <input type="hidden" name="movieId" value="<%=movies[i].id%>"/>
-			                          <% if(movies[i].available_copies > 0) { %>
-		                   			<input type="submit" value="Issue >>"/> 
-		                   			<%} else { %>
-		                   			<input type="submit" value="Issue >>" disabled/> 
-		                   			<%} %>
-		                   		</form>   			 
-								</div>
 								<%
 								videoIndex++;
 								if(i== (numOfSections-1))

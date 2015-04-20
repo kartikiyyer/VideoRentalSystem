@@ -10,7 +10,7 @@ var cacheTimeout = 600000;
 function insertMovie(callback, movieDetails) {
 	var connection = mysql.createdbConnection();
 	// TODO: Insert in category and actor table
-	connection.query("INSERT INTO video (title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, video_type_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [movieDetails.title, movieDetails.description, movieDetails.releaseYear, movieDetails.rentalRate, movieDetails.discount, movieDetails.availableCopies, movieDetails.formatId, movieDetails.languageId, movieDetails.originalLanguageId, movieDetails.length, movieDetails.replacementCost, movieDetails.rating, movieDetails.certificationId, movieDetails.videoTypeId], function(error, results) {
+	connection.query("INSERT INTO video (title, poster, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, video_type_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [movieDetails.title, movieDetails.poster, movieDetails.description, movieDetails.releaseYear, movieDetails.rentalRate, movieDetails.discount, movieDetails.availableCopies, movieDetails.formatId, movieDetails.languageId, movieDetails.originalLanguageId, movieDetails.length, movieDetails.replacementCost, movieDetails.rating, movieDetails.certificationId, movieDetails.videoTypeId], function(error, results) {
 		if(!error) {
 			if(results.length !== 0) {
 				console.log("Video details inserted");
@@ -40,7 +40,7 @@ exports.insertMovie = insertMovie;
 function editMovie(callback, movieDetails) {
 	var connection = mysql.createdbConnection();
 	var success = 0;
-	connection.query("UPDATE video SET title = ?, description = ?, release_year = ?, rental_rate = ?, discount = ?, available_copies = ?, format_id = ?, language_id = ?, original_language_id = ?, length = ?, replacement_cost = ?, rating = ?, certification_id = ?, video_type_id = ? WHERE id  = ?", [movieDetails.title, movieDetails.description, movieDetails.releaseYear, movieDetails.rentalRate, movieDetails.discount, movieDetails.availableCopies, movieDetails.formatId, movieDetails.languageId, movieDetails.originalLanguageId, movieDetails.length, movieDetails.replacementCost, movieDetails.rating, movieDetails.certificationId, movieDetails.videoTypeId, movieDetails.id],function(error, results) {
+	connection.query("UPDATE video SET title = ?, poster = ?, description = ?, release_year = ?, rental_rate = ?, discount = ?, available_copies = ?, format_id = ?, language_id = ?, original_language_id = ?, length = ?, replacement_cost = ?, rating = ?, certification_id = ?, video_type_id = ? WHERE id  = ?", [movieDetails.title, movieDetails.poster, movieDetails.description, movieDetails.releaseYear, movieDetails.rentalRate, movieDetails.discount, movieDetails.availableCopies, movieDetails.formatId, movieDetails.languageId, movieDetails.originalLanguageId, movieDetails.length, movieDetails.replacementCost, movieDetails.rating, movieDetails.certificationId, movieDetails.videoTypeId, movieDetails.id],function(error, results) {
 		if(!error) {
 			if(results.length !== 0) {
 				connection.query("DELETE FROM video_actor WHERE video_id  = ?", [movieDetails.id],function(error1, results1) {
@@ -142,7 +142,7 @@ exports.deleteMovie = deleteMovie;
  */
 function selectMovieById(callback, movieId) {
 	var connection = mysql.createdbConnection();
-	connection.query("SELECT video.id, title, description, release_year, rental_rate, discount, available_copies, format_id, format.name AS format, language_id, language.name AS language, original_language_id, language1.name AS original_language, length, replacement_cost, rating, certification_id, certificate.name AS certification, video_type_id, video_type.name AS video_type, poster FROM video INNER JOIN format ON format.id = video.format_id INNER JOIN language ON language.id = video.language_id INNER JOIN language AS language1 ON language1.id = video.original_language_id INNER JOIN certificate ON certificate.id = video.certification_id INNER JOIN video_type ON video_type.id = video.video_type_id WHERE video.id  = ?",[movieId], function(error, results) {
+	connection.query("SELECT video.id, poster, title, description, release_year, rental_rate, discount, available_copies, format_id, format.name AS format, language_id, language.name AS language, original_language_id, language1.name AS original_language, length, replacement_cost, rating, certification_id, certificate.name AS certification, video_type_id, video_type.name AS video_type, poster FROM video INNER JOIN format ON format.id = video.format_id INNER JOIN language ON language.id = video.language_id INNER JOIN language AS language1 ON language1.id = video.original_language_id INNER JOIN certificate ON certificate.id = video.certification_id INNER JOIN video_type ON video_type.id = video.video_type_id WHERE video.id  = ?",[movieId], function(error, results) {
 		if(!error) {
 			if(results.length !== 0) {
 				console.log("Video details selected for " + movieId);
@@ -230,7 +230,7 @@ exports.selectUsersCurrentlyIssuedMovie = selectUsersCurrentlyIssuedMovie;
  * @param callback
  */
 function selectMovies(callback) {
-	var query = "SELECT video.id, poster, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, certificate.name AS certification, video_type_id, video_type.name AS video_type FROM video INNER JOIN certificate ON certificate.id = video.certification_id INNER JOIN video_type ON video_type.id = video.video_type_id ORDER BY video.id LIMIT 1000";
+	var query = "SELECT video.id, poster, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, certificate.name AS certification, video_type_id, video_type.name AS video_type FROM video INNER JOIN certificate ON certificate.id = video.certification_id INNER JOIN video_type ON video_type.id = video.video_type_id ORDER BY video.id LIMIT 500";
 	var success = 0;
 	cache.get(function(rows){
 		if(rows == null){
@@ -291,6 +291,40 @@ function selectMovies(callback) {
 }
 
 exports.selectMovies = selectMovies;
+
+
+/**
+ * Get all videos
+ * @param callback
+ */
+function selectVideosForHome(callback) {
+	var query = "SELECT video.id, poster, title, release_year, rental_rate, certificate.name AS certification FROM video INNER JOIN certificate ON certificate.id = video.certification_id ORDER BY video.id LIMIT 10";
+	var success = 0;
+	cache.get(function(rows){
+		if(rows == null){
+			var connection = mysql.createdbConnection();
+			connection.query(query, function(error, results) {
+				if(!error) {
+					if(results.length !== 0) {
+						console.log("Videos selected for home page");
+					} else {
+						cache.put(query, results, cacheTimeout);
+						
+					}
+				} else {
+					console.log(error);
+				}
+				callback(results, error);
+			});
+			mysql.closedbConnection(connection);
+		} else {
+			callback(rows, null);
+		}
+	},query);
+}
+
+exports.selectVideosForHome = selectVideosForHome;
+
 
 function selectMovieBySearchCriteria(callback, title, releaseYear, category, minPrice, maxPrice, isAvailable, certificationId, videoTypeId) {
 	var connection = mysql.createdbConnection();
@@ -363,7 +397,7 @@ function selectMovieBySearchCriteria(callback, title, releaseYear, category, min
 		query = "SELECT DISTINCT(video.id) AS id, poster, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, name AS certification FROM video INNER JOIN certificate ON certificate.id = video.certification_id ";
 		parameters = [];
 	}
-	query += " ORDER BY video.id LIMIT 1000";
+	query += " ORDER BY video.id LIMIT 500";
 	console.log("Query for selectMoviebysearchcriteria: " + query + " " + parameters);
 	connection.query(query,parameters, function(error, results) {
 		if(!error) {

@@ -3,14 +3,14 @@
 	<title>Admin</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
-	<link href="css/slider.css" rel="stylesheet" type="text/css" media="all"/>
-	<link href="css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
-	<link href="css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
-	<script type="text/javascript" src="js/jquery-1.9.0.min.js"></script> 
-	<script type="text/javascript" src="js/move-top.js"></script>
-	<script type="text/javascript" src="js/easing.js"></script>
-	<script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
+	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
+	<script type="text/javascript" src="/js/move-top.js"></script>
+	<script type="text/javascript" src="/js/easing.js"></script>
+	<script type="text/javascript" src="/js/jquery.nivo.slider.js"></script>
 </head>
 <body>
 	<div class="header">
@@ -18,15 +18,14 @@
 			<div class="wrap">
 				<div class="nav_list">
 					<ul>
-						<li style="float:left;"><a href="homepage.html">Home</a></li>
-
-						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>	 
-						<li><a href="/userissuemovie?nocache=1">Rent Video  </a></li>
+						<li style="float:left;"><a href="/">Home</a></li>
+						<li><a href="/viewusermovies?nocache=1">View Videos   </a></li>	 
+						<li><a href="/userissuemovie?nocache=1">Rent Videos  </a></li>
 						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account  </a></li>
 						<li><a href="/usergeneratebill?nocache=1">View Bill  </a></li>
 						<li><a href="/changepassword?nocache=1">Change Password   </a></li>
 						<li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
-					</ul>
+					</ul> 
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -91,7 +90,7 @@
 							</div>
 							<div class="fieldBlock">
 								<select  id ="videoTypeId" class="doubleTextBox" name="videoTypeId" style="width:300px;">
-									<option value="">Select</option>
+									<option value="">Video Type</option>
 									<% for(var i=0;i<videoTypes.length;i++) { %>
 									<option value="<%=videoTypes[i].id %>"><%=videoTypes[i].name %></option>
 									<% } %>
@@ -99,7 +98,7 @@
 							</div>
 							<div class="fieldBlock">
 								<select  id ="releaseYear" class="doubleTextBox" name="releaseYear" style="width:300px;">
-									<option value="">Select</option>
+									<option value="">Release Year</option>
 									<% for(var i=0;i<releaseDates.length;i++) { %>
 									<option value="<%=releaseDates[i].release_year %>"><%=releaseDates[i].release_year %></option>
 									<% } %>
@@ -114,7 +113,7 @@
 							
 							<div class="fieldBlock">
 								<select  id ="certificationId" class="doubleTextBox" name="certificationId" style="width:300px;">
-									<option value="">Select</option>
+									<option value="">Certification</option>
 									<% for(var i in certificates) { %>
 									<option value="<%= certificates[i]['id'] %>"><%=certificates[i]["name"]%></option>
 									<% } %>
@@ -155,8 +154,12 @@
 				<%
 				if(movies != null && movies.length > 0) {
 					var numOfSections = (movies.length/5);
+					numOfSections = Math.floor(numOfSections);
 					var videoIndex = 0;
 					var gridSize=5;
+					if(movies.length < gridSize) {
+						gridSize = movies.length;
+					}
 					for(var i=0;i<=numOfSections;i++) {
 						%>
 						<div class="section group">

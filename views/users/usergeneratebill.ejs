@@ -3,15 +3,15 @@
 	<title>View Bill</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
-	<link href="css/slider.css" rel="stylesheet" type="text/css" media="all"/>
-	<link href="css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
-	<link href="css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
-	<script type="text/javascript" src="js/jquery-1.9.0.min.js"></script> 
-	<script type="text/javascript" src="js/move-top.js"></script>
-	<script type="text/javascript" src="js/easing.js"></script>
-	<script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
-	<script type="text/javascript" src="js/jquery.lightbox_me.js"></script>
+	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
+	<script type="text/javascript" src="/js/move-top.js"></script>
+	<script type="text/javascript" src="/js/easing.js"></script>
+	<script type="text/javascript" src="/js/jquery.nivo.slider.js"></script>
+	<script type="text/javascript" src="/js/jquery.lightbox_me.js"></script>
 </head>
 <body>
 	<div class="header">
@@ -19,15 +19,14 @@
 			<div class="wrap">
 				<div class="nav_list">
 					<ul>
-						<li style="float:left;"><a href="homepage.html">Home</a></li>
-
-						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>	 
-						<li><a href="/userissuemovie?nocache=1">Rent Video  </a></li>
+						<li style="float:left;"><a href="/">Home</a></li>
+						<li><a href="/viewusermovies?nocache=1">View Videos   </a></li>	 
+						<li><a href="/userissuemovie?nocache=1">Rent Videos </a></li>
 						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account  </a></li>
 						<li><a href="/usergeneratebill?nocache=1">View Bill  </a></li>
 						<li><a href="/changepassword?nocache=1">Change Password   </a></li>
 						<li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
-					</ul>
+					</ul> 
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -163,7 +162,7 @@
 									%>
 									<table class="listTable" border=1 align = "center">
 										<tr>
-											<th>Movie Name:</th>
+											<th>Video Name:</th>
 											<th>Issue Date:</th>
 											<th>Rent Amount:</th>
 											<th>Copies:</th>
@@ -215,7 +214,7 @@
 										%>
 										<table class="listTable" border=1 align = "center">
 											<tr>
-												<th>Movie Name:</th>
+												<th>Video Name:</th>
 												<th>Issue Date:</th>
 												<th>Rent Amount:</th>
 												<th>Copies:</th>
@@ -237,7 +236,7 @@
 									%>
 									<div class="content_top">
 										<div class="heading">
-											<h3>No movies rented.</h3>
+											<h3>No videos rented</h3>
 										</div>
 									</div>
 									<%

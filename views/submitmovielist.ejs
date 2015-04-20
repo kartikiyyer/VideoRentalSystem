@@ -19,15 +19,15 @@
 			<div class="wrap">
 				<div class="nav_list">
 					<ul>
-						<li style="float:left;"><a href="homepage.html">Home</a></li>
-						<li><a href="createmember.html">Create Member</a></li>
-						<li><a href="listmembers.html">List Members</a></li>
-						<li><a href="createmovie.html">Create Movie</a></li>
-						<li><a href="listmovies.html">List Movies</a></li>
-						<li><a href="issuemovies.html">Issue Movies</a></li>
-						<li><a href="submitmovie.html">Submit Movie</a></li>
-						<li><a href="generatebill.html">Generate Bill</a></li>
-						<li style="float:right;"><a href="contact.html">Logout</a></li>
+						<li style="float:left;"><a href="/">Home</a></li>
+						<li><a href="/createmember?nocache=1">Create Member    </a></li>
+						<li><a href="/listmember?nocache=1">List Members   </a></li>
+						<li><a href="/createmovie?nocache=1">Create Video   </a></li>
+						<li><a href="/listmovie?nocache=1">List Videos   </a></li>	
+						<li><a id="issueMovieLinkId">Issue Videos   </a></li>
+						<li><a id="submitMovieLinkId">Submit Videos  </a></li> 
+						<li><a href="/generatebill?nocache=1">Generate Bill  </a></li>
+						<li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
 					</ul>
 				</div>
 				<div class="clear"></div>
@@ -36,6 +36,68 @@
 		<div class="wrap">
 			
 			<script type="text/javascript">
+			
+			function allnumeric(inputtxt)  
+			   {  
+				 
+				 var numbers = /^[0-9]+$/;  
+				 if(inputtxt.match(numbers))  
+				 {  
+				  return true;  
+				 }  
+				 else  
+				 {
+				  return false;  
+				 }  
+			   }
+			   
+
+				function validateIssueMovie()   
+			   {
+			     if(document.issuemovie.membershipNo.value ==null ||document.issuemovie.membershipNo.value == ''){
+						alert('Membership No. cannot be blank');
+						return false;
+					} 
+				else if(!allnumeric(document.issuemovie.membershipNo.value))
+				{
+					alert("Membership No. should be numeric");
+					return false;
+				}
+				else if(document.issuemovie.membershipNo.value.length != 9 ) 
+				{
+					alert("Membership No. should be 9 Digits.");
+					return false;
+				}
+				else
+				{
+					
+					return true;
+				}
+			    }
+				
+				function validateReturnMovie()   
+				   {
+				     if(document.returnmovie.membershipNo.value ==null ||document.returnmovie.membershipNo.value == ''){
+							alert('Membership No. cannot be blank');
+							return false;
+						} 
+					else if(!allnumeric(document.returnmovie.membershipNo.value))
+					{
+						alert("Membership No. should be numeric");
+						return false;
+					}
+					else if(document.returnmovie.membershipNo.value.length != 9 ) 
+					{
+						alert("Membership No. should be 9 Digits.");
+						return false;
+					}
+					else
+					{
+						
+						return true;
+					}
+				    }
+				
 			function DropDown(el) {
 				this.dd = el;
 				this.initEvents();
@@ -119,7 +181,8 @@
 			<div class="content">
 				<div class="content_top">
 					<div class="heading">
-						<h3>Return Video</h3>
+						<h3 style="display:inline;">Return Video</h3>
+						<h3 style="display:inline;float:right">Welcome <%= userDet.firstname %>!!!</h3>
 					</div>
 				</div>
 				<div class="section group">
@@ -132,7 +195,7 @@
 								<table class="listTable" border=1>
 								<tr>
 									<td>Sr. No.</td>
-									<td>Movie Name</td>                    
+									<td>Video Name</td>                    
 									<td>Issued Date</td>
 									<td>Issued Copies</td>
 									<td>Select</td>

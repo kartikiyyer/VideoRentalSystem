@@ -285,6 +285,8 @@ function selectCurrentlyIssuedMoviesByUser(callback, membershipNo) {
 						}
 					});
 				}
+			} else {
+				callback(results, error);
 			}
 		} else {
 			console.log(error);

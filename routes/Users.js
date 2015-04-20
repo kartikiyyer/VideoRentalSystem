@@ -39,7 +39,7 @@ exports.validateLogin = function(req, res){
 			} else if(results.length > 0) {
 				req.session.userdetails = JSON.stringify({membershipNo : results[0].membership_no, firstname :  results[0].first_name, lastname : results[0].last_name, memberTypes : results[0].member_type, email: results[0].email,role: results[0].role_id, role_name: results[0].role_name});
 				if(results[0].role_name == "Admin") {
-					res.render('index',{userDet : results[0]},function(err, result) {
+					/*res.render('index',{userDet : results[0]},function(err, result) {
 						// render on success
 						if (!err) {
 							res.end(result);
@@ -49,11 +49,15 @@ exports.validateLogin = function(req, res){
 							res.end('An error occurred');
 							
 						}
-					});
+					});*/
+					res.writeHead(301,
+							{Location: "/listmovie"}			
+					);
+					res.end();
 				}
 				else {
 					res.writeHead(301,
-							{Location: "/"}			
+							{Location: "/viewusermovies"}			
 					);
 					res.end();
 				}
@@ -128,34 +132,34 @@ exports.createMemberSubmit = function(req,res) {
 								res.render("createmember",{userDet : user,"insertedresults":"MEMBER EMAIL EXISTS!! ","roles":roles,"memberTypes":memberTypes,"states":states});
 							}
 							else {
-								var user = [];
+								var users = [];
 								var membershipNum = randomNoGenerator(100000000, 999999999);
-								user.membershipNo = membershipNum;
-								user.password = req.body.password;
-								user.firstname= req.body.firstname;
-								user.lastname= req.body.lastname;
-								user.issuedMovies=0;
-								user.outstandingMovies=0;
-								user.memberTypeId=req.body.memberTypeId;
-								user.balanceAmount=0;
-								user.roleId=req.body.role;
-								user.email = req.body.email;
-								user.areacode = req.body.areacode;
-								user.citycode = req.body.citycode;
-								user.phonenum = req.body.phonenum;
-								user.line1 = req.body.address;
-								user.line2 = req.body.address2;
-								user.city = req.body.city;
-								user.stateId = req.body.stateId;
-								user.zip = req.body.zip1;
-								user.zipext = req.body.zip2;
-								user.roleId = req.body.roleId;
-								if(user.zipext == "") {
-									user.zipext = 0;
+								users.membershipNo = membershipNum;
+								users.password = req.body.password;
+								users.firstname= req.body.firstname;
+								users.lastname= req.body.lastname;
+								users.issuedMovies=0;
+								users.outstandingMovies=0;
+								users.memberTypeId=req.body.memberTypeId;
+								users.balanceAmount=0;
+								users.roleId=req.body.role;
+								users.email = req.body.email;
+								users.areacode = req.body.areacode;
+								users.citycode = req.body.citycode;
+								users.phonenum = req.body.phonenum;
+								users.line1 = req.body.address;
+								users.line2 = req.body.address2;
+								users.city = req.body.city;
+								users.stateId = req.body.stateId;
+								users.zip = req.body.zip1;
+								users.zipext = req.body.zip2;
+								users.roleId = req.body.roleId;
+								if(users.zipext == "") {
+									users.zipext = 0;
 								}
 								
-								/*if(user.memberTypeId == 2) {
-									user.balanceAmount = 25;
+								/*if(users.memberTypeId == 2) {
+									users.balanceAmount = 25;
 								}*/
 								dbuser.insertUser(function(insertSucessfullFlag) {
 									if(!insertSucessfullFlag) {
@@ -164,7 +168,7 @@ exports.createMemberSubmit = function(req,res) {
 									else {	
 										res.render("createmember",{"userDet" : user,"insertedresults":"User details inserted with membership no."+membershipNum,"roles": roles,"memberTypes":memberTypes,"states":states});
 									}
-								},user);
+								},users);
 							}
 						}
 					},req.body.email);
@@ -255,15 +259,30 @@ exports.index = function(req, res) {
 	if(req.session.userdetails != null && req.session.userdetails != "") {
 		var user = JSON.parse(req.session.userdetails);
 		if(user !=null && user.role_name == "Admin") {
-			res.render('index', {userDet : user});
+			//res.render('index', {userDet : user});
+			res.writeHead(301,
+					{Location: "/listmovie"}			
+			);
+			res.end();
 		} else {
-			res.render('\\users\\userindex', {"userDet": user});
+			//res.render('\\users\\userindex', {"userDet": user});
+			res.writeHead(301,
+					{Location: "/viewusermovies"}			
+			);
+			res.end();
 		}
 	} else {
-		res.writeHead(301,
+		/*res.writeHead(301,
 				{Location: "/login"}
 		);
-		res.end();
+		res.end();*/
+		dbvideo.selectVideosForHome(function(videos,error){
+			if(error == null) {
+				console.log(videos);
+				res.render('homepage', {"videos":videos});
+			}			
+		});
+		
 	}
 };
 
@@ -308,14 +327,14 @@ exports.editMember = function(req, res){
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
 		if(user !=null && user.role_name == "Admin") {
-			var user;
+			var users;
 			var memberId = req.params.id;
 			dbuser.selectRole(function(roles,error) {
 				dbuser.selectMemberTypes(function(memberTypes,error) {
 					dbuser.selectStates(function(states,error) {
 						dbuser.selectUserById(function(results, error) {
-							user = results[0];
-							res.render("editmember",{"userDet" : user,"member":user, "editedResults": null,"states":states,"roles":roles,"memberTypes":memberTypes});
+							users = results[0];
+							res.render("editmember",{"userDet" : user,"member":users, "editedResults": null,"states":states,"roles":roles,"memberTypes":memberTypes});
 						},memberId);
 					});
 				});
@@ -338,36 +357,36 @@ exports.editMemberSubmit = function(req, res){
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
 		if(user !=null && user.role_name == "Admin") {
-			var user = [];
+			var users = [];
 			dbuser.selectUserById(function(results, error) {
-				user = results[0];
-				user.first_name= req.body.fname;
-				user.last_name= req.body.lname;
-				user.member_type_id=req.body.memberTypeId;
-				user.email = req.body.email;
-				user.line1 = req.body.address;
-				user.line2 = req.body.address2;
-				user.city = req.body.city;
-				user.state_id= req.body.stateId;
-				user.zip = req.body.zip1;
-				user.zip_ext = req.body.zip2;
-				user.city_code = req.body.citycode;
-				user.area_code = req.body.areacode;
-				user.number = req.body.phonenum;
-				user.role_id = req.body.roleId;
+				users = results[0];
+				users.first_name= req.body.fname;
+				users.last_name= req.body.lname;
+				users.member_type_id=req.body.memberTypeId;
+				users.email = req.body.email;
+				users.line1 = req.body.address;
+				users.line2 = req.body.address2;
+				users.city = req.body.city;
+				users.state_id= req.body.stateId;
+				users.zip = req.body.zip1;
+				users.zip_ext = req.body.zip2;
+				users.city_code = req.body.citycode;
+				users.area_code = req.body.areacode;
+				users.number = req.body.phonenum;
+				users.role_id = req.body.roleId;
 				dbuser.selectRole(function(roles,error) {
 					dbuser.selectMemberTypes(function(memberTypes,error) {
 						dbuser.selectStates(function(states,error) {
 							dbuser.selectUserByEmail(function(results,err) {
 								if(err) {
-									res.render("editmember",{"userDet" : user,"member":user,"editedResults": "Error.","states":states,"roles":roles,"memberTypes":memberTypes});
+									res.render("editmember",{"userDet" : user,"member":users,"editedResults": "Error.","states":states,"roles":roles,"memberTypes":memberTypes});
 								} else {
-									if(results.length>0) {
-										res.render("editmember",{"userDet" : user,"member":user,"editedResults": "Email already exists.","states":states,"roles":roles,"memberTypes":memberTypes});
+									if(results.length > 0 && results[0].membership_no != req.body.memberId) {
+										res.render("editmember",{"userDet" : user,"member":users,"editedResults": "Email already exists.","states":states,"roles":roles,"memberTypes":memberTypes});
 									} else {
 										dbuser.editUser(function(results, error) {
-											res.render("editmember",{"userDet" : user,"member":user,"editedResults": "User edited successfully.","states":states,"roles":roles,"memberTypes":memberTypes});
-										},user);
+											res.render("editmember",{"userDet" : user,"member":users,"editedResults": "User edited successfully.","states":states,"roles":roles,"memberTypes":memberTypes});
+										},users);
 									}
 								}
 							}, req.body.email);
@@ -470,15 +489,15 @@ exports.showMember = function(req,res) {
 		if(user !=null && user.role_name == "Admin") {
 			var memberId = req.params.id;
 			dbuser.selectUserById(function(results,error) {
-				var user = null;
+				var users = null;
 				if(results != null && results.length > 0) {
-					user = results[0];
+					users = results[0];
 					var videos = null;
 					dbuser.selectCurrentlyIssuedMoviesByUser(function(results, error) {
 						if(results != null && results.length >0){
 							videos = results;							
 						} 
-						res.render("member",{"userDet":user,"member": user,"movies":videos});
+						res.render("member",{"userDet":user,"member": users,"movies":videos});
 					},memberId);
 				}
 			},memberId);
@@ -522,15 +541,15 @@ exports.generateBillSubmit = function(req,res) {
 			var membershipNo = req.body.membershipNo;
 			dbuser.selectUserByMembershipNo(function(results,error) {
 				if(results != null && results.length > 0) {
-					var user = results[0];
+					var users = results[0];
 					//if(user.member_type == "S") {
 						dbuser.selectCurrentlyIssuedMoviesByUser(function(results, error){
 							var videos = null;
 							if(results != null && results.length > 0 && results[0].movie_count != 0) {
 								videos = results;
 							}
-							res.render("generatebill",{"userDet":user,"fetchResult": null,"member": user,"movies":videos});
-						},user.membership_no);
+							res.render("generatebill",{"userDet":user,"fetchResult": null,"member": users,"movies":videos});
+						},users.membership_no);
 					//} else {
 					//	res.render("generatebill",{"userDet":user,"fetchResult": null,"member": user,"movies":null});
 					//}
@@ -578,10 +597,10 @@ exports.submitMovieList = function(req,res) {
 		if(user !=null && user.role_name == "Admin") {
 			var membershipNo = req.body.membershipNo;
 			if(membershipNo != null) {	
-				var user = null;
+				var users = null;
 				dbuser.selectUserByMembershipNo(function(results, error) {
 					if(!error && results != null && results.length > 0 && results[0].role_name != "Admin") {
-						user = results[0];
+						users = results[0];
 						// Fetch movies from database
 						var videos = null;
 							dbuser.selectCurrentlyIssuedMoviesByUser(function(results,error) {
@@ -589,7 +608,7 @@ exports.submitMovieList = function(req,res) {
 									videos = results;
 								}
 								res.render('submitmovielist', {"userDet" : user,"videos": videos,"membershipNo":membershipNo,"checkoutError":null});
-							},user.membership_no);
+							},users.membership_no);
 					} else {
 						res.render('submitmovie',{"userDet" : user ,"fetchResult":"Member not recognized."});
 					}
@@ -617,9 +636,9 @@ exports.submitMovieSelectSubmit = function(req,res) {
 			var videoId = req.body.videoId;
 			if(membershipNo != null && membershipNo != null) {
 				dbuser.selectUserByMembershipNo(function(results,err){
-				  var user = null;
+				  var users = null;
 					if(results != null && results.length > 0) {
-						user = results[0];
+						users = results[0];
 						var userMovieMapping = null;
 						dbuser.selectUserMovieMapping(function(results, error) {
 							if(results != null && results.length > 0 ){
@@ -640,7 +659,7 @@ exports.submitMovieSelectSubmit = function(req,res) {
 													}
 													dbuser.editUser(function(results, error) {
 														console.log("Movie returned by user");
-													*/	res.render('submitCheckout',{"userDet" : user,"movie":video,"member":user });
+													*/	res.render('submitCheckout',{"userDet" : user,"movie":video,"member":users });
 													/*},user);*/
 												},video);
 											},videoId);
@@ -650,7 +669,7 @@ exports.submitMovieSelectSubmit = function(req,res) {
 								  	}
 								}, userMovieMapping.id);
 							}
-						}, user.membership_no, videoId);
+						}, users.membership_no, videoId);
 					}	
 				},membershipNo);
 			}			
@@ -679,15 +698,15 @@ exports.usergenerateBill = function(req,res) {
 		var membershipNo = user.membershipNo;
 		dbuser.selectUserByMembershipNo(function(results,error) {
 			if(results != null && results.length > 0) {
-				var user = results[0];
-				//if(user.member_type == "S") {
+				var users = results[0];
+				//if(users.member_type == "S") {
 					dbuser.selectCurrentlyIssuedMoviesByUser(function(results, error){
 						var videos = null;
 						if(results != null && results.length > 0 && results[0].movie_count != 0) {
 							videos = results;
 						}
-						res.render("\\users\\usergeneratebill",{"userDet":user,"fetchResult": null,"member": user,"movies":videos});
-					},user.membership_no);
+						res.render("\\users\\usergeneratebill",{"userDet":user,"fetchResult": null,"member": users,"movies":videos});
+					},users.membership_no);
 				//} else {
 				//	res.render("generatebill",{"userDet":user,"fetchResult": null,"member": user,"movies":null});
 				//}
@@ -712,15 +731,15 @@ exports.user = function(req,res) {
 		if(user !=null) {
 			var memberId = req.params.id;
 			dbuser.selectUserById(function(results,error) {
-				var user = null;
+				var users = null;
 				if(results != null && results.length > 0) {
-					user = results[0];
+					users = results[0];
 					var videos = null;
 					dbuser.selectCurrentlyIssuedMoviesByUser(function(results, error) {
 						if(results != null && results.length >0){
 							videos = results;							
 						} 
-						res.render("\\users\\user",{"userDet":user,"member": user,"movies":videos});
+						res.render("\\users\\user",{"userDet":user,"member": users,"movies":videos});
 					},memberId);
 				}
 			},memberId);
@@ -794,13 +813,13 @@ exports.changePasswordSubmit = function(req, res) {
 exports.usereditMember = function(req, res){
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
-		var user;
+		var users;
 		var memberId = req.params.id;
 		dbuser.selectMemberTypes(function(memberTypes,error) {
 			dbuser.selectStates(function(states,error) {
 				dbuser.selectUserById(function(results, error) {
-					user = results[0];
-					res.render("\\users\\usereditmember",{"userDet" : user,"member":user, "editedResults": null,"states":states,"memberTypes":memberTypes});
+					users = results[0];
+					res.render("\\users\\usereditmember",{"userDet" : user,"member":users, "editedResults": null,"states":states,"memberTypes":memberTypes});
 				},memberId);
 			});
 		});
@@ -818,34 +837,34 @@ exports.usereditMember = function(req, res){
 exports.usereditMemberSubmit = function(req, res){
 	if(req.session.userdetails != null && req.session.userdetails != "") {	
 		var user = JSON.parse(req.session.userdetails);
-		var user = [];
+		var users = [];
 		dbuser.selectUserById(function(results, error) {
-			user = results[0];
-			user.first_name= req.body.fname;
-			user.last_name= req.body.lname;
-			user.member_type_id=req.body.memberTypeId;
-			//user.email = req.body.email;
-			user.line1 = req.body.address;
-			user.line2 = req.body.address2;
-			user.city = req.body.city;
-			user.state_id= req.body.stateId;
-			user.zip = req.body.zip1;
-			user.zip_ext = req.body.zip2;
-			user.city_code = req.body.citycode;
-			user.area_code = req.body.areacode;
-			user.number = req.body.phonenum;
+			users = results[0];
+			users.first_name= req.body.fname;
+			users.last_name= req.body.lname;
+			users.member_type_id=req.body.memberTypeId;
+			//users.email = req.body.email;
+			users.line1 = req.body.address;
+			users.line2 = req.body.address2;
+			users.city = req.body.city;
+			users.state_id= req.body.stateId;
+			users.zip = req.body.zip1;
+			users.zip_ext = req.body.zip2;
+			users.city_code = req.body.citycode;
+			users.area_code = req.body.areacode;
+			users.number = req.body.phonenum;
 			dbuser.selectMemberTypes(function(memberTypes,error) {
 				dbuser.selectStates(function(states,error) {
 					dbuser.selectUserByEmail(function(results,err) {
 						if(err) {
-							res.render("\\users\\usereditmember",{"userDet" : user,"member":user,"editedResults": "Error.","states":states,"memberTypes":memberTypes});
+							res.render("\\users\\usereditmember",{"userDet" : user,"member":users,"editedResults": "Error.","states":states,"memberTypes":memberTypes});
 						} else {
-							if(results.length > 0) {
-								res.render("\\users\\usereditmember",{"userDet" : user,"member":user,"editedResults": "Email already exists.","states":states,"memberTypes":memberTypes});
+							if(results.length > 0 & results[0].membership_no != req.body.memberId) {
+								res.render("\\users\\usereditmember",{"userDet" : user,"member":users,"editedResults": "Email already exists.","states":states,"memberTypes":memberTypes});
 							} else {
 								dbuser.editUser(function(results, error) {
-									res.render("\\users\\usereditmember",{"userDet" : user,"member":user,"editedResults": "User edited successfully.","states":states,"memberTypes":memberTypes});
-								},user);
+									res.render("\\users\\usereditmember",{"userDet" : user,"member":users,"editedResults": "User edited successfully.","states":states,"memberTypes":memberTypes});
+								},users);
 							}
 						}
 					}, req.body.email);
