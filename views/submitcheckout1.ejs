@@ -59,8 +59,10 @@
 										// all dropdowns
 										$('.wrapper-dropdown-2').removeClass('active');
 									});
+				
+			});
 
-				$('#issueMovieLinkId').click(function(e) {
+			$('#issueMovieLinkId').click(function(e) {
 				$('#issueMoviePopup').lightbox_me({
 					centered: true,preventScroll: true
 				});
@@ -74,10 +76,6 @@
 				e.preventDefault();
 			});
 
-				
-			});
-
-			
 			</script>    
 			<div class="header_bottom">
 				<div class="header_bottom_left">										
@@ -151,7 +149,7 @@
 									<div class="doubleTextBox">Returned Video</div>
 									<div class="doubleTextBox"><%= movie.title %></div>		
 								</div>
-								<a class="loginButton submitMovieLinkId">Submit Again  </a>
+								<a class="submitMovieLinkId">Submit Again  </a>
 
 							</div>
 

@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="/js/move-top.js"></script>
 	<script type="text/javascript" src="/js/easing.js"></script>
 	<script type="text/javascript" src="/js/jquery.nivo.slider.js"></script>
+		<script type="text/javascript" src="js/jquery.lightbox_me.js"></script>
 </head>
 <body>
 	<div class="header">
@@ -19,14 +20,14 @@
 				<div class="nav_list">
 					<ul>
 						<li style="float:left;"><a href="homepage.html">Home</a></li>
-						<li><a href="createmember.html">Create Member</a></li>
-						<li><a href="listmembers.html">List Members</a></li>
-						<li><a href="createmovie.html">Create Movie</a></li>
-						<li><a href="listmovies.html">List Movies</a></li>
-						<li><a href="issuemovies.html">Issue Movies</a></li>
-						<li><a href="submitmovie.html">Submit Movie</a></li>
-						<li><a href="generatebill.html">Generate Bill</a></li>
-						<li style="float:right;"><a href="contact.html">Logout</a></li>
+						<li><a href="/createmember?nocache=1">Create member    </a></li>
+						<li><a href="/listmember?nocache=1">List Members   </a></li>
+						<li><a href="/createmovie?nocache=1">Create Movie   </a></li>
+						<li><a href="/listmovie?nocache=1">List Movies   </a></li>	
+						<li><a id="issueMovieLinkId">Issue Movie   </a></li>
+						<li><a id="submitMovieLinkId">Submit Movie  </a></li>  
+						<li><a href="/generatebill?nocache=1">Generate Bill  </a></li>
+						<li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
 					</ul>
 				</div>
 				<div class="clear"></div>
@@ -60,6 +61,20 @@
 									});
 				
 			});
+			$('#issueMovieLinkId').click(function(e) {
+				$('#issueMoviePopup').lightbox_me({
+					centered: true,preventScroll: true
+				});
+				e.preventDefault();
+			});
+
+			$('#submitMovieLinkId').click(function(e) {
+				$('#submitMoviePopup').lightbox_me({
+					centered: true,preventScroll: true
+				});
+				e.preventDefault();
+			});
+
 			</script>    
 			<div class="header_bottom">
 				<div class="header_bottom_left">										
@@ -69,105 +84,96 @@
 		</div>
 	</div>
 	<!------------End Header ------------>
+	<!------------Popoups ------------>
+	<div id="issueMoviePopup" style="display:none">
+
+		<h1 align="center">Issue Movie </h1>
+
+		<form style="margin-top: 13px;" action="/issuemovie-submit" method="Post" name ="issuemovie" onsubmit="return validateIssueMovie()">
+			<div class="fieldBlock">
+				<input id="membershipNoIM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNoIM" type="text"/>
+			</div>
+
+			<div class="fieldBlock">
+				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
+			</div>			
+		</form>
+	</div>
+
+	<div id="submitMoviePopup" style="display:none">
+		<h1 align="center">Submit Movie </h1>
+		<form style="margin-top: 13px;" action="/submitmovie-submit" method="POST" name="returnmovie" onsubmit="return validateReturnMovie()">
+			<div class="fieldBlock">
+				<input id="membershipNoSM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNoIM" type="text"/>
+			</div>
+			<div class="fieldBlock">
+				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
+			</div>			
+		</form>
+	</div>
+	<!------------End Popups ------------>
 	<div class="main">
 		<div class="wrap">
 			<div class="content">
 				<div class="content_top">
 					<div class="heading">
-						<h3>Video Details</h3>
+						<h3 style="display:inline;">Video Details</h3>
+						<h3 style="display:inline;float:right">Welcome <%= userDet.firstname %>!!!</h3>
 					</div>
 				</div>
 				<div class="section group">
-					<div align="center">
-						<div class="container" align = "center">
-							<header>
-								<h1 align="center">Video Information</h1>
-							</header>
-							<%
-							if(movie !=null ){
-								%>
-								<div class="fieldBlock">
-									<div class="imageBox" style="height=100%" ><img  src="images/end-game.jpg" alt="" /></div>
-								</div>
-								<div class="fieldBlock">
-									<div class="doubleTextBox">Video Title</div>
-									<div class="doubleTextBox"><%= movie.title %></div>
-								</div>
-								<div class="fieldBlock">
-									<div class="doubleTextBox">Description</div>
-									<div class="doubleTextBox"><%= movie.description %></div>		
-								</div>
-								<div class="fieldBlock">
-									<div class="doubleTextBox">Video Type</div>
-									<div class="doubleTextBox"><%= movie.video_type %></div>		
-								</div>
-								<div class="fieldBlock"> 
-									<div class="doubleTextBox">Release Year</div>
-									<div class="doubleTextBox"><%= movie.release_year %></div>		
-								</div>
-								<div class="fieldBlock">
-									<div class="doubleTextBox">Rent Amount</div>
-									<div class="doubleTextBox"><%= movie.rental_rate %></div>
-								</div>
-								<div class="fieldBlock">
-									<div class="doubleTextBox">Discount</div>
-									<div class="doubleTextBox"><%= movie.discount %></div>		
-								</div>
-								<div class="fieldBlock"> 
-									<div class="doubleTextBox">Available Copies</div>
-									<div class="doubleTextBox"><%= movie.available_copies %></div>		
-								</div>
-								<div class="fieldBlock"> 
-									<div class="doubleTextBox">Format</div>
-									<div class="doubleTextBox"><%= movie.format %></div>		
-								</div>
-								<div class="fieldBlock">
-									<div class="doubleTextBox">Language</div>
-									<div class="doubleTextBox"><%= movie.language %></div>
-								</div>
-								<div class="fieldBlock">
-									<div class="doubleTextBox">Original Language</div>
-									<div class="doubleTextBox"><%= movie.original_language %></div>		
-								</div>
-								<div class="fieldBlock"> 
-									<div class="doubleTextBox">Video Length(in minutes)</div>
-									<div class="doubleTextBox"><%= movie.length %></div>		
-								</div>
-								<div class="fieldBlock"> 
-									<div class="doubleTextBox">Replacement Cost</div>
-									<div class="doubleTextBox"><%= movie.replacement_cost %></div>		
-								</div>
-								<div class="fieldBlock"> 
-									<div class="doubleTextBox">Rating</div>
-									<div class="doubleTextBox"><%= movie.rating %></div>		
-								</div>
-								<div class="fieldBlock">
-									<div class="doubleTextBox">Certification</div>
-									<div class="doubleTextBox"><%= movie.certification %></div>
-								</div>
-								<div class="fieldBlock">
-									<div class="doubleTextBox">Actors</div>
-									<div class="doubleTextBox"><%= movie.actors %></div>		
-								</div>
-								<div class="fieldBlock"> 
-									<div class="doubleTextBox">Category</div>
-									<div class="doubleTextBox"><%= movie.categories %></div>		
-								</div>
-
-
-								<%
-							}
-						else{
-							%>
-							<div class="fieldBlock">
-								<div class="singleTextBox">Video Details Not Found</div>
-							</div>
-							<%
-						}
+					<%
+					if(movie !=null ){
 						%>
+						<div class="cont-desc span_1_of_2">
+							<div class="product-details">				
+								<div class="grid images_3_of_2">
+									<img src="<%= movie.poster%>" alt="" />
+								</div>
+								<div class="desc span_3_of_2">
+									<h2><%= movie.title %>(<%= movie.release_year %>) |<div style="color:red;display:inline"> <%= movie.certification %></div> | <%= movie.length %> min.</h2>
+									<p><%= movie.description %></p>	
+									<br/>
+									<div class="price">
+										<p style="display:inline">Rental Price: <span>$<%= movie.rental_rate %></span></p>&nbsp;&nbsp;
+										<p style="display:inline">Discount: <span>$<%= movie.discount %></span></p>
+									</div>
+									<br/>
+									<div class="available">
+										<ul>
+											<li><span>Video Type:</span> &nbsp;<%= movie.video_type %></li>			
+											<li><span>Format:</span> &nbsp; <%= movie.format %></li>
+											<li><span>Rating:</span> &nbsp; <%= movie.rating %></li>
+											<li><span>Language:</span> &nbsp; <%= movie.language %></li>
+											<li><span>Original Language:</span> &nbsp; <%= movie.original_language %> </li>
+											<li><span>Availability:</span>&nbsp; <%= movie.available_copies %></li>
+											<li><span>Replacement Cost:</span>&nbsp;<%= movie.replacement_cost %></li>
+										</ul>
+									</div>
+									<div class="share-desc">
+										<div class="share">
+											<p>Actors :</p><%= movie.actors %>		
+											<br/><p>Genre :</p><%= movie.categories %>		
+										</div>
 
+										<div class="clear"></div>
+									</div>
+
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+
+						<%
+					}
+				else{
+					%>
+					<div class="fieldBlock">
+						<div class="singleTextBox">Video Details Not Found</div>
 					</div>
-				</div>
+					<%
+				}
+				%>
 			</div>
 
 			<div class="section group">
@@ -181,23 +187,23 @@
 							</header>
 
 							<%
-							
-								for(var i in users) { %>
-								<div class="fieldBlock">
-									<div class="doubleTextBox"><%= users[i].membership_no %></div>
-									<div class="doubleTextBox"><%= users[i].first_name %> <%= users[i].last_name %></div>
-								</div>
-								<%
-							}
+
+							for(var i in users) { %>
+							<div class="fieldBlock">
+								<div class="doubleTextBox"><%= users[i].membership_no %></div>
+								<div class="doubleTextBox"><%= users[i].first_name %> <%= users[i].last_name %></div>
+							</div>
+							<%
 						}
-					else{
-						%>
-						<div class="fieldBlock">
-							<div class="singleTextBox">No User Rented this movie yet.</div>
-						</div>
-						<%
 					}
-			
+				else{
+					%>
+					<div class="fieldBlock">
+						<div class="singleTextBox">No User Rented this movie yet.</div>
+					</div>
+					<%
+				}
+
 				%>
 
 			</div>

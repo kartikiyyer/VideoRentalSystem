@@ -349,13 +349,12 @@ body {
 	color:#383838;
 }
 .add-cart{
-	float:right;
 	display: inline-block;
 }
 .add-cart h4 a{
 	font-size:0.85em;
 	display: block;
-	padding:8px 10px;
+	padding:4px 4px;
 	font-family: 'ambleregular';
 	background:#FC7D01;
 	color: #FFF;

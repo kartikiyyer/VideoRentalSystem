@@ -1,126 +1,183 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE HTML>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<style>
-.small_bottom{
-    float:left;
-    height:50px;
-    width:50px;
-    margin:5px;
-}
-</style>
-<title>Video Library</title>
-
-<link href="/stylesheets/templatemo_style.css" rel="stylesheet" type="text/css" />
-<script src="/js/jquery-1.10.2.js"></script>
-<!--<script src="/js/jquery.jscroll.js"></script>-->
-
+	<title>Admin</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
+	<script type="text/javascript" src="/js/move-top.js"></script>
+	<script type="text/javascript" src="/js/easing.js"></script>
+	<script type="text/javascript" src="/js/jquery.nivo.slider.js"></script>
+	<script type="text/javascript" src="/js/jquery.lightbox_me.js"></script>
 </head>
-
 <body>
-	<div id="templatemo_background_section_top">
-    
-    	<div class="templatemo_container">
-		
-        	<div id="templatemo_header">
-				<div id="templatemo_logo_section">            
-		        	<h1><a href="/">Video Library</a></h1>          
-					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
-				</div>
-				<div id="templatemo_user_section">            
-		        	Welcome <%= userDet.firstname %>!!
-		        	<a href="/sign-out?nocache=1">Sign Out</a>
-				</div>
-         	</div><!-- end of headder -->
-               <div id="templatemo_menu_panel"> 
-				<div id="templatemo_menu_section">
-					
+	<div class="header">
+		<div class="headertop_desc">
+			<div class="wrap">
+				<div class="nav_list">
 					<ul>
-					  <li><a href="/createmember?nocache=1">Create member    </a></li>
-					  <li><a href="/listmember?nocache=1">List Members   </a></li>
-					  <li><a href="/createmovie?nocache=1">Create Movie   </a></li>
-					  <li><a href="/listmovie?nocache=1">List Movies   </a></li>
-					  <li><a href="/issuemovie?nocache=1">Issue Movie   </a></li>
-					  <li><a href="/submitmovie?nocache=1">Submit Movie  </a></li>  
-					  <li><a href="/generatebill?nocache=1">Generate Bill  </a></li> 							
-					</ul> 
-						
-					</div>
-             </div> <!-- end of menu -->
-		</div><!-- end of container-->
-        
-	</div><!-- end of templatemo_background_section_top-->
-    
-    <div id="templatemo_background_section_middle">
-    
-    	<div class="templatemo_container">
-        
-        	<div id="templatemo_left_section">
-            	
-                <div class="templatemo_post">
-                
-                	<div class="templatemo_post_top">
-                    	<h1>List Movies: This Section lists all the movies and allows to issue the same</h1>
-                    </div>
-                    <div class="templatemo_post_mid">
-                    
-                    <!-- List to display -->
-                   <div style="color:yellow; font-weight:bold;" align="center">
-				<% if(checkoutError != null) {%>
-				<%= checkoutError %>
-				<% } %>
+						<li style="float:left;"><a href="homepage.html">Home</a></li>
+						<li><a href="createmember.html">Create Member</a></li>
+						<li><a href="listmembers.html">List Members</a></li>
+						<li><a href="createmovie.html">Create Movie</a></li>
+						<li><a href="listmovies.html">List Movies</a></li>
+						<li><a href="issuemovies.html">Issue Movies</a></li>
+						<li><a href="submitmovie.html">Submit Movie</a></li>
+						<li><a href="generatebill.html">Generate Bill</a></li>
+						<li style="float:right;"><a href="contact.html">Logout</a></li>
+					</ul>
 				</div>
-				<br/>
-                    <table class="listData" border=1>
-                    <tr>
-                    <th style="color:white;">Sr. No.</th>
-                    <th style="color:white;">Movie Name</th>                    
-                    <th style="color:white;">Issued Date</th>
-                    <th style="color:white;">Issued Copies</th>
-                    <th style="color:white;">Select</th>
-                    </tr>
-                    <% if(videos != null && videos.length > 0) {
-              
-                    	for(var i=0;i<videos.length;i++) {
-                    %>
-	                    <tr>
-	                    <td><%= i+1 %></td>
-	                    <td><%= videos[i].title %></td>
-	                    <td><%= videos[i].rental_date %></td>
-	                    
-	                    <td><%= videos[i].video_count %></td>
-	       				
-	                    <td>
-	                     <form action="/submitmovieselect-submit" method="POST">
-	                          <input type="hidden" name="membershipNo" value="<%=membershipNo%>"/>
-	                          <input type="hidden" name="videoId" value="<%=videos[i].video_id%>"/>
-                   			  <input type="submit" value="Submit >>"/> 
-                   		</form>       
-	                    </td>
-	                    </tr>
-	                    <% } } %>
-                    </table>
-                    </div>
-                    <div class="templatemo_post_bottom">
-          
-                    </div>
-                    
-				</div><!-- end of templatemo_post-->
-                
-            </div><!-- end of left section-->
-            
-            
-        </div><!-- end of container-->
-	</div><!-- end of background middle-->
-    
-     
-</body>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="wrap">
+			
+			<script type="text/javascript">
+			function DropDown(el) {
+				this.dd = el;
+				this.initEvents();
+			}
+			DropDown.prototype = {
+				initEvents : function() {
+					var obj = this;
+					
+					obj.dd.on('click', function(event){
+						$(this).toggleClass('active');
+						event.stopPropagation();
+					});	
+				}
+			}
+			
+			$(function() {
+				
+				var dd = new DropDown( $('#dd') );
+				
+				$(document).click(function() {
+										// all dropdowns
+										$('.wrapper-dropdown-2').removeClass('active');
+									});
+				
+			});
+
+			$('#issueMovieLinkId').click(function(e) {
+				$('#issueMoviePopup').lightbox_me({
+					centered: true,preventScroll: true
+				});
+				e.preventDefault();
+			});
+
+			$('#submitMovieLinkId').click(function(e) {
+				$('#submitMoviePopup').lightbox_me({
+					centered: true,preventScroll: true
+				});
+				e.preventDefault();
+			});
+
+			</script>    
+			<div class="header_bottom">
+				<div class="header_bottom_left">										
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!------------End Header ------------>
+	<!------------Popoups ------------>
+	<div id="issueMoviePopup" style="display:none">
+
+		<h1 align="center">Return Videos </h1>
+		
+		<form style="margin-top: 13px;" action="/issuemovie-submit" method="Post" name ="issuemovie" onsubmit="return validateIssueMovie()">
+			<div class="fieldBlock">
+				<input id="membershipNoIM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
+			</div>
+
+			<div class="fieldBlock">
+				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
+			</div>			
+		</form>
+	</div>
+
+	<div id="submitMoviePopup" style="display:none">
+		<h1 align="center">Return Video </h1>
+		<form style="margin-top: 13px;" action="/submitmovie-submit" method="POST" name="returnmovie" onsubmit="return validateReturnMovie()">
+			<div class="fieldBlock">
+				<input id="membershipNoSM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
+			</div>
+			<div class="fieldBlock">
+				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
+			</div>			
+		</form>
+	</div>
+
+	<!------------End Popups ------------>
+	<div class="main">
+		<div class="wrap">
+			<div class="content">
+				<div class="content_top">
+					<div class="heading">
+						<h3>Return Video</h3>
+					</div>
+				</div>
+				<div class="section group">
+					<div class="section group">
+						<div align="center">
+							<div class="container" align = "center">
+								<header>
+									<h1 align="center">Issued Video List</h1>
+								</header>
+								<table class="listTable" border=1>
+								<tr>
+									<td>Sr. No.</td>
+									<td>Movie Name</td>                    
+									<td>Issued Date</td>
+									<td>Issued Copies</td>
+									<td>Select</td>
+								</tr>
+								<% if(videos != null && videos.length > 0) {
+
+									for(var i=0;i<videos.length;i++) {
+										%>
+										<tr>
+											<td><%= i+1 %></td>
+											<td><%= videos[i].title %></td>
+											<td><%= videos[i].rental_date %></td>
+
+											<td><%= videos[i].video_count %></td>
+
+											<td>
+												<form action="/submitmovieselect-submit" method="POST">
+													<input type="hidden" name="membershipNo" value="<%=membershipNo%>"/>
+													<input type="hidden" name="videoId" value="<%=videos[i].video_id%>"/>
+													<input type="submit" value="Submit >>"/> 
+												</form>       
+											</td>
+										</tr>
+										<% } } %>
+									</table>
 
 
 
+								</div>
 
-</html>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+
+		});
+		</script>
+		<a href="#" id="toTop"><span id="`"> </span></a>
+	</body>
+	</html>
+

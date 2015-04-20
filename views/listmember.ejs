@@ -1,204 +1,249 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE HTML>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-
-</style>
-<title>Video Library</title>
-
-<link href="/stylesheets/templatemo_style.css" rel="stylesheet" type="text/css" />
-
+	<title>Admin</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<script type="text/javascript" src="js/jquery-1.9.0.min.js"></script> 
+	<script type="text/javascript" src="js/move-top.js"></script>
+	<script type="text/javascript" src="js/easing.js"></script>
+	<script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
+		<script type="text/javascript" src="js/jquery.lightbox_me.js"></script>
 </head>
-
 <body>
-	<div id="templatemo_background_section_top">
-    
-    	<div class="templatemo_container">
-		
-        	<div id="templatemo_header">
-				<div id="templatemo_logo_section">            
-		        	<h1><a href="/">Video Library</a></h1>            
-					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
+	<div class="header">
+		<div class="headertop_desc">
+			<div class="wrap">
+				<div class="nav_list">
+					<ul>
+						<li style="float:left;"><a href="homepage.html">Home</a></li>
+						<li><a href="/createmember?nocache=1">Create member    </a></li>
+						<li><a href="/listmember?nocache=1">List Members   </a></li>
+						<li><a href="/createmovie?nocache=1">Create Movie   </a></li>
+						<li><a href="/listmovie?nocache=1">List Movies   </a></li>	
+						<li><a id="issueMovieLinkId">Issue Movie   </a></li>
+						<li><a id="submitMovieLinkId">Submit Movie  </a></li>
+						<li><a href="/generatebill?nocache=1">Generate Bill  </a></li>
+						<li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
+					</ul>
 				</div>
-				<div id="templatemo_user_section">            
-		        	Welcome <%= userDet.firstname %>!!
-		        	<a href="/sign-out?nocache=1">Sign Out</a>
-				</div>
-         	</div><!-- end of headder -->
-               <div id="templatemo_menu_panel"> 
-    		<div id="templatemo_menu_section">
-                
-            		<ul>
-						  <li><a href="/createmember?nocache=1">Create member    </a></li>
-						  <li><a href="/listmember?nocache=1">List Members   </a></li>
-						  <li><a href="/createmovie?nocache=1">Create Movie   </a></li>
-						  <li><a href="/listmovie?nocache=1">List Movies   </a></li>
-						  <li><a href="/issuemovie?nocache=1">Issue Movie   </a></li>
-						  <li><a href="/submitmovie?nocache=1">Submit Movie  </a></li>  
-						  <li><a href="/generatebill?nocache=1">Generate Bill  </a></li> 
-					</ul>  
-                    
-				</div>
-             </div> <!-- end of menu -->
-		</div><!-- end of container-->
-        
-	</div><!-- end of templatemo_background_section_top-->
-    
-    <div id="templatemo_background_section_middle">
-    
-    	<div class="templatemo_container">
-        
-        	<div id="templatemo_left_section">
-            	
-                <div class="templatemo_post">
-                
-                	<div class="templatemo_post_top">
-                    	<h1>List Members: This Section lists all the members and allows to edit and delete the same</h1>
-                    </div>
-                    <div class="templatemo_post_mid">
-                    <form method="POST" action="/listmember-submit">
-						<p>Filter members based on criteria below</p>
-						<table style="margin-left:50px"><tr><td>
-							<table border="0">
-							<tbody>
-							
-							<tr>
-							<td><label class="roleId" for="name">Role: </label> </td>
-							<td>
-							
-							<div class="roleId">
-							<% for(var i in roles) { %>
-							<input type="radio" name="roleId" value="<%=roles[i].id %>"><%=roles[i].name%>
-							<% } %>	
-							</td>
-							</div>
-							</tr>
-							
-							<tr>
-							<td><label class="memberTypeId" for="name">Member type: </label> </td>
-							<td>
-							
-							<div class="memberTypeId">
-							<% for(var i in memberTypes) { %>
-							<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>"><%=memberTypes[i].name%>
-							<% } %>	
-							</td>
-							</div>
-							</tr>
-							
-							<tr>
-							<td><label for="fname">First Name: </label> </td>
-							<td><input id="fname" maxlength="45" name="fname" type="text" /> </td>
-							</tr>
-							
-							<tr>
-							<td><label for="lname">Last Name: </label> </td>
-							<td><input id="lname" maxlength="45" name="lname" type="text" /> </td>
-							</tr>
-							
-							<tr>
-							<td><label for="membershipNo">Membership Number: </label> </td>
-							<td><input id="membershipNo" maxlength="75" name="membershipNo" type="text"/></td>
-							</tr>
-							</tbody></table>
-						</td>
-						<td>
-							<table border="0">
-							<tbody>
-							
-							<tr>
-							<td><label for="email">Email Address: </label> </td>
-							<td><input id="email" maxlength="75" name="email" type="text" style="width:275px;"/></td>
-							</tr>
-							
-							<tr>
-							<td><label for="city">City*: </label> </td>
-							<td><input id="city" maxlength="50" name="city" type="text" /> </td>
-							</tr>
-							<tr>
-							<td><label for="stateId">State*: </label> </td>
-							<td>
-							<select id="stateId" name="stateId">
-							<option value="">Select</option>
-							<% for(var i in states) { %>
-								<option value="<%=states[i].id %>"><%=states[i].name %></option>
-							<% } %>
-							</select>
-							
-							 </td>
-							</tr>
-							
-							<tr>
-							<td><label for="zip1">Zip Code*: </label> </td>
-							<td><input id="zip1" maxlength="50" name="zip1" type="text" style="width:50px"/> - <input id="zip2" maxlength="50" name="zip2" type="text" style="width:50px"/> </td>
-							</tr>
-							
-							<tr><td></td>
-							</tr>
-							</tbody></table>
-						</tr></table>
-                        <table>
-						</table> 
-						<br/>
-						<div><input name="Filter" type="submit" value="Filter" style="width:50px; align:right; margin-left:800px"/></div>
-                    	</form>
-                    	<br/>
-						<br/>
-                    <!-- Listing members -->
-                    <table class="listData" border=1>
-                    <tr>
-                    <th style="color:white;">Sr. No.</th>
-                    <th style="color:white;">Membership No.</th>
-                    <th style="color:white;">First Name</th>
-                    <th style="color:white;">Last Name</th>
-                    <th style="color:white;">Role</th>
-                    <th style="color:white;">Member Type</th>
-                    <th style="color:white;">Outstanding Movies</th>
-                    <th style="color:white;">Balance Amount</th>
-                    <th style="color:white;">View</th>
-                    <th style="color:white;">Edit</th>
-                    <th style="color:white;">Delete</th>
-                    </tr>
-                    <% if(members != null && members.length > 0) {
-              
-                    	for(var i=0;i<members.length;i++) {
-                    	//console.log(members[i].membership_no);
-                    %>
-	                    <tr>
-	                    <td><%= i+1 %></td>
-	                    <td><%= members[i].membership_no %></td>
-	                    <td><%= members[i].first_name %></td>
-	                    <td><%= members[i].last_name %></td>
-	                    <td><%= members[i].role %></td>
-	                    <td width="30px">
-	                    <%= members[i].member_type_name %>
-	                    </td>
-	                    <td><%= members[i].outstanding_movies %></td>
-	                    <td><%= members[i].balance_amount %></td>
-	                    <td><a href="/member/<%=members[i].membership_no %>?nocache=1">View</a></td>
-	                    <td><a href="/editmember/<%=members[i].membership_no %>?nocache=1">Edit</a></td>
-	                    <td><a href="/deletemember/<%=members[i].membership_no %>?nocache=1">Delete</a></td>
-	                    </tr>
-	                    <% } } %>
-                    </table>
-                    </div>
-                    <div class="templatemo_post_bottom">
-                    
-             
-                    </div>
-                    
-				</div><!-- end of templatemo_post-->
-                
-            </div><!-- end of left section-->
-            
-            
-        </div><!-- end of container-->
-	</div><!-- end of background middle-->
-    
-     
-</body>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="wrap">
+			
+			<script type="text/javascript">
+			$(document).ready(function(){
+				$(".role").click(function(){
+					if($(this).val() == 1) {
+						$("#memberType").attr("hidden","");
+					} else {
+						$("#memberType").removeAttr("hidden");
+					}
+				});
 
-</html>
+
+			});
+
+			$('#issueMovieLinkId').click(function(e) {
+				$('#issueMoviePopup').lightbox_me({
+					centered: true,preventScroll: true
+				});
+				e.preventDefault();
+			});
+
+			$('#submitMovieLinkId').click(function(e) {
+				$('#submitMoviePopup').lightbox_me({
+					centered: true,preventScroll: true
+				});
+				e.preventDefault();
+			});
+
+			function DropDown(el) {
+				this.dd = el;
+				this.initEvents();
+			}
+			DropDown.prototype = {
+				initEvents : function() {
+					var obj = this;
+					
+					obj.dd.on('click', function(event){
+						$(this).toggleClass('active');
+						event.stopPropagation();
+					});	
+				}
+			}
+			
+			$(function() {
+				
+				var dd = new DropDown( $('#dd') );
+				
+				$(document).click(function() {
+										// all dropdowns
+										$('.wrapper-dropdown-2').removeClass('active');
+									});
+				
+			});
+			</script>    
+			<div class="header_bottom">
+				<div class="header_bottom_left">										
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!------------End Header ------------>
+	<!------------Popoups ------------>
+	<div id="issueMoviePopup" style="display:none">
+
+		<h1 align="center">Issue Movie </h1>
+
+		<form style="margin-top: 13px;" action="/issuemovie-submit" method="Post" name ="issuemovie" onsubmit="return validateIssueMovie()">
+			<div class="fieldBlock">
+				<input id="membershipNoIM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNoIM" type="text"/>
+			</div>
+
+			<div class="fieldBlock">
+				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
+			</div>			
+		</form>
+	</div>
+
+	<div id="submitMoviePopup" style="display:none">
+		<h1 align="center">Submit Movie </h1>
+		<form style="margin-top: 13px;" action="/submitmovie-submit" method="POST" name="returnmovie" onsubmit="return validateReturnMovie()">
+			<div class="fieldBlock">
+				<input id="membershipNoSM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNoIM" type="text"/>
+			</div>
+			<div class="fieldBlock">
+				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
+			</div>			
+		</form>
+	</div>
+	<!------------End Popups ------------>
+	<div class="main">
+		<div class="wrap">
+			<div class="content">
+				<div class="content_top">
+					<div class="heading">
+						<h3 style="display:inline;">List Members</h3>
+						<h3 style="display:inline;float:right">Welcome <%= userDet.firstname %>!!!</h3>
+					</div>
+				</div>
+				<div class="section group">
+					<form method="POST" action="/listmember-submit">
+						<div class="container">
+							<header>
+								<h1 align="center">Filter members based on criteria below</h1>
+							</header>
+							<div class="fieldBlock">
+								<div class="doubleTextBox" align="center">
+									<div style="padding:0.5cm 0.5cm 0.5cm 0.5cm;">
+										<% for(var i in roles) { %>
+										<input type="radio" class="role" name="roleId" value="<%=roles[i].id %>"><%=roles[i].name%>
+										<% } %>
+									</div>
+								</div>
+								
+								<div id="memberType" class="doubleTextBox" align="center" hidden>
+									<div style="padding:0.5cm 0.5cm 0.5cm 0.5cm;">
+										<% for(var i in memberTypes) { %>
+										<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>"><%=memberTypes[i].name%>
+										<% } %>
+									</div>
+								</div>
+							</div>
+
+							<div class="fieldBlock">
+								<input id="fname" class="doubleTextBox" placeholder="First Name" type="text"></input>
+								<input id="lname" class="doubleTextBox" placeholder="Last Name" type="text"></input>
+							</div>
+
+							<div class="fieldBlock">
+								<input id="membershipNo" class="doubleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
+								<input class="doubleTextBox" id="email" maxlength="75" name="email" placeholder="E-mail Address" type="text"></input>
+							</div>
+
+							<div class="fieldBlock">
+								<input class="doubleTextBox" id="city" maxlength="50" name="city" placeholder="City" type="text"></input>
+								<select id="stateId" name="stateId" style="width:300px;"class="doubleTextBox">
+									<% for(var i in states) { %>
+									<option value="<%=states[i].id %>"><%=states[i].name %></option>
+									<% } %>
+								</select>
+							</div>
+
+							<div class="fieldBlock">
+								<input id="zip1" maxlength="5" name="zip1" class="doubleTextBox" placeholder="Zip Code" type="text"></input>
+								<input id="zip2" class="doubleTextBox" maxlength="4" name="zip2" placeholder="Zip Extn" type="text"></input>
+							</div>
+							<div class="fieldBlock" align="center">
+								<input name="Filter" class="loginButton singleTextBox" type="submit" value="Filter"/>
+							</div>
+
+						</div>
+
+					</div>
+
+				</form>
+				<div class="content_bottom">
+					<div class="heading">
+						<div class="header_bottom_center">
+						</div>
+
+						<h3>Members</h3>
+					</div>
+				</div>
+				<div class="section group">
+					<table class="listTable">
+						<tr>
+							<td>Sr. No.</td>
+							<td>Membership No.</td>
+							<td>First Name</td>
+							<td>Last Name</td>
+							<td>Role</td>
+							<td>Member Type</td>
+							<td>View</td>
+							<td>Edit</td>
+							<td>Delete</td>
+						</tr>
+						<% if(members != null && members.length > 0) {
+							
+							for(var i=0;i<members.length;i++) {
+								//console.log(members[i].membership_no);
+								%>
+								<tr>
+									<td><%= i+1 %></td>
+									<td><%= members[i].membership_no %></td>
+									<td><%= members[i].first_name %></td>
+									<td><%= members[i].last_name %></td>
+									<td><%= members[i].role %></td>
+									<td widtd="30px">
+										<%= members[i].member_type_name %>
+									</td>
+									<td><a href="/member/<%=members[i].membership_no %>?nocache=1">View</a></td>
+									<td><a href="/editmember/<%=members[i].membership_no %>?nocache=1">Edit</a></td>
+									<td><a href="/deletemember/<%=members[i].membership_no %>?nocache=1">Delete</a></td>
+								</tr>
+								<% } } %>
+							</table>
+						</div>
+					</div>
+
+					
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+
+		});
+		</script>
+		<a href="#" id="toTop"><span id="`"> </span></a>
+	</body>
+	</html>
+

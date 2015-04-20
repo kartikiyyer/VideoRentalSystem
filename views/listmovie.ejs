@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <head>
-	<title>Admin</title>
+	<title>List Videos</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="js/move-top.js"></script>
 	<script type="text/javascript" src="js/easing.js"></script>
 	<script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
+		<script type="text/javascript" src="js/jquery.lightbox_me.js"></script>
 </head>
 <body>
 	<div class="header">
@@ -19,14 +20,14 @@
 				<div class="nav_list">
 					<ul>
 						<li style="float:left;"><a href="homepage.html">Home</a></li>
-						<li><a href="createmember.html">Create Member</a></li>
-						<li><a href="listmembers.html">List Members</a></li>
-						<li><a href="createmovie.html">Create Movie</a></li>
-						<li><a href="listmovies.html">List Movies</a></li>
-						<li><a href="issuemovies.html">Issue Movies</a></li>
-						<li><a href="submitmovie.html">Submit Movie</a></li>
-						<li><a href="generatebill.html">Generate Bill</a></li>
-						<li style="float:right;"><a href="contact.html">Logout</a></li>
+						<li><a href="/createmember?nocache=1">Create member    </a></li>
+						<li><a href="/listmember?nocache=1">List Members   </a></li>
+						<li><a href="/createmovie?nocache=1">Create Movie   </a></li>
+						<li><a href="/listmovie?nocache=1">List Movies   </a></li>	
+						<li><a id="issueMovieLinkId">Issue Movie   </a></li>
+						<li><a id="submitMovieLinkId">Submit Movie  </a></li>
+						<li><a href="/generatebill?nocache=1">Generate Bill  </a></li>
+						<li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
 					</ul>
 				</div>
 				<div class="clear"></div>
@@ -60,6 +61,21 @@
 									});
 				
 			});
+
+			$('#issueMovieLinkId').click(function(e) {
+				$('#issueMoviePopup').lightbox_me({
+					centered: true,preventScroll: true
+				});
+				e.preventDefault();
+			});
+
+			$('#submitMovieLinkId').click(function(e) {
+				$('#submitMoviePopup').lightbox_me({
+					centered: true,preventScroll: true
+				});
+				e.preventDefault();
+			});
+
 			</script>    
 			<div class="header_bottom">
 				<div class="header_bottom_left">										
@@ -70,17 +86,46 @@
 	</div>
 	<!------------End Header ------------>
 
-	
+	<!------------Popoups ------------>
+	<div id="issueMoviePopup" style="display:none">
+
+		<h1 align="center">Issue Movie </h1>
+
+		<form style="margin-top: 13px;" action="/issuemovie-submit" method="Post" name ="issuemovie" onsubmit="return validateIssueMovie()">
+			<div class="fieldBlock">
+				<input id="membershipNoIM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNoIM" type="text"/>
+			</div>
+
+			<div class="fieldBlock">
+				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
+			</div>			
+		</form>
+	</div>
+
+	<div id="submitMoviePopup" style="display:none">
+		<h1 align="center">Submit Movie </h1>
+		<form style="margin-top: 13px;" action="/submitmovie-submit" method="POST" name="returnmovie" onsubmit="return validateReturnMovie()">
+			<div class="fieldBlock">
+				<input id="membershipNoSM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNoIM" type="text"/>
+			</div>
+			<div class="fieldBlock">
+				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
+			</div>			
+		</form>
+	</div>
+
+	<!------------End Popups ------------>
 	<div class="main">
 		<div class="wrap">
 			<div class="content">
 				<div class="content_top">
 					<div class="heading">
-						<h3>List Videos: This Section lists all the videos and allows the admin to issue the same</h3>
+						<h3 style="display:inline;">List Videos</h3>
+						<h3 style="display:inline;float:right">Welcome <%= userDet.firstname %>!!!</h3>
 					</div>
 				</div>
 				<div class="section group">
-					<form method="POST" action="/issuemovielist-submit">
+					<form method="POST" action="/listmovie-submit">
 						<div class="container">
 							<header>
 								<h1 align="center">Filter videos based on criteria below</h1>
@@ -154,64 +199,82 @@
 				</div>
 				<%
 				if(movies != null && movies.length > 0) {
-				var numOfSections = (movies.length/5);
-				var videoIndex = 0;
-				var gridSize=5;
-				for(var i=0;i<=numOfSections;i++) {
-					%>
-					<div class="section group">
-						<%
-						for(var j=0;j<gridSize;j++)
-							{
-								%>
-								<div class="grid_1_of_5 images_1_of_5">
-									<a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><img src="<%=movies[videoIndex].poster%>" alt="" /></a>
-									<h2><a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><%= movies[videoIndex].title %> (<%= movies[videoIndex].release_year %>)</a></h2>
-									<div class="price-details">
-										<div class="price-number">
-											<p><span class="rupees"><%= movies[videoIndex].rental_rate %></span></p>
+					var numOfSections = (movies.length/5);
+					var videoIndex = 0;
+					var gridSize=5;
+					for(var i=0;i<=numOfSections;i++) {
+						%>
+						<div class="section group">
+							<%
+							for(var j=0;j<gridSize;j++)
+								{
+									%>
+									<div class="grid_1_of_5 images_1_of_5">
+										<a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><img src="<%=movies[videoIndex].poster%>" alt="" /></a>
+										<h2 style="font-size:20px"><a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><%= movies[videoIndex].title %> (<%= movies[videoIndex].release_year %>)</a></h2>
+										<div class="price-details">
+											<div class="price-number">
+												<p style="font-size:14px;display:inline;"><span class="rupees">$<%= movies[videoIndex].rental_rate %></span></p>
+											</div>
 										</div>
+										
+										<div style="display:inline;">
+											<p style="font-size:14px;color:red;float:right"><%= movies[videoIndex].certification %></p>
 
+										</div>
 										<div class="clear"></div>
+										<div style="display:inline;">
+											<p style="font-size:14px;color:purple">Available Copies:<%= movies[videoIndex].available_copies %></p>
+
+										</div>
+										<div class="clear"></div>
+										<div style="display:inline;">
+											<p style="font-size:14px;color:brown;"><%= movies[videoIndex].categories %></p>
+										</div>
+										<div class="clear"></div>
+										<div>
+											<div class="add-cart">								
+												<h4><a href="/movie/<%=movies[videoIndex].id %>?nocache=1">View</a></h4>
+											</div>
+											<div class="add-cart">								
+												<h4><a href="/editmovie/<%=movies[videoIndex].id %>?nocache=1">Edit</a></h4>
+											</div>
+											<div class="add-cart">								
+												<h4><a href="/deletemovie/<%=movies[videoIndex].id %>?nocache=1">Delete</a>	</h4>
+											</div>
+
+										</div>			 
 									</div>
-									<%= movies[i].certification %>            			
-	                    			<%= movies[i].available_copies %>
-	                   				<%= movies[i].categories %>
-	                    			<%= movies[i].video_type %>
-									<a href="/movie/<%=movies[videoIndex].id %>?nocache=1">View</a>
-	                  			 	<a href="/editmovie/<%=movies[videoIndex].id %>?nocache=1">Edit</a>
-	                    			<a href="/deletemovie/<%=movies[videoIndex].id %>?nocache=1">Delete</a>				 
+									<%
+									videoIndex++;
+									if(i== (numOfSections-1))
+										{
+											gridSize = (movies.length%5);
+										}
+									}
+									%>
 								</div>
 								<%
-								videoIndex++;
-								if(i== (numOfSections-1))
-									{
-										gridSize = (movies.length%5);
-									}
-								}
+								} }
 								%>
 							</div>
-							<%
-						} }
-						%>
+
+
+						</div>
 					</div>
-
-
 				</div>
-			</div>
-		</div>
-		<div class="footer">
-			<div class="copy_right">
-				<p>Company Name © All rights Reseverd | Design by  <a href="http://w3layouts.com">W3Layouts</a> </p>
-			</div>			
-		</div>
-		<script type="text/javascript">
-		$(document).ready(function() {			
-			$().UItoTop({ easingType: 'easeOutQuart' });
+				<div class="footer">
+					<div class="copy_right">
+						<p>Company Name © All rights Reseverd | Design by  <a href="http://w3layouts.com">W3Layouts</a> </p>
+					</div>			
+				</div>
+				<script type="text/javascript">
+				$(document).ready(function() {			
+					$().UItoTop({ easingType: 'easeOutQuart' });
 
-		});
-		</script>
-		<a href="#" id="toTop"><span id="`"> </span></a>
-	</body>
-	</html>
+				});
+				</script>
+				<a href="#" id="toTop"><span id="`"> </span></a>
+			</body>
+			</html>
 

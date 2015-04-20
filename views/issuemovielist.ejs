@@ -91,11 +91,11 @@
 		</div>
 	</div>
 	<!------------End Header ------------>
-<!------------Popoups ------------>
+	<!------------Popoups ------------>
 	<div id="issueMoviePopup" style="display:none">
 
-			<h1 align="center">Issue Movie </h1>
-			
+		<h1 align="center">Issue Movie </h1>
+
 		<form style="margin-top: 13px;" action="/issuemovie-submit" method="Post" name ="issuemovie" onsubmit="return validateIssueMovie()">
 			<div class="fieldBlock">
 				<input id="membershipNoIM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNoIM" type="text"/>
@@ -139,12 +139,13 @@
 			<div class="content">
 				<div class="content_top">
 					<div class="heading">
-						<h3>List Videos: This Section lists all the videos and allows the admin to issue the same</h3>
+						<h3 style="display:inline;">List Videos</h3>
+						<h3 style="display:inline;float:right">Welcome <%= userDet.firstname %>!!!</h3>
 					</div>
 				</div>
 				<div class="section group">
 					<form method="POST" action="/issuemovielist-submit">
-					<input type="hidden" name="membershipNo" value="<%=membershipNo%>"/> 
+						<input type="hidden" name="membershipNo" value="<%=membershipNo%>"/> 
 						<div class="container">
 							<header>
 								<h1 align="center">Filter videos based on criteria below</h1>
@@ -218,70 +219,82 @@
 				</div>
 				<%
 				if(movies != null && movies.length > 0) {
-				var numOfSections = (movies.length/5);
-				var videoIndex = 0;
-				var gridSize=5;
-				for(var i=0;i<=numOfSections;i++) {
-					%>
-					<div class="section group">
-						<%
-						for(var j=0;j<gridSize;j++)
-							{
-								%>
-								<div class="grid_1_of_5 images_1_of_5">
-									<a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><img src="<%=movies[videoIndex].poster%>" alt="" /></a>
-									<h2><a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><%= movies[videoIndex].title %> (<%= movies[videoIndex].release_year %>)</a></h2>
-									<div class="price-details">
-										<div class="price-number">
-											<p><span class="rupees"><%= movies[videoIndex].rental_rate %></span></p>
+					var numOfSections = (movies.length/5);
+					var videoIndex = 0;
+					var gridSize=5;
+					for(var i=0;i<=numOfSections;i++) {
+						%>
+						<div class="section group">
+							<%
+							for(var j=0;j<gridSize;j++)
+								{
+									%>
+									<div class="grid_1_of_5 images_1_of_5">
+										<a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><img src="<%=movies[videoIndex].poster%>" alt="" /></a>
+										<h2 style="font-size:20px"><a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><%= movies[videoIndex].title %> (<%= movies[videoIndex].release_year %>)</a></h2>
+										<div class="price-details">
+											<div class="price-number">
+												<p style="font-size:14px;display:inline;"><span class="rupees">$<%= movies[videoIndex].rental_rate %></span></p>
+											</div>
 										</div>
+										
+										<div style="display:inline;">
+											<p style="font-size:14px;color:red;float:right"><%= movies[videoIndex].certification %></p>
 
+										</div>
 										<div class="clear"></div>
+										<div style="display:inline;">
+											<p style="font-size:14px;color:purple">Available Copies:<%= movies[videoIndex].available_copies %></p>
+
+										</div>
+										<div class="clear"></div>
+										<div style="display:inline;">
+											<p style="font-size:14px;color:brown;"><%= movies[videoIndex].categories %></p>
+										</div>
+										<div class="clear"></div>
+										<div align="center">
+											<form action="/issuemovieselect-submit" method="POST">
+												<input type="hidden" name="membershipNo" value="<%=membershipNo%>"/>
+												<input type="hidden" name="movieId" value="<%=movies[i].id%>"/>
+												<% if(movies[i].available_copies > 0) { %>
+												<input type="submit" value="Issue >>"/> 
+												<%} else { %>
+												<input type="submit" value="Issue >>" disabled/> 
+												<%} %>
+											</form>   
+
+										</div>			 
 									</div>
-									<%= movies[i].certification %>            			
-	                    			<%= movies[i].available_copies %>
-	                   				<%= movies[i].categories %>
-	                    			<%= movies[i].video_type %>
-									<form action="/issuemovieselect-submit" method="POST">
-			                          <input type="hidden" name="membershipNo" value="<%=membershipNo%>"/>
-			                          <input type="hidden" name="movieId" value="<%=movies[i].id%>"/>
-			                          <% if(movies[i].available_copies > 0) { %>
-		                   			<input type="submit" value="Issue >>"/> 
-		                   			<%} else { %>
-		                   			<input type="submit" value="Issue >>" disabled/> 
-		                   			<%} %>
-		                   		</form>   			 
+									<%
+									videoIndex++;
+									if(i== (numOfSections-1))
+										{
+											gridSize = (movies.length%5);
+										}
+									}
+									%>
 								</div>
 								<%
-								videoIndex++;
-								if(i== (numOfSections-1))
-									{
-										gridSize = (movies.length%5);
-									}
-								}
+								} }
 								%>
 							</div>
-							<%
-						} }
-						%>
+
+
+						</div>
 					</div>
-
-
 				</div>
-			</div>
-		</div>
-		<div class="footer">
-			<div class="copy_right">
-				<p>Company Name © All rights Reseverd | Design by  <a href="http://w3layouts.com">W3Layouts</a> </p>
-			</div>			
-		</div>
-		<script type="text/javascript">
-		$(document).ready(function() {			
-			$().UItoTop({ easingType: 'easeOutQuart' });
+				<div class="footer">
+					<div class="copy_right">
+						<p>Company Name © All rights Reseverd | Design by  <a href="http://w3layouts.com">W3Layouts</a> </p>
+					</div>			
+				</div>
+				<script type="text/javascript">
+				$(document).ready(function() {			
+					$().UItoTop({ easingType: 'easeOutQuart' });
 
-		});
-		</script>
-		<a href="#" id="toTop"><span id="`"> </span></a>
-	</body>
-	</html>
+				});
+				</script>
+				<a href="#" id="toTop"><span id="`"> </span></a>
+			</body>
+			</html>
 

@@ -30,6 +30,7 @@ header {
 }
 
 .doubleTextBox {
+  font-size: 20px;
   float: left;
   width: 278px;
   margin: 0;
@@ -39,6 +40,7 @@ header {
 }
 
 .tripleTextBox {
+  font-size: 20px;
   float: left;
   width: 196px;
   margin: 0;
@@ -47,8 +49,18 @@ header {
   height: 50px;
 }
 .singleTextBox {
+  font-size: 20px;
   height: 50px;
   width: 578px;
+  line-height: 50px;
+  padding: 0 0 0 20px;
+  border-top: 0;
+  border-left: 1px solid rgba(0,0,0,.1);
+  border-right: 1px solid rgba(0,0,0,.1);
+  border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.imageBox {
   line-height: 50px;
   padding: 0 0 0 20px;
   border-top: 0;

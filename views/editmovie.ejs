@@ -124,13 +124,6 @@
 				e.preventDefault();
 			});
 
-			$('#generateBillLinkId').click(function(e) {
-				$('#generateBillPopup').lightbox_me({
-					centered: true,preventScroll: true
-				});
-				e.preventDefault();
-			});
-
 			function DropDown(el) {
 				this.dd = el;
 				this.initEvents();
@@ -191,19 +184,6 @@
 		</form>
 	</div>
 
-
-	<div id="generateBillPopup" style="display:none">
-		<h1 align="center">Generate Bill</h1>
-		<form name="generateBill" action="/generatebill-submit" style="margin-top: 13px;" method="POST" onsubmit="return validateGenerateBill()">
-			<div class="fieldBlock">
-				<input id="membershipNoGB" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNoIM" type="text"/>
-			</div>
-
-			<div class="fieldBlock">
-				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
-			</div>			
-		</form>
-	</div>
 	<!------------End Popups ------------>
 	<div class="main">
 		<div class="wrap">

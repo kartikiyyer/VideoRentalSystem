@@ -25,14 +25,14 @@
 				<div class="nav_list">
 					<ul>
 						<li style="float:left;"><a href="homepage.html">Home</a></li>
-						<li><a href="createmember.html">Create Member</a></li>
-						<li><a href="listmembers.html">List Members</a></li>
-						<li><a href="createmovie.html">Create Movie</a></li>
-						<li><a href="listmovies.html">List Movies</a></li>
-						<li><a id="issueMovieLinkId">Issue Movies</a></li>
-						<li><a id="submitMovieLinkId">Submit Movie</a></li>
-						<li><a id="generateBillLinkId">Generate Bill</a></li>
-						<li style="float:right;"><a href="contact.html">Logout</a></li>
+						<li><a href="/createmember?nocache=1">Create member    </a></li>
+						  <li><a href="/listmember?nocache=1">List Members   </a></li>
+						  <li><a href="/createmovie?nocache=1">Create Movie   </a></li>
+						  <li><a href="/listmovie?nocache=1">List Movies   </a></li>	
+						  <li><a id="issueMovieLinkId">Issue Movie   </a></li>
+						  <li><a id="submitMovieLinkId">Submit Movie  </a></li>  
+						  <li><a href="/generatebill?nocache=1">Generate Bill  </a></li>
+						  <li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
 					</ul>
 				</div>
 				<div class="clear"></div>
@@ -123,13 +123,6 @@
 				e.preventDefault();
 			});
 
-			$('#generateBillLinkId').click(function(e) {
-				$('#generateBillPopup').lightbox_me({
-					centered: true,preventScroll: true
-				});
-				e.preventDefault();
-			});
-
 			function DropDown(el) {
 				this.dd = el;
 				this.initEvents();
@@ -192,19 +185,6 @@
 		</form>
 	</div>
 
-
-	<div id="generateBillPopup" style="display:none">
-		<h1 align="center">Generate Bill</h1>
-		<form name="generateBill" action="/generatebill-submit" style="margin-top: 13px;" method="POST" onsubmit="return validateGenerateBill()">
-			<div class="fieldBlock">
-				<input id="membershipNoGB" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNoIM" type="text"/>
-			</div>
-
-			<div class="fieldBlock">
-				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
-			</div>			
-		</form>
-	</div>
 	<!------------End Popups ------------>
 	<div class="main">
 		<div class="wrap">
@@ -216,7 +196,8 @@
 							<div class="clear"></div>
 						</div>
 
-						<h3>Add a Video</h3>
+						<h3 style="display:inline;">Add a Video</h3>
+						<h3 style="display:inline;float:right">Welcome <%= userDet.firstname %>!!!</h3>
 					</div>
 				</div>
 				<div class="section group">
@@ -229,16 +210,18 @@
 						<div class="container">
 							<header>
 								<h1 align="center">Create a New Video Listing </h1>
+
 							</header>
 							<div class="fieldBlock">
 								<input id="title" class="singleTextBox" placeholder="Video Name" maxlength="100" name="title" type="text" /></input>
 							</div>
 							<div class="fieldBlock">
-								<select id="videoTypeId" name="videoTypeId" style="width:300px;">
+								<select class="doubleTextBox" id="videoTypeId" name="videoTypeId" style="width:300px;">
 									<% for(var i in videoTypes) { %>
 									<option value="<%= videoTypes[i]['id'] %>"><%=videoTypes[i]["name"]%></option>
 									<% } %>
 								</select>
+								<input class="doubleTextBox" placeholder="Rental Rate" id="rentalRate" maxlength="25" name="rentalRate" type="text"></input>
 							</div>
 
 							<div class="fieldBlock">
@@ -298,9 +281,8 @@
 							</div>
 
 							<div class="fieldBlock">
-								<input class="tripleTextBox" placeholder="Rating" id="rating" maxlength="5" name="rating" type="text"></input>
-								<input class="tripleTextBox" placeholder="Rental Rate" id="rentalRate" maxlength="25" name="rentalRate" type="text"></input>
-								<input class="tripleTextBox" style="width:143px" placeholder="Number of Copies:" id="availableCopies" maxlength="5" name="availableCopies" type="text"></input>
+								<input class="doubleTextBox" placeholder="Rating" id="rating" maxlength="5" name="rating" type="text"></input>
+								<input class="doubleTextBox" placeholder="No. of Copies" id="availableCopies" maxlength="5" name="availableCopies" type="text"></input>
 							</div>
 
 							<div class="fieldBlock" align="center">
