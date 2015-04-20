@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <head>
-	<title>Admin</title>
+	<title>View Bill</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="js/move-top.js"></script>
 	<script type="text/javascript" src="js/easing.js"></script>
 	<script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
+	<script type="text/javascript" src="js/jquery.lightbox_me.js"></script>
 </head>
 <body>
 	<div class="header">
@@ -19,14 +20,13 @@
 				<div class="nav_list">
 					<ul>
 						<li style="float:left;"><a href="homepage.html">Home</a></li>
-						<li><a href="createmember.html">Create Member</a></li>
-						<li><a href="listmembers.html">List Members</a></li>
-						<li><a href="createmovie.html">Create Movie</a></li>
-						<li><a href="listmovies.html">List Movies</a></li>
-						<li><a href="issuemovies.html">Issue Movies</a></li>
-						<li><a href="submitmovie.html">Submit Movie</a></li>
-						<li><a href="generatebill.html">Generate Bill</a></li>
-						<li style="float:right;"><a href="contact.html">Logout</a></li>
+
+						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>	 
+						<li><a href="/userissuemovie?nocache=1">Rent Video  </a></li>
+						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account  </a></li>
+						<li><a href="/usergeneratebill?nocache=1">View Bill  </a></li>
+						<li><a href="/changepassword?nocache=1">Change Password   </a></li>
+						<li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
 					</ul>
 				</div>
 				<div class="clear"></div>
@@ -38,26 +38,26 @@
 			
 			
 			function allnumeric(inputtxt)  
-			   {  
-				 
-				 var numbers = /^[0-9]+$/;  
-				 if(inputtxt.match(numbers))  
-				 {  
-				  return true;  
-				 }  
-				 else  
-				 {
-				  return false;  
-				 }  
-			   }
-			   
+			{  
+				
+				var numbers = /^[0-9]+$/;  
+				if(inputtxt.match(numbers))  
+				{  
+					return true;  
+				}  
+				else  
+				{
+					return false;  
+				}  
+			}
+			
 
-				function validateGenerateBill()   
-			   {
-			     if(document.generateBill.membershipNo.value ==null ||document.generateBill.membershipNo.value == ''){
-						alert('Membership No. cannot be blank');
-						return false;
-					} 
+			function validateGenerateBill()   
+			{
+				if(document.generateBill.membershipNo.value ==null ||document.generateBill.membershipNo.value == ''){
+					alert('Membership No. cannot be blank');
+					return false;
+				} 
 				else if(!allnumeric(document.generateBill.membershipNo.value))
 				{
 					alert("Membership No. should be numeric");
@@ -73,7 +73,8 @@
 					
 					return true;
 				}
-			    }
+			}
+
 			
 			function DropDown(el) {
 				this.dd = el;
@@ -114,94 +115,49 @@
 			<div class="content">
 				<div class="content_top">
 					<div class="heading">
-						<h3>Generated Bill</h3>
+						<h3 style="display:inline;">View Bill</h3>
+						<h3 style="display:inline;float:right">Welcome <%= userDet.firstname %>!!!</h3>
 					</div>
 				</div>
+
 				<div class="section group">
 					<div class="section group">
-					<%
-							if(member !=null ){
-								%>
-						<div align="center">
-							<div class="container" align = "center">
-								<header>
-									<h1 align="center">User Information </h1>
-								</header>
-								<div class="fieldBlock">
-									<div class="doubleTextBox">Membership No:</div>
-									<div class="doubleTextBox"><%= member.membership_no %></div>
-								</div>
-								<div class="fieldBlock">
-									<div class="doubleTextBox">First Name:</div>
-									<div class="doubleTextBox"><%= member.first_name %></div>		
-								</div>
-								<div class="fieldBlock"> 
-									<div class="doubleTextBox">Last Name:</div>
-									<div class="doubleTextBox"><%= member.last_name %></div>		
-								</div>
-
-							</div>
-							
-							<br/><br/><br/>
-							<div class="content_top">
-								<div class="heading">
-									<h3>Rented Videos</h3>
-								</div>
-							</div>
-
-							<%if(member.member_type == "Simple") { %>
-							<% 
-							if(movies !=null && movies.length > 0){
-								%>
-								<table class="listTable" border=1 align = "center">
-									<tr>
-										<th>Movie Name:</th>
-										<th>Issue Date:</th>
-										<th>Rent Amount:</th>
-										<th>Copies:</th>
-										<th>Total:</th>
-									</tr>
-									<% 
-									var grandTotal = 0;
-									for(var i=0;i< movies.length;i++) {%>
-									<tr>
-
-										<td><%= movies[i].title %></td>
-										<td><%= movies[i].rental_date %></td>
-										<td><%= movies[i].rental_rate %></td>
-										
-										<td><%= movies[i].video_count %></td>
-
-										<td><% 
-
-										var total = 0;
-										total = movies[i].video_count * movies[i].rental_rate;
-										grandTotal = grandTotal + total;									
-										%>
-										<%= total %></td>						
-
-									</tr>
-									<% } %>
-									<tr>
-										<td colspan="4" style="color:black;text-align:right;font-weight:bold" >
-											Grand Total:
-										</td>
-										<td style="color:black;font-weight:bold"><%=grandTotal %></td>
-									</tr>
-
-								</table>
-								<%
-							}
-						else{
+						<%
+						if(member !=null ){
 							%>
 							<div class="content_top">
 								<div class="heading">
-									<h3>No movies rented.</h3>
+									<h3 style="display:inline;">Bill Details</h3>
 								</div>
 							</div>
-							<%
-							} } else {
-								%>
+							<div align="center">
+								<div class="container" align = "center">
+									<header>
+										<h1 align="center">User Information </h1>
+									</header>
+									<div class="fieldBlock">
+										<div class="doubleTextBox">Membership No:</div>
+										<div class="doubleTextBox"><%= member.membership_no %></div>
+									</div>
+									<div class="fieldBlock">
+										<div class="doubleTextBox">First Name:</div>
+										<div class="doubleTextBox"><%= member.first_name %></div>		
+									</div>
+									<div class="fieldBlock"> 
+										<div class="doubleTextBox">Last Name:</div>
+										<div class="doubleTextBox"><%= member.last_name %></div>		
+									</div>
+
+								</div>
+								
+								<br/><br/><br/>
+								<div class="content_top">
+									<div class="heading">
+										<h3>Rented Videos Details</h3>
+									</div>
+								</div>
+
+								<%if(member.member_type == "Simple") { %>
 								<% 
 								if(movies !=null && movies.length > 0){
 									%>
@@ -211,17 +167,36 @@
 											<th>Issue Date:</th>
 											<th>Rent Amount:</th>
 											<th>Copies:</th>
+											<th>Total:</th>
 										</tr>
-										<% for(var i=0;i< movies.length;i++) {%>
+										<% 
+										var grandTotal = 0;
+										for(var i=0;i< movies.length;i++) {%>
 										<tr>
 
 											<td><%= movies[i].title %></td>
 											<td><%= movies[i].rental_date %></td>
-											<td><%= movies[i].rental_rate %></td>
-											<td><%= movies[i].video_count %></td>						
+											<td>$<%= movies[i].rental_rate %></td>
+											
+											<td><%= movies[i].video_count %></td>
+
+											<td><% 
+
+											var total = 0;
+											total = movies[i].video_count * movies[i].rental_rate;
+											grandTotal = grandTotal + total;									
+											%>
+											$<%= total %></td>						
 
 										</tr>
-										<% } %>	
+										<% } %>
+										<tr>
+											<td colspan="4" style="color:black;text-align:right;font-weight:bold" >
+												Grand Total:
+											</td>
+											<td style="color:black;font-weight:bold">$<%=grandTotal %></td>
+										</tr>
+
 									</table>
 									<%
 								}
@@ -229,56 +204,83 @@
 								%>
 								<div class="content_top">
 									<div class="heading">
-										<h3>No movies rented.</h3>
+										<h3>No videos rented.</h3>
 									</div>
 								</div>
 								<%
-							} %>
-							<br/><br/>
-							<div class="content_top">
-								<div class="heading">
-									<h3>Subscription Details</h3>
+								} } else {
+									%>
+									<% 
+									if(movies !=null && movies.length > 0){
+										%>
+										<table class="listTable" border=1 align = "center">
+											<tr>
+												<th>Movie Name:</th>
+												<th>Issue Date:</th>
+												<th>Rent Amount:</th>
+												<th>Copies:</th>
+											</tr>
+											<% for(var i=0;i< movies.length;i++) {%>
+											<tr>
+
+												<td><%= movies[i].title %></td>
+												<td><%= movies[i].rental_date %></td>
+												<td><%= movies[i].rental_rate %></td>
+												<td><%= movies[i].video_count %></td>						
+
+											</tr>
+											<% } %>	
+										</table>
+										<%
+									}
+								else{
+									%>
+									<div class="content_top">
+										<div class="heading">
+											<h3>No movies rented.</h3>
+										</div>
+									</div>
+									<%
+								} %>
+								<br/><br/>
+								<div class="content_top">
+									<div class="heading">
+										<h3>Subscription Details</h3>
+									</div>
 								</div>
+
+
+								<table class="listTable" border=1 align = "center" style="font-weight:bolder">
+									<tr>
+										<td>Description:</td>
+										<td>Amount:</td>
+										
+									</tr>
+									<tr>								
+										<td>Monthly Subscription</td>
+										<td><%= 25 %></td>
+									</tr>
+								</table>
+								<% } %>
 							</div>
+							<%
+						}
 
+						%>
 
-							<table class="listTable" border=1 align = "center" style="font-weight:bolder">
-								<tr>
-									<th>Description:</th>
-									<th>Amount:</th>
-									
-								</tr>
-								<tr>								
-									<td>Monthly Subscription</td>
-									<td><%= 25 %></td>
-								</tr>
-							</table>
-							<% } %>
-						</div>
-						<%
-					}
+					</div>
 
-					%>
 
 				</div>
-
-
 			</div>
 		</div>
-	</div>
-	<div class="footer">
-	<div class="copy_right">
-		<p>Company Name © All rights Reseverd | Design by  <a href="http://w3layouts.com">W3Layouts</a> </p>
-	</div>			
-</div>
+		<script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
 
-	<script type="text/javascript">
-	$(document).ready(function() {			
-		$().UItoTop({ easingType: 'easeOutQuart' });
-
-	});
-	</script>
-	<a href="#" id="toTop"><span id="`"> </span></a>
-</body>
-</html>
+		});
+		</script>
+		<a href="#" id="toTop"><span id="`"> </span></a>
+	</body>
+	</html>
 

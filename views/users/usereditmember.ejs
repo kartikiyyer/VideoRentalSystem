@@ -1,238 +1,296 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE HTML>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-
-<script type="text/javascript">
-
-   function allnumeric(inputtxt)  
-   {  
-	 
-	 var numbers = /^[0-9]+$/;  
-	 if(inputtxt.match(numbers))  
-	 {  
-	  return true;  
-	 }  
-	 else  
-	 {
-	  return false;  
-	 }  
-   }
-   
-   function validateEmail(mail)   
-	{  
-	 if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))  
-	  {  
-		return (true);
-	  }  
-	  return (false);
-	}  
-
-
-	function validateCreateMember()   
-   {
-   
-	return true;
-     if(document.createmember.fname.value==null ||document.createmember.fname.value == ''){
-			alert('Member First Name cannot be blank');
-			return false;
-		} 
-		if(document.createmember.lname.value==null ||document.createmember.lname.value == ''){
-			alert('Member Last Name cannot be blank');
-			return false;
-		}
-		if(document.createmember.email.value==null ||document.createmember.email.value == ''){
-			alert('Email Address cannot be blank');
-			return false;
-		} else if(!validateEmail(document.createmember.email.value)){
-			alert('Enter valid Email address of the member');
-			return false;
-		} 
-		if(document.createmember.address.value==null ||document.createmember.address.value == ''){
-			alert('Address Line 1 cannot be blank');
-			return false;
-		}
-		if(document.createmember.city.value==null ||document.createmember.city.value == ''){
-			alert('City value cannot be blank');
-			return false;
-		}
-
-		if(document.createmember.zip1.value==null ||document.createmember.zip1.value == ''){
-			alert('Please enter Zip Code');
-			return false;
-		}else if(!allnumeric(document.createmember.zip1.value) || document.createmember.zip1.value.length != 5){
-			alert('Enter valid Zip Code for the entered Record. Zip code should be numeric in the following format XXXXX OR XXXXX-XXXX');
-			return false;
-		}
-		
-		if(document.createmember.zip2.value != '' && (!allnumeric(document.createmember.zip2.value) || document.createmember.zip2.value.length!=4)){
-			alert('Enter valid Zip Code extension for the entered Record. Zip code should be numeric in the following format XXXXX OR XXXXX-XXXX');
-			return false;
-		}
-    }
-</script>
-<title>Video Library</title>
-
-<link href="/stylesheets/templatemo_style.css" rel="stylesheet" type="text/css" />
-
+	<title>Edit User Details</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
+	<script type="text/javascript" src="/js/move-top.js"></script>
+	<script type="text/javascript" src="/js/easing.js"></script>
+	<script type="text/javascript" src="/js/jquery.nivo.slider.js"></script>
+	<script type="text/javascript" src="js/jquery.lightbox_me.js"></script>
+	
 </head>
-
 <body>
-	<div id="templatemo_background_section_top">
-    
-    	<div class="templatemo_container">
-		
-        	<div id="templatemo_header">
-				<div id="templatemo_logo_section">            
-		        	<h1><a href="/">Video Library</a></h1>           
-					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
+	<div class="header">
+		<div class="headertop_desc">
+			<div class="wrap">
+				<div class="nav_list">
+					<ul>
+						<li style="float:left;"><a href="homepage.html">Home</a></li>
+
+						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>	 
+						<li><a href="/userissuemovie?nocache=1">Rent Video  </a></li>
+						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account  </a></li>
+						<li><a href="/usergeneratebill?nocache=1">View Bill  </a></li>
+						<li><a href="/changepassword?nocache=1">Change Password   </a></li>
+						<li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
+					</ul>
 				</div>
-				<div id="templatemo_user_section">            
-		        	Welcome <%= userDet.firstname %>!!
-		        	<a href="/sign-out?nocache=1">Sign Out</a>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="wrap">
+
+			<script type="text/javascript">
+			
+			$(document).ready(function(){
+				$(".role").click(function(){
+					if($(this).val() == 1) {
+						$("#memberType").attr("hidden","");
+					} else {
+						$("#memberType").removeAttr("hidden");
+					}
+				});
+
+			});
+
+			function allnumeric(inputtxt)  
+			{  
+
+				var numbers = /^[0-9]+$/;  
+				if(inputtxt.match(numbers))  
+				{  
+					return true;  
+				}  
+				else  
+				{
+					return false;  
+				}  
+			}
+
+			function validateEmail(mail)   
+			{  
+				if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))  
+				{  
+					return (true);
+				}  
+				return (false);
+			}  
+
+
+			function validateCreateMember()   
+			{
+
+				if(document.createmember.roleId.value==null ||document.createmember.roleId.value == ''){
+					alert('Role cannot be blank');
+					return false;
+				} 
+				if(document.createmember.memberTypeId.value==null ||document.createmember.memberTypeId.value == ''){
+					alert('Member Type cannot be blank');
+					return false;
+				} 
+				if(document.createmember.fname.value==null ||document.createmember.fname.value == ''){
+					alert('Member First Name cannot be blank');
+					return false;
+				} 
+				if(document.createmember.lname.value==null ||document.createmember.lname.value == ''){
+					alert('Member Last Name cannot be blank');
+					return false;
+				}
+				if(document.createmember.email.value==null ||document.createmember.email.value == ''){
+					alert('Email Address cannot be blank');
+					return false;
+				} else if(!validateEmail(document.createmember.email.value)){
+					alert('Enter valid Email address of the member');
+					return false;
+				}
+
+				if(document.createmember.areacode.value==null ||document.createmember.areacode.value == ''){
+					alert('Please enter Area Code');
+					return false;
+				}else if(!allnumeric(document.createmember.areacode.value) || document.createmember.areacode.value.length != 3){
+					alert('Enter valid Phone Number for the entered Record. Phone Number should be numeric in the following format XXX-XXX-XXXX');
+					return false;
+				}
+
+				if(document.createmember.citycode.value != '' && (!allnumeric(document.createmember.citycode.value) || document.createmember.citycode.value.length!=3)){
+					alert('Enter valid city Code for the entered Record. Phone number should be numeric in the following format XXX-XXX-XXXX');
+					return false;
+				}
+
+
+				if(document.createmember.phonenum.value != '' && (!allnumeric(document.createmember.phonenum.value) || document.createmember.phonenum.value.length!=4)){
+					alert('Enter valid phone number for the entered Record. Phone number should be numeric in the following format XXX-XXX-XXXX');
+					return false;
+				}
+
+				if(document.createmember.address.value==null ||document.createmember.address.value == ''){
+					alert('Address Line 1 cannot be blank');
+					return false;
+				}
+				if(document.createmember.city.value==null ||document.createmember.city.value == ''){
+					alert('City value cannot be blank');
+					return false;
+				}
+
+				if(document.createmember.zip1.value==null ||document.createmember.zip1.value == ''){
+					alert('Please enter Zip Code');
+					return false;
+				}else if(!allnumeric(document.createmember.zip1.value) || document.createmember.zip1.value.length != 5){
+					alert('Enter valid Zip Code for the entered Record. Zip code should be numeric in the following format XXXXX OR XXXXX-XXXX');
+					return false;
+				}
+
+				if(document.createmember.zip2.value != '' && (!allnumeric(document.createmember.zip2.value) || document.createmember.zip2.value.length!=4)){
+					alert('Enter valid Zip Code extension for the entered Record. Zip code should be numeric in the following format XXXXX OR XXXXX-XXXX');
+					return false;
+				}
+			}
+			
+			
+			function DropDown(el) {
+				this.dd = el;
+				this.initEvents();
+			}
+			DropDown.prototype = {
+				initEvents : function() {
+					var obj = this;
+
+					obj.dd.on('click', function(event){
+						$(this).toggleClass('active');
+						event.stopPropagation();
+					});	
+				}
+			}
+
+			$(function() {
+
+				var dd = new DropDown( $('#dd') );
+
+				$(document).click(function() {
+											// all dropdowns
+											$('.wrapper-dropdown-2').removeClass('active');
+										});
+
+			});
+			</script>    
+			<div class="header_bottom">
+				<div class="header_bottom_left">										
 				</div>
-         	</div><!-- end of headder -->
-               <div id="templatemo_menu_panel"> 
-				<div id="templatemo_menu_section">
-					
-						<ul>
-						  <li><a href="/">Home    </a></li>
-						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>
-						<li><a href="/changepassword?nocache=1">Change Password   </a></li>	
-						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account</a></li>
-						<li><a href="/userissuemovie?nocache=1">Issue Movie   </a></li>
-						<li><a href="/usergeneratebill?nocache=1">Generate Bill  </a></li>
-						</ul> 
+
+			</div>
+		</div>
+	</div>
+
+	<!------------End Header ------------>
+	<div class="main">
+		<div class="wrap">
+			<div class="content">
+				<div class="content_top">
+					<div class="heading">
+						<div class="header_bottom_center">
+
+							<div class="clear"></div>
+						</div>
+
+						<h3 style="display:inline">Edit Member</h3>
+						<h3 style="display:inline;float:right">Welcome <%= userDet.firstname %>!!!</h3>
+					</div>
+				</div>
+				<div class="section group">
+
+					<div class="container">
+						<header>
+							<h1 align="center">Edit Member </h1>
+						</header>
+						<div style="font-weight:bold;" align="center">
+							<% if(editedResults != null) {%>
+							<%= editedResults %>
+							<% } %>
+							
+						</div>
+						<form name="createmember" onsubmit="return validateCreateMember()" action="/editmember-submit" method="post">
+
+							<div class="fieldBlock">
+								<div class="doubleTextBox" align="center">
+									<div style="padding:0.5cm 0.5cm 0.5cm 0.5cm;">
+										<% for(var i in roles) { %>
+										<% if(roles[i].id == member.role_id) { %>
+										<input type="radio" name="roleId" value="<%=roles[i].id %>" checked><%=roles[i].name%>
+										<% } else { %>
+										<input type="radio" name="roleId" value="<%=roles[i].id %>"><%=roles[i].name%>
+										<% } } %>	
+									</div>
+								</div>
+								
+								<div id="memberType" class="doubleTextBox" align="center" hidden>
+									<div style="padding:0.5cm 0.5cm 0.5cm 0.5cm;">
+										<% for(var i in memberTypes) { %>
+										<% if(memberTypes[i].id == member.member_type_id) { %>
+										<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>" checked><%=memberTypes[i].name%>
+										<% } else { %>
+										<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>"><%=memberTypes[i].name%>
+										<% } } %>	
+									</div>
+								</div>
+							</div>
+							<div class="fieldBlock">
+								<input id="membershipNo" maxlength="45" name="membershipNo" class="singleTextBox" type="text" disabled="true" value="Membership No:<%=member.membership_no%>"/>
+							</div>
+							<div class="fieldBlock">
+								<input id="fname" name="firstname" class="doubleTextBox" placeholder="First Name" type="text" value="<%=member.first_name%>"></input>
+								<input id="lname" name="lastname" class="doubleTextBox"  value="<%=member.last_name%>" placeholder="Last Name" type="text"></input>
+							</div>
+							
+							<div class="fieldBlock">
+								<input class="singleTextBox" id="email" maxlength="75" name="email" placeholder="E-mail Address" type="text" value="<%=member.email%>"></input>
+							</div>
+
+							<div class="fieldBlock">
+								<input name="citycode" class="tripleTextBox" placeholder="City Code" value="<%=member.city_code%>" type="text"></input>
+								<input name="areacode" class="tripleTextBox" placeholder="Area Code" value="<%=member.area_code%>" type="text"></input>
+								<input name="phonenum" class="tripleTextBox" style="width:143px" value="<%=member.number%>" placeholder="Phone Number" type="text"></input>
+							</div>
+
+							<div class="fieldBlock">
+								<input class="singleTextBox" id="address" name="address" maxlength="50" placeholder="Address Line 1" type="text" value="<%=member.line1%>"></input>
+							</div>
+
+							<div class="fieldBlock">
+								<input class="singleTextBox" id="address2" name="address2" maxlength="50" placeholder="Address Line 2" type="text" value="<%=member.line2%>"></input>
+							</div>
+
+							<div class="fieldBlock">
+								<input class="doubleTextBox" id="city" maxlength="50" name="city" placeholder="City" type="text" value="<%=member.city%>"></input>
+								<select id="stateId" name="stateId" style="width:300px;"class="doubleTextBox">
+									<% for(var i in states) { %>
+									<% if(states[i].id == member.state_id) { %>
+									<option value="<%=states[i].id %>" selected><%=states[i].name %></option>
+									<% } else { %>
+									<option value="<%=states[i].id %>"><%=states[i].name %></option>
+									<% } } %>
+								</select>
+							</div>
+
+							<div class="fieldBlock">
+								<input id="zip1" maxlength="5" name="zip1" class="doubleTextBox" placeholder="Zip Code" type="text" value="<%=member.zip%>"></input>
+								<input id="zip2" class="doubleTextBox" maxlength="4" name="zip2" value="<%=member.zip_ext%>" placeholder="Zip Extn" type="text"></input>
+							</div>
+
+							<div class="fieldBlock" align="center">
+								<input name="Submit" class="loginButton singleTextBox" type="submit" value="Submit" />
+								<!--a href="login.html" class="loginButton singleTextBox">Register</a-->
+							</div>
+							<input type="hidden" name="memberId" value="<%=member.membership_no%>"/>
+						</form>
 						
 					</div>
-             </div> <!-- end of menu -->
-		</div><!-- end of container-->
-        
-	</div><!-- end of templatemo_background_section_top-->
-    
-    <div id="templatemo_background_section_middle">
-    
-    	<div class="templatemo_container">
-        
-        	<div id="templatemo_left_section">
-            	
-                <div class="templatemo_post">
-                
-                	<div class="templatemo_post_top">
-                    	<h1>Edit Member</h1>
-                    </div>
-                    <div class="templatemo_post_mid">
-					<form action="/usereditmember-submit" onsubmit="return validateCreateMember()" method="post">
-                    	<div style="color:yellow; font-weight:bold;" align="center">
-				<% if(editedResults != null) {%>
-				<%= editedResults %>
-				<% } %>
 				</div>
-				<br/>
-				<table border="0">
-							<tbody>
-							<input type="hidden" name="memberId" value=""/>
-							<tr>
-							<td><label for="mno">Membership Number: </label> </td>
-							<td><input id="membershipNo" maxlength="45" name="membershipNo" type="text" disabled="true" value="<%=member.membership_no%>"/> </td>
-							</tr>
-							
-							<tr>
-							<td><label class="memberTypeId" for="name">Member type: </label> </td>
-							<td>
-							
-							<div class="memberTypeId">
-							<% for(var i in memberTypes) { %>
-							<% if(memberTypes[i].id == member.member_type_id) { %>
-							<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>" checked><%=memberTypes[i].name%>
-							<% } else { %>
-							<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>"><%=memberTypes[i].name%>
-							<% } } %>	
-							</td>
-							</div>
-							</tr>
-							
-							<tr>
-							<td><label for="fname">First Name*: </label> </td>
-							<td><input id="fname" maxlength="45" name="fname" type="text" value="<%=member.first_name%>"/> </td>
-							</tr>
-							
-							<tr>
-							<td><label for="lname">Last Name*: </label> </td>
-							<td><input id="lname" maxlength="45" name="lname" type="text" value="<%=member.last_name%>"/> </td>
-							</tr>
-							
-							<tr>
-							<td><label for="email">Email Address*: </label> </td>
-							<td><input id="email" maxlength="175" name="email" type="text" disabled="true" style="width:275px;" value="<%=member.email%>"/></td>
-							</tr>
+			</div>
+		</div>
+	</div>
 
-							<tr>
-							<td><label for="address">Address Line 1*: </label> </td>
-							<td><input id="address" maxlength="50" name="address" type="text" value="<%=member.line1%>"/> </td>
-							</tr>
-							
-							<tr>
-							<td><label for="address2">Address Line 2: </label> </td>
-							<td><input id="address2" maxlength="50" name="address2" type="text" value="<%=member.line2%>"/> </td>
-							</tr>
-							
-							<tr>
-							<td><label for="city">City*: </label> </td>
-							<td><input id="city" maxlength="50" name="city" type="text" value="<%=member.city%>"/> </td>
-							</tr>
-							<tr>
-							<td><label for="state">State*: </label> </td>
-							<td><!--<input id="state" maxlength="50" name="state" type="text" value="<%=member.state%>"/>-->
-							
-							<select id="stateId" name="stateId">
-							<% for(var i in states) { %>
-							<% if(states[i].id == member.state_id) { %>
-								<option value="<%=states[i].id %>" selected><%=states[i].name %></option>
-							<% } else { %>
-								<option value="<%=states[i].id %>"><%=states[i].name %></option>
-							<% } } %>
-							</select>
-							
-							</td>
-							</tr>
-							
-							<tr>
-							<td><label for="zip1">Zip Code*: </label> </td>
-							<td><input id="zip1" maxlength="50" name="zip1" type="text" style="width:50px" value="<%=member.zip%>"/> - <input id="zip2" maxlength="50" name="zip2" type="text" style="width:50px" value="<%=member.zip_ext%>"/> </td>
-							</tr>
-							<tr>
-							<td><label for="zip1">Phone*: </label> </td>
-							<td><input id="areacode" maxlength="3" name="areacode" type="text" value="<%=member.area_code%>" style="width:50px"/> - <input id="citycode" maxlength="3" name="citycode" type="text" value="<%=member.city_code%>" style="width:50px"/> <input id="phonenum" maxlength="4" name="phonenum" value="<%=member.number%>" type="text" style="width:50px"/></td>
-							</tr>
-							<tr><td></td>
-							</tr>
-							<tr>
-							<td align="right"><input name="Submit" type="submit" value="Submit" /></td>
-							</tr>
+	<script type="text/javascript">
+	$(document).ready(function() {			
+		$().UItoTop({ easingType: 'easeOutQuart' });
 
-							</tbody></table>
-							<input type="hidden" name="memberId" value="<%=member.membership_no%>"/>
-							</form>
-							
-                    </div>
-                    <div class="templatemo_post_bottom">
-                    
-                    	
-                    </div>
-                    
-				</div><!-- end of templatemo_post-->
-                
-            </div><!-- end of left section-->
-            
-            
-        </div><!-- end of container-->
-	</div><!-- end of background middle-->
-    
-     
+	});
+	</script>
+	<a href="#" id="toTop"><span id="`"> </span></a>
 </body>
-
 </html>
+

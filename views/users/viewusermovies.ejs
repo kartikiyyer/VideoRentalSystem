@@ -19,14 +19,13 @@
 				<div class="nav_list">
 					<ul>
 						<li style="float:left;"><a href="homepage.html">Home</a></li>
-						<li><a href="createmember.html">Create Member</a></li>
-						<li><a href="listmembers.html">List Members</a></li>
-						<li><a href="createmovie.html">Create Movie</a></li>
-						<li><a href="listmovies.html">List Movies</a></li>
-						<li><a href="issuemovies.html">Issue Movies</a></li>
-						<li><a href="submitmovie.html">Submit Movie</a></li>
-						<li><a href="generatebill.html">Generate Bill</a></li>
-						<li style="float:right;"><a href="contact.html">Logout</a></li>
+
+						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>	 
+						<li><a href="/userissuemovie?nocache=1">Rent Video  </a></li>
+						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account  </a></li>
+						<li><a href="/usergeneratebill?nocache=1">View Bill  </a></li>
+						<li><a href="/changepassword?nocache=1">Change Password   </a></li>
+						<li style="float:right"><a href="/sign-out?nocache=1">Logout</a></li>
 					</ul>
 				</div>
 				<div class="clear"></div>
@@ -76,11 +75,12 @@
 			<div class="content">
 				<div class="content_top">
 					<div class="heading">
-						<h3>List Videos: This Section lists all the videos and allows the admin to issue the same</h3>
+						<h3 style="display:inline;">List Videos</h3>
+						<h3 style="display:inline;float:right">Welcome <%= userDet.firstname %>!!!</h3>
 					</div>
 				</div>
 				<div class="section group">
-					<form method="POST" action="/issuemovielist-submit">
+					<form method="POST" action="/viewusermovies-submit">
 						<div class="container">
 							<header>
 								<h1 align="center">Filter videos based on criteria below</h1>
@@ -136,7 +136,7 @@
 
 							<div class="fieldBlock" align="center">
 								<input name="Filter" class="loginButton singleTextBox" type="submit" value="Filter"/>
-								<!-- a href="login.html" class="loginButton singleTextBox">Filter</a-->
+
 							</div>
 
 						</div>
@@ -154,62 +154,73 @@
 				</div>
 				<%
 				if(movies != null && movies.length > 0) {
-				var numOfSections = (movies.length/5);
-				var videoIndex = 0;
-				var gridSize=5;
-				for(var i=0;i<=numOfSections;i++) {
-					%>
-					<div class="section group">
-						<%
-						for(var j=0;j<gridSize;j++)
-							{
-								%>
-								<div class="grid_1_of_5 images_1_of_5">
-									<a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><img src="<%=movies[videoIndex].poster%>" alt="" /></a>
-									<h2><a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><%= movies[videoIndex].title %> (<%= movies[videoIndex].release_year %>)</a></h2>
-									<div class="price-details">
-										<div class="price-number">
-											<p><span class="rupees"><%= movies[videoIndex].rental_rate %></span></p>
-										</div>
-
-										<div class="clear"></div>
-									</div>
-									<%= movies[i].certification %>            			
-	                    			<%= movies[i].available_copies %>
-	                   				<%= movies[i].categories %>
-	                    			<%= movies[i].video_type %>
-									<a href="/usermovie/<%=movies[videoIndex].id %>?nocache=1">View</a>			 
-								</div>
-								<%
-								videoIndex++;
-								if(i== (numOfSections-1))
-									{
-										gridSize = (movies.length%5);
-									}
-								}
-								%>
-							</div>
-							<%
-						} }
+					var numOfSections = (movies.length/5);
+					var videoIndex = 0;
+					var gridSize=5;
+					for(var i=0;i<=numOfSections;i++) {
 						%>
+						<div class="section group">
+							<%
+							for(var j=0;j<gridSize;j++)
+								{
+									%>
+									<div class="grid_1_of_5 images_1_of_5">
+										<a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><img src="<%=movies[videoIndex].poster%>" alt="" /></a>
+										<h2><a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><%= movies[videoIndex].title %> (<%= movies[videoIndex].release_year %>)</a></h2>
+										<div class="price-details">
+											<div class="price-number">
+												<p><span class="rupees">$<%= movies[videoIndex].rental_rate %></span></p>
+											</div>
+										</div>
+										
+										<div style="display:inline;">
+											<p style="font-size:14px;color:red;float:right"><%= movies[videoIndex].certification %></p>
+
+										</div>
+										<div class="clear"></div>
+										<div style="display:inline;">
+											<p style="font-size:14px;color:purple">Available Copies:<%= movies[videoIndex].available_copies %></p>
+
+										</div>
+										<div class="clear"></div>
+										<div style="display:inline;">
+											<p style="font-size:14px;color:brown;"><%= movies[videoIndex].categories %></p>
+										</div>
+										<div class="clear"></div>
+										<div class="add-cart">								
+											<h4><a href="/usermovie/<%=movies[videoIndex].id %>?nocache=1">View Details</a>
+											</div>		 
+										</div>
+										<%
+										videoIndex++;
+										if(i== (numOfSections-1))
+											{
+												gridSize = (movies.length%5);
+											}
+										}
+										%>
+									</div>
+									<%
+									} }
+									%>
+								</div>
+
+
+							</div>
+						</div>
 					</div>
+					<div class="footer">
+						<div class="copy_right">
+							<p>Company Name © All rights Reseverd | Design by  <a href="http://w3layouts.com">W3Layouts</a> </p>
+						</div>			
+					</div>
+					<script type="text/javascript">
+					$(document).ready(function() {			
+						$().UItoTop({ easingType: 'easeOutQuart' });
 
-
-				</div>
-			</div>
-		</div>
-		<div class="footer">
-			<div class="copy_right">
-				<p>Company Name © All rights Reseverd | Design by  <a href="http://w3layouts.com">W3Layouts</a> </p>
-			</div>			
-		</div>
-		<script type="text/javascript">
-		$(document).ready(function() {			
-			$().UItoTop({ easingType: 'easeOutQuart' });
-
-		});
-		</script>
-		<a href="#" id="toTop"><span id="`"> </span></a>
-	</body>
-	</html>
+					});
+					</script>
+					<a href="#" id="toTop"><span id="`"> </span></a>
+				</body>
+				</html>
 

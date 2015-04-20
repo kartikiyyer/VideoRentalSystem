@@ -1,12 +1,6 @@
-	<!--A Design by W3layouts
-	Author: W3layout
-	Author URL: http://w3layouts.com
-	License: Creative Commons Attribution 3.0 Unported
-	License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <!DOCTYPE HTML>
 <head>
-	<title>Admin</title>
+	<title>Register</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
@@ -23,15 +17,7 @@
 			<div class="wrap">
 				<div class="nav_list">
 					<ul>
-						<li style="float:left;"><a href="homepage.html">Home</a></li>
-						<li><a href="createmember.html">Create Member</a></li>
-						<li><a href="listmembers.html">List Members</a></li>
-						<li><a href="createmovie.html">Create Movie</a></li>
-						<li><a href="listmovies.html">List Movies</a></li>
-						<li><a href="issuemovies.html">Issue Movies</a></li>
-						<li><a href="submitmovie.html">Submit Movie</a></li>
-						<li><a href="generatebill.html">Generate Bill</a></li>
-						<li style="float:right;"><a href="contact.html">Logout</a></li>
+						<li align="center"><a href="homepage.html">Home</a></li>
 					</ul>
 				</div>
 				<div class="clear"></div>
@@ -182,9 +168,9 @@
 
 					<div class="container">
 						<header>
-							<h1 align="center">Create a New Member </h1>
+							<h1 align="center">Register </h1>
 						</header>
-						<div style="color:yellow; font-weight:bold;" align="center">
+						<div style="font-weight:bold;" align="center">
 							<% if(insertedresults != null) {%>
 							<%= insertedresults %>
 							<% } %>
@@ -237,7 +223,6 @@
 							</div>
 							<div class="fieldBlock" align="center">
 								<input name="Submit" class="loginButton singleTextBox" type="submit" value="Register" />
-								<!--a href="login.html" class="loginButton singleTextBox">Register</a-->
 							</div>
 						</form>
 						

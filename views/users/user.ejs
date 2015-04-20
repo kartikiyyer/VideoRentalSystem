@@ -1,164 +1,178 @@
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-	<html xmlns="http://www.w3.org/1999/xhtml">
-
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-
-	</style>
-	<title>Video Library</title>
-
-	<link href="/stylesheets/templatemo_style.css" rel="stylesheet" type="text/css" />
-
+<!DOCTYPE HTML>
+<head>
+	<title>User</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
+	<script type="text/javascript" src="/js/move-top.js"></script>
+	<script type="text/javascript" src="/js/easing.js"></script>
+	<script type="text/javascript" src="/js/jquery.nivo.slider.js"></script>
+	<script type="text/javascript" src="js/jquery.lightbox_me.js"></script>
 </head>
-
 <body>
-	<div id="templatemo_background_section_top">
-
-		<div class="templatemo_container">
-
-			<div id="templatemo_header">
-				<div id="templatemo_logo_section">            
-					<h1><a href="/">Video Library</a></h1>            
-					<h2>Store for all movies: Comedy, Thriller, Action, Romantic, Documentary</h2>
-				</div>
-				<div id="templatemo_user_section">            
-					Welcome <%= userDet.firstname %>!!
-					<a href="/sign-out?nocache=1">Sign Out</a>
-				</div>
-			</div><!-- end of headder -->
-			<div id="templatemo_menu_panel"> 
-				<div id="templatemo_menu_section">
-
+	<div class="header">
+		<div class="headertop_desc">
+			<div class="wrap">
+				<div class="nav_list">
 					<ul>
-
 						<li><a href="/">Home    </a></li>
-						<li><a href="/viewusermovies?nocache=1">View Movies   </a></li>
+						<li><a href="/viewusermovies?nocache=1">List Videos   </a></li>
 						<li><a href="/changepassword?nocache=1">Change Password   </a></li>	
 						<li><a href="/user/<%= userDet.membershipNo%>?nocache=1">My Account</a></li>
 						<li><a href="/userissuemovie?nocache=1">Issue Movie   </a></li>
-						<li><a href="/usergeneratebill?nocache=1">Generate Bill  </a></li> 	
+						<li><a href="/usergeneratebill?nocache=1">Generate Bill  </a></li> 	 							
 					</ul> 
-
 				</div>
-			</div> <!-- end of menu -->
-		</div><!-- end of container-->
-
-	</div><!-- end of templatemo_background_section_top-->
-
-	<div id="templatemo_background_section_middle">
-
-		<div class="templatemo_container">
-
-			<div id="templatemo_left_section">
-
-				<div class="templatemo_post">
-
-					<div class="templatemo_post_top">
-						<h1>Welcome to the Video Library: The Store for all type of Movie VCDs & DVDs</h1>
-					</div>
-					<div class="templatemo_post_mid">
-
-
-						<div  style="text-align: center;">
-							<h4 style="color:yellow;">User Info</h4>
-							<%
-							if(member !=null ){
-								%>
-								<a href="/usereditmember/<%=member.membership_no %>?nocache=1">Edit</a>
-								<table class="listUserInfo" border=1 align = "center">
-									<tr>
-										<th>Membership No:</th>
-										<td><%= member.membership_no %>    </td>		
-
-									</tr>
-									<tr>
-										<th>First Name:</th>
-										<td><%= member.first_name %>    </td>		
-									</tr>
-									<tr>
-										<th>Last Name:</th>
-										<td><%= member.last_name %>    </td>		
-									</tr>
-									<tr>
-										<th>Address Line 1:</th>
-										<td><%= member.line1 %>    </td>		
-									</tr>
-									<tr>
-										<th>Address Line 2:</th>
-										<td><%= member.line2 %>    </td>		
-									</tr>
-									<tr>
-										<th>City:</th>
-										<td><%= member.city %>    </td>		
-									</tr>
-									<tr>
-										<th>State:</th>
-										<td><%= member.state %>    </td>		
-									</tr>
-									<tr>
-										<th>Zip:</th>
-										<td><%= member.zip %>    </td>		
-									</tr>
-									<tr>
-										<th>Zip Ext:</th>
-										<td><%= member.zip_ext %>    </td>		
-									</tr>
-								</table>
-								<%
-							}
-						else{
-							%>
-							<h5 style="color:yellow;">Member Details Not Found</h5>
-							<%
-						}
-						%>
-
-						<h4 style="color:yellow;">Rented Movies</h4>
-						<%
-						if(movies !=null ){
-							%>
-							<table class="listUserInfo" border=1 align = "center">
-								<tr>
-									<th>Movie Name:</th>
-									<th>Category:</th>
-									<th>Issue Date:</th>
-								</tr>
-								<% for(var i=0;i< movies.length;i++) {%>
-								<tr>
-								
-									<td><%= movies[i].title %></td>
-									<td><%= movies[i].categories %></td>
-									<td><%= movies[i].rental_date %></td>			
-								</tr>
-								<% } %>
-							</table>
-							<%
-						}
-					else{
-						%>
-						<h5 style="color:yellow;">Rented Movie Details Not Found</h5>
-						<%
-					}
-					%>
-				</div>
-
+				<div class="clear"></div>
 			</div>
-			<div class="templatemo_post_bottom">
-
+		</div>
+		<div class="wrap">
 			
+			<script type="text/javascript">
+			function DropDown(el) {
+				this.dd = el;
+				this.initEvents();
+			}
+			DropDown.prototype = {
+				initEvents : function() {
+					var obj = this;
+					
+					obj.dd.on('click', function(event){
+						$(this).toggleClass('active');
+						event.stopPropagation();
+					});	
+				}
+			}
+			
+			$(function() {
+				
+				var dd = new DropDown( $('#dd') );
+				
+				$(document).click(function() {
+										// all dropdowns
+										$('.wrapper-dropdown-2').removeClass('active');
+									});
+				
+			});
+
+			</script>    
+			<div class="header_bottom">
+				<div class="header_bottom_left">										
+				</div>
+				
 			</div>
+		</div>
+	</div>
+	<!------------End Header ------------>
+	<div class="main">
+		<div class="wrap">
+			<div class="content">
+				<div class="content_top">
+					<div class="heading">
+						<h3 style="display:inline;">My Account</h3>
+						<h3 style="display:inline;float:right">Welcome <%= userDet.firstname %>!!!</h3>
+					</div>
+				</div>
 
-		</div><!-- end of templatemo_post-->
+				<div class="section group" align="center">
+					<div align="center">
+						<div class="container" align = "center">
+							<header>
+								<h1 align="center">My Account Information </h1>
+							</header>
+							<div class="fieldBlock">
+								<div class="doubleTextBox">Membership No:</div>
+								<div class="doubleTextBox"><%= member.membership_no %></div>
+							</div>
+							<div class="fieldBlock">
+								<div class="doubleTextBox">First Name</div>
+								<div class="doubleTextBox"><%= member.first_name %></div>		
+							</div>
+							<div class="fieldBlock"> 
+								<div class="doubleTextBox">Last Name</div>
+								<div class="doubleTextBox"><%= member.last_name %></div>		
+							</div>
+							<div class="fieldBlock"> 
+								<div class="doubleTextBox">Address Line 1</div>
+								<div class="doubleTextBox"><%= member.line1 %></div>		
+							</div>	
+							<div class="fieldBlock"> 
+								<div class="doubleTextBox">Address Line 2</div>
+								<div class="doubleTextBox"><%= member.line2 %></div>		
+							</div>
+							<div class="fieldBlock"> 
+								<div class="doubleTextBox">City</div>
+								<div class="doubleTextBox"><%= member.city %></div>		
+							</div>
+							<div class="fieldBlock"> 
+								<div class="doubleTextBox">State</div>
+								<div class="doubleTextBox"><%= member.line2 %></div>		
+							</div>
+							<div class="fieldBlock"> 
+								<div class="doubleTextBox">Zip</div>
+								<div class="doubleTextBox"><%= member.zip %></div>		
+							</div>
+							<div class="fieldBlock"> 
+								<div class="doubleTextBox">Zip Ext</div>
+								<div class="doubleTextBox"><%= member.zip_ext %></div>
+							</div>
+							<div class="fieldBlock" align="center">
+								<a href=">/usereditmember/<%=member.membership_no %>?nocache=1" class="loginButton">Edit</a>
+							</div>
+						</form>
+					</div>
+				</div>
 
-	</div><!-- end of left section-->
+				<br/><br/><br/>
+			</div>
+			<div class="content_top">
+				<div class="heading">
+					<h3 style="display:inline;">Video Rental History</h3>
 
+				</div>
+			</div>
+			<%
+			if(movies !=null && movies.length > 0){
+				%>
+				<table class="listTable">
+					<tr>
+						<td>Movie Name</td>
+						<td>Genre</td>
+						<td>Issued Date</td>
+					</tr>
+					<% for(var i=0;i< movies.length;i++) {%>
+					<tr>
 
-</div><!-- end of container-->
-</div><!-- end of background middle-->
+						<td><%= movies[i].title %></td>
+						<td><%= movies[i].categories %></td>
+						<td><%= movies[i].rental_date %></td>			
+					</tr>
+					<% } %>
+				</table>
+				<%
+			}
+		else{
+			%>
+			<h5>No movies issued yet!!!</h5>
+			<%
+		}
+		%>
+	</div>
+</div>
+</div>
+</div>
 
+<script type="text/javascript">
+$(document).ready(function() {			
+	$().UItoTop({ easingType: 'easeOutQuart' });
 
+});
+</script>
+<a href="#" id="toTop"><span id="`"> </span></a>
 </body>
-
 </html>
+
