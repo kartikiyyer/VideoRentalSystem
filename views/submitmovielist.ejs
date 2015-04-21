@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <head>
-	<title>Admin</title>
+	<title>Return Video List</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
@@ -139,7 +139,8 @@
 				e.preventDefault();
 			});
 
-			</script>    
+			</script>  
+				<a href="/"><img style="margin: 10px 10px 0px 20px;"src="/images/logo.png" alt="" /></a>    
 			<div class="header_bottom">
 				<div class="header_bottom_left">										
 				</div>
@@ -216,7 +217,7 @@
 												<form action="/submitmovieselect-submit" method="POST">
 													<input type="hidden" name="membershipNo" value="<%=membershipNo%>"/>
 													<input type="hidden" name="videoId" value="<%=videos[i].video_id%>"/>
-													<input type="submit" value="Submit >>"/> 
+													<input class="submitButtonClass"type="submit" value="Submit >>"/> 
 												</form>       
 											</td>
 										</tr>

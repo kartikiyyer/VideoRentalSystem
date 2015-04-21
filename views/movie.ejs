@@ -1,12 +1,13 @@
 <!DOCTYPE HTML>
 <head>
-	<title>Admin</title>
+	<title>Video Details</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/styleLogin.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
 	<script type="text/javascript" src="/js/move-top.js"></script>
 	<script type="text/javascript" src="/js/easing.js"></script>
@@ -136,7 +137,8 @@
 				e.preventDefault();
 			});
 
-			</script>    
+			</script>   
+				<a href="/"><img style="margin: 10px 10px 0px 20px;"src="/images/logo.png" alt="" /></a>   
 			<div class="header_bottom">
 				<div class="header_bottom_left">										
 				</div>
@@ -146,32 +148,32 @@
 	</div>
 	<!------------End Header ------------>
 	<!------------Popoups ------------>
-	<div id="issueMoviePopup" style="display:none">
+	<div id="issueMoviePopup" style="display:none;background:grey">
 
-		<h1 align="center">Issue Videos </h1>
-
+		<h1 align="center" style="font-size:25px;font-weight:bold">Issue Videos </h1>
 		<form style="margin-top: 13px;" action="/issuemovie-submit" method="Post" name ="issuemovie" onsubmit="return validateIssueMovie()">
 			<div class="fieldBlock">
 				<input id="membershipNoIM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
 			</div>
-
-			<div class="fieldBlock">
-				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
+			<br/>
+			<div class="fieldBlock" align="center">
+				<input name="Submit" class="submitButtonClass" type="submit" value="Next>>" />
 			</div>			
 		</form>
 	</div>
 
-	<div id="submitMoviePopup" style="display:none">
+	<div id="submitMoviePopup" style="display:none;background:grey">
 		<h1 align="center" style="font-size:25px;font-weight:bold">Return Videos </h1>
 		<form style="margin-top: 13px;" action="/submitmovie-submit" method="POST" name="returnmovie" onsubmit="return validateReturnMovie()">
 			<div class="fieldBlock">
 				<input id="membershipNoSM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
 			</div>
-			<div class="fieldBlock">
-				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
-			</div>			
-		</form>
-	</div>
+		</br>
+		<div class="fieldBlock" align="center">
+			<input name="Submit" class="submitButtonClass" type="submit" value="Next>>" />
+		</div>			
+	</form>
+</div>
 	<!------------End Popups ------------>
 	<div class="main">
 		<div class="wrap">
