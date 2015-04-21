@@ -11,6 +11,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="/css/styleLogin.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
 <script type="text/javascript" src="/js/move-top.js"></script>
 <script type="text/javascript" src="/js/easing.js"></script>
@@ -69,9 +70,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		  	         </div>
 						    <div>					 
 						 	    <!------ Slider ------------>
-						 	    <div class="overlay">
+						 	    <div class="overlay" >
 						 	    	<a href="/"><img src="images/logo.png" alt="" /></a>
-						 	    	<a href="/login" class="loginButton" style="margin-right: 30px" style="float:right">Login</a>
 						 	    </div>
 								  <div class="slider">
 							      	<div class="slider-wrapper theme-default">
@@ -101,40 +101,54 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<div class="clear"></div>
 				</div>
 						
-    		<h3>New Products</h3>
+    		<h3>Popular Videos</h3>
     		</div>
     	</div>
 	      <div class="section group">
 	      		<% for(var i=0;i<5;i++) { %>
-				<div class="grid_1_of_5 images_1_of_5">
-					 <img src="<%=videos[i].poster%>" alt="" />
-					 <h2><%=videos[i].title%></h2>
-					<div class="price-details">
-				       <div class="price-number">
-							<p><span class="rupees">$<%=videos[i].rental_rate%></span></p>
-					    </div>
-							 <div class="clear"></div>
-					</div>					 
-				</div>
+													<div class="grid_1_of_5 images_1_of_5">
+										<img src="<%=videos[i].poster%>" alt="" />
+										<h2 style="font-size:20px">
+										<%= videos[i].title %> (<%= videos[i].release_year %>)</h2>
+										<div class="price-details">
+											<div class="price-number">
+												<p style="font-size:14px;display:inline;"><span class="rupees">$<%= videos[i].rental_rate %></span></p>
+											</div>
+										</div>
+										
+										<div style="display:inline;">
+											<p style="font-size:14px;color:red;float:right"><%= videos[i].certification %></p>
+
+										</div>
+										<div class="clear"></div>
+										<div style="display:inline;">
+											<p style="font-size:14px;color:brown;"><%= videos[i].categories %></p>
+										</div>	 
+									</div>
 				<% } %>
 			</div>
 			<div class="content_bottom">
     		<div class="heading">
-    		<h3>Feature Products</h3>
+    		<h3>Featured Videos</h3>
     		</div>
     	  </div>
 			<div class="section group">
 				<% for(var i=5;i<10;i++) { %>
-				<div class="grid_1_of_5 images_1_of_5">
-					 <img src="<%=videos[i].poster%>" alt="" />
-					 <h2><%=videos[i].title%></h2>
-					<div class="price-details">
-				       <div class="price-number">
-							<p><span class="rupees">$<%=videos[i].rental_rate%></span></p>
-					    </div>
-							 <div class="clear"></div>
-					</div>					 
-				</div>
+																	<div class="grid_1_of_5 images_1_of_5">
+										<img src="<%=videos[i].poster%>" alt="" />
+										<h2 style="font-size:20px">
+										<%= videos[i].title %> (<%= videos[i].release_year %>)</h2>
+										<div class="price-details">
+											<div class="price-number">
+												<p style="font-size:14px;display:inline;"><span class="rupees">$<%= videos[i].rental_rate %></span></p>
+											</div>
+										</div>
+										
+										<div style="display:inline;">
+											<p style="font-size:14px;color:red;float:right"><%= videos[i].certification %></p>
+
+										</div>
+									</div>
 				<% } %>
 				
 			</div>

@@ -7,6 +7,7 @@
 	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/styleLogin.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
 	<script type="text/javascript" src="/js/move-top.js"></script>
 	<script type="text/javascript" src="/js/easing.js"></script>
@@ -196,94 +197,94 @@
 
 					<div class="container">
 						<header>
-							<h1 align="center">Edit Member </h1>
+							<h1 align="center">Edit My Account Details </h1>
 						</header>
-						<div style="font-weight:bold;" align="center">
+						<div class="fieldBlock" align="center">
 							<% if(editedResults != null) {%>
-							<%= editedResults %>
+							<div class="singleTextBox" style="font-weight:bold;font-size:20px">
+								<%= editedResults %>
+							</div>
 							<% } %>
-							
 						</div>
 						<form name="createmember" onsubmit="return validateCreateMember()" action="/usereditmember-submit" method="post">
 
 							<div class="fieldBlock">
-								<div class="doubleTextBox" align="center">
-									
+
+
+
+								<div id="memberType" class="singleTextBox" align="center">
 								
-								<div id="memberType" class="doubleTextBox" align="center">
-									<div style="padding:0.5cm 0.5cm 0.5cm 0.5cm;">
 										<% for(var i in memberTypes) { %>
 										<% if(memberTypes[i].id == member.member_type_id) { %>
 										<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>" checked><%=memberTypes[i].name%>
 										<% } else { %>
 										<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>"><%=memberTypes[i].name%>
 										<% } } %>	
-									</div>
+									
 								</div>
-							</div>
-							<div class="fieldBlock">
-								<input id="membershipNo" maxlength="45" name="membershipNo" class="singleTextBox" type="text" disabled="true" value="Membership No:<%=member.membership_no%>"/>
-							</div>
-							<div class="fieldBlock">
-								<input id="fname" name="fname" class="doubleTextBox" placeholder="First Name" type="text" value="<%=member.first_name%>"></input>
-								<input id="lname" name="lname" class="doubleTextBox"  value="<%=member.last_name%>" placeholder="Last Name" type="text"></input>
-							</div>
-							
-							<div class="fieldBlock">
-								<input class="singleTextBox" id="email" maxlength="75" name="email" placeholder="E-mail Address" type="text" value="<%=member.email%>"></input>
-							</div>
+								<div class="fieldBlock">
+									<input id="membershipNo" maxlength="45" name="membershipNo" class="singleTextBox" type="text" disabled="true" value="Membership No:<%=member.membership_no%>"/>
+								</div>
+								<div class="fieldBlock">
+									<input id="fname" name="fname" class="doubleTextBox" placeholder="First Name" type="text" value="<%=member.first_name%>"></input>
+									<input id="lname" name="lname" class="doubleTextBox"  value="<%=member.last_name%>" placeholder="Last Name" type="text"></input>
+								</div>
 
-							<div class="fieldBlock">
-								<input name="citycode" class="tripleTextBox" placeholder="City Code" value="<%=member.city_code%>" type="text"></input>
-								<input name="areacode" class="tripleTextBox" placeholder="Area Code" value="<%=member.area_code%>" type="text"></input>
-								<input name="phonenum" class="tripleTextBox" style="width:143px" value="<%=member.number%>" placeholder="Phone Number" type="text"></input>
-							</div>
+								<div class="fieldBlock">
+									<input class="singleTextBox" id="email" maxlength="75" name="email" placeholder="E-mail Address" type="text" value="<%=member.email%>"></input>
+								</div>
 
-							<div class="fieldBlock">
-								<input class="singleTextBox" id="address" name="address" maxlength="50" placeholder="Address Line 1" type="text" value="<%=member.line1%>"></input>
-							</div>
+								<div class="fieldBlock">
+									<input name="citycode" class="tripleTextBox" placeholder="City Code" value="<%=member.city_code%>" type="text"></input>
+									<input name="areacode" class="tripleTextBox" placeholder="Area Code" value="<%=member.area_code%>" type="text"></input>
+									<input name="phonenum" class="tripleTextBox" style="width:143px" value="<%=member.number%>" placeholder="Phone Number" type="text"></input>
+								</div>
 
-							<div class="fieldBlock">
-								<input class="singleTextBox" id="address2" name="address2" maxlength="50" placeholder="Address Line 2" type="text" value="<%=member.line2%>"></input>
-							</div>
+								<div class="fieldBlock">
+									<input class="singleTextBox" id="address" name="address" maxlength="50" placeholder="Address Line 1" type="text" value="<%=member.line1%>"></input>
+								</div>
 
-							<div class="fieldBlock">
-								<input class="doubleTextBox" id="city" maxlength="50" name="city" placeholder="City" type="text" value="<%=member.city%>"></input>
-								<select id="stateId" name="stateId" style="width:300px;"class="doubleTextBox">
-									<% for(var i in states) { %>
-									<% if(states[i].id == member.state_id) { %>
-									<option value="<%=states[i].id %>" selected><%=states[i].name %></option>
-									<% } else { %>
-									<option value="<%=states[i].id %>"><%=states[i].name %></option>
-									<% } } %>
-								</select>
-							</div>
+								<div class="fieldBlock">
+									<input class="singleTextBox" id="address2" name="address2" maxlength="50" placeholder="Address Line 2" type="text" value="<%=member.line2%>"></input>
+								</div>
 
-							<div class="fieldBlock">
-								<input id="zip1" maxlength="5" name="zip1" class="doubleTextBox" placeholder="Zip Code" type="text" value="<%=member.zip%>"></input>
-								<input id="zip2" class="doubleTextBox" maxlength="4" name="zip2" value="<%=member.zip_ext%>" placeholder="Zip Extn" type="text"></input>
-							</div>
+								<div class="fieldBlock">
+									<input class="doubleTextBox" id="city" maxlength="50" name="city" placeholder="City" type="text" value="<%=member.city%>"></input>
+									<select id="stateId" name="stateId" style="width:300px;"class="doubleTextBox">
+										<% for(var i in states) { %>
+										<% if(states[i].id == member.state_id) { %>
+										<option value="<%=states[i].id %>" selected><%=states[i].name %></option>
+										<% } else { %>
+										<option value="<%=states[i].id %>"><%=states[i].name %></option>
+										<% } } %>
+									</select>
+								</div>
 
-							<div class="fieldBlock" align="center">
-								<input name="Submit" class="loginButton singleTextBox" type="submit" value="Submit" />
-								<!--a href="login.html" class="loginButton singleTextBox">Register</a-->
-							</div>
-							<input type="hidden" name="memberId" value="<%=member.membership_no%>"/>
-						</form>
-						
+								<div class="fieldBlock">
+									<input id="zip1" maxlength="5" name="zip1" class="doubleTextBox" placeholder="Zip Code" type="text" value="<%=member.zip%>"></input>
+									<input id="zip2" class="doubleTextBox" maxlength="4" name="zip2" value="<%=member.zip_ext%>" placeholder="Zip Extn" type="text"></input>
+								</div>
+								<br/>
+								<div class="fieldBlock" align="center">
+									<input name="Submit" class="submitButtonClass singleTextBox" type="submit" value="Submit" />
+									<!--a href="login.html" class="loginButton singleTextBox">Register</a-->
+								</div>
+								<input type="hidden" name="memberId" value="<%=member.membership_no%>"/>
+							</form>
+
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<script type="text/javascript">
-	$(document).ready(function() {			
-		$().UItoTop({ easingType: 'easeOutQuart' });
+		<script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
 
-	});
-	</script>
-	<a href="#" id="toTop"><span id="`"> </span></a>
-</body>
-</html>
+		});
+		</script>
+		<a href="#" id="toTop"><span id="`"> </span></a>
+	</body>
+	</html>
 

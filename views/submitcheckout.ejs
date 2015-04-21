@@ -6,6 +6,7 @@
 	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/styleLogin.css" rel="stylesheet" type="text/css" />
 	<link href="/css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
 	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
 	<script type="text/javascript" src="/js/move-top.js"></script>
@@ -149,32 +150,32 @@
 	</div>
 	<!------------End Header ------------>
 	<!------------Popoups ------------>
-	<div id="issueMoviePopup" style="display:none">
+	<div id="issueMoviePopup" style="display:none;background:grey">
 
-		<h1 align="center">Issue Videos </h1>
-		
+		<h1 align="center" style="font-size:25px;font-weight:bold">Issue Videos </h1>
 		<form style="margin-top: 13px;" action="/issuemovie-submit" method="Post" name ="issuemovie" onsubmit="return validateIssueMovie()">
 			<div class="fieldBlock">
-				<input id="membershipNo" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
+				<input id="membershipNoIM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
 			</div>
-
-			<div class="fieldBlock">
-				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
+			<br/>
+			<div class="fieldBlock" align="center">
+				<input name="Submit" class="submitButtonClass" type="submit" value="Next>>" />
 			</div>			
 		</form>
 	</div>
 
-	<div id="submitMoviePopup" style="display:none">
-		<h1 align="center">Submit Videos </h1>
+	<div id="submitMoviePopup" style="display:none;background:grey">
+		<h1 align="center" style="font-size:25px;font-weight:bold">Submit Videos </h1>
 		<form style="margin-top: 13px;" action="/submitmovie-submit" method="POST" name="returnmovie" onsubmit="return validateReturnMovie()">
 			<div class="fieldBlock">
 				<input id="membershipNoSM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
 			</div>
-			<div class="fieldBlock">
-				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
-			</div>			
-		</form>
-	</div>
+		</br>
+		<div class="fieldBlock" align="center">
+			<input name="Submit" class="submitButtonClass" type="submit" value="Next>>" />
+		</div>			
+	</form>
+</div>
 
 	<!------------End Popups ------------>
 	<div class="main">
@@ -216,8 +217,8 @@
                     	
                     	
 								<input id="membershipNo" maxlength="40" name="membershipNo" value="<%= member.membership_no %>" type="hidden"/></td>
-							
-									<div><input name="Submit" class="loginButton" type="submit" value="Submit More >>" style="width:70px; align:right; margin-left:100px"/></div>
+									</br>
+									<div><input name="Submit" class="submitButtonClass" type="submit" value="Submit More >>"/></div>
 									</form>
 
 							</div>

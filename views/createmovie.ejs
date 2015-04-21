@@ -1,22 +1,19 @@
-	<!--A Design by W3layouts
-	Author: W3layout
-	Author URL: http://w3layouts.com
-	License: Creative Commons Attribution 3.0 Unported
-	License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <!DOCTYPE HTML>
 <head>
-	<title>Admin</title>
+	<title>Create Movie</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/styleLogin.css" rel="stylesheet" type="text/css" />
+	<link href="/css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
 	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
 	<script type="text/javascript" src="/js/move-top.js"></script>
 	<script type="text/javascript" src="/js/easing.js"></script>
 	<script type="text/javascript" src="/js/jquery.nivo.slider.js"></script>
 	<script type="text/javascript" src="/js/jquery.lightbox_me.js"></script>
+	<link href="/css/styleLogin.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<div class="header">
@@ -209,35 +206,35 @@
 		</div>
 	</div>
 	<!------------End Header ------------>
-	<!------------Popoups ------------>
-	<div id="issueMoviePopup" style="display:none">
+		<!------------Popoups ------------>
+	<div id="issueMoviePopup" style="display:none;background:grey">
 
-			<h1 align="center">Issue Movie </h1>
-			
+		<h1 align="center" style="font-size:25px;font-weight:bold">Issue Videos </h1>
 		<form style="margin-top: 13px;" action="/issuemovie-submit" method="Post" name ="issuemovie" onsubmit="return validateIssueMovie()">
 			<div class="fieldBlock">
 				<input id="membershipNoIM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
 			</div>
-
-			<div class="fieldBlock">
-				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
+			<br/>
+			<div class="fieldBlock" align="center">
+				<input name="Submit" class="submitButtonClass" type="submit" value="Next>>" />
 			</div>			
 		</form>
 	</div>
 
-	<div id="submitMoviePopup" style="display:none">
-		<h1 align="center">Submit Videos </h1>
+	<div id="submitMoviePopup" style="display:none;background:grey">
+		<h1 align="center" style="font-size:25px;font-weight:bold">Submit Videos </h1>
 		<form style="margin-top: 13px;" action="/submitmovie-submit" method="POST" name="returnmovie" onsubmit="return validateReturnMovie()">
 			<div class="fieldBlock">
 				<input id="membershipNoSM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
 			</div>
-			<div class="fieldBlock">
-				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
-			</div>			
-		</form>
-	</div>
+		</br>
+		<div class="fieldBlock" align="center">
+			<input name="Submit" class="submitButtonClass" type="submit" value="Next>>" />
+		</div>			
+	</form>
+</div>
 
-	<!------------End Popups ------------>
+<!------------End Popups ------------>
 	<div class="main">
 		<div class="wrap">
 			<div class="content">
@@ -346,9 +343,9 @@
 								<input class="doubleTextBox" placeholder="Rating" id="rating" maxlength="5" name="rating" type="text"></input>
 								<input class="doubleTextBox" placeholder="No. of Copies" id="availableCopies" maxlength="5" name="availableCopies" type="text"></input>
 							</div>
-
+							</br>
 							<div class="fieldBlock" align="center">
-								<input name="Submit" align="center" class="loginButton singleTextBox" type="submit" value="Submit" />
+								<input name="Submit" align="center" class="submitButtonClass singleTextBox" type="submit" value="Submit" />
 							</div>
 
 						</div>

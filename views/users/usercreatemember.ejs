@@ -6,6 +6,7 @@
 	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/styleLogin.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
 	<script type="text/javascript" src="/js/move-top.js"></script>
 	<script type="text/javascript" src="/js/easing.js"></script>
@@ -18,6 +19,7 @@
 				<div class="nav_list">
 					<ul>
 						<li align="center"><a href="/">Home</a></li>
+						<li><a href="/login">Login</a></li>
 					</ul>
 				</div>
 				<div class="clear"></div>
@@ -26,99 +28,99 @@
 		<div class="wrap">
 
 			<script type="text/javascript">
-							
-				   function allnumeric(inputtxt)  
-				   {  
-					 
-					 var numbers = /^[0-9]+$/;  
-					 if(inputtxt.match(numbers))  
-					 {  
-					  return true;  
-					 }  
-					 else  
-					 {
-					  return false;  
-					 }  
-				   }
-				   
-				   function validateEmail(mail)   
-					{  
-					 if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))  
-					  {  
-						return (true);
-					  }  
-					  return (false);
-					}  
+
+			function allnumeric(inputtxt)  
+			{  
+
+				var numbers = /^[0-9]+$/;  
+				if(inputtxt.match(numbers))  
+				{  
+					return true;  
+				}  
+				else  
+				{
+					return false;  
+				}  
+			}
+
+			function validateEmail(mail)   
+			{  
+				if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))  
+				{  
+					return (true);
+				}  
+				return (false);
+			}  
 
 
-					function validateCreateMember()   
-				   {
-				   		if(document.createmember.memberTypeId.value==null ||document.createmember.memberTypeId.value == ''){
-							alert('Member Type cannot be blank');
-							return false;
-						} 
-				     	if(document.createmember.fname.value==null ||document.createmember.fname.value == ''){
-							alert('Member First Name cannot be blank');
-							return false;
-						} 
-						if(document.createmember.lname.value==null ||document.createmember.lname.value == ''){
-							alert('Member Last Name cannot be blank');
-							return false;
-						}
-						if(document.createmember.email.value==null ||document.createmember.email.value == ''){
-							alert('Email Address cannot be blank');
-							return false;
-						} else if(!validateEmail(document.createmember.email.value)){
-							alert('Enter valid Email address of the member');
-							return false;
-						}
+			function validateCreateMember()   
+			{
+				if(document.createmember.memberTypeId.value==null ||document.createmember.memberTypeId.value == ''){
+					alert('Member Type cannot be blank');
+					return false;
+				} 
+				if(document.createmember.fname.value==null ||document.createmember.fname.value == ''){
+					alert('Member First Name cannot be blank');
+					return false;
+				} 
+				if(document.createmember.lname.value==null ||document.createmember.lname.value == ''){
+					alert('Member Last Name cannot be blank');
+					return false;
+				}
+				if(document.createmember.email.value==null ||document.createmember.email.value == ''){
+					alert('Email Address cannot be blank');
+					return false;
+				} else if(!validateEmail(document.createmember.email.value)){
+					alert('Enter valid Email address of the member');
+					return false;
+				}
 
-						if(document.createmember.areacode.value==null ||document.createmember.areacode.value == ''){
-							alert('Please enter Area Code');
-							return false;
-						}else if(!allnumeric(document.createmember.areacode.value) || document.createmember.areacode.value.length != 3){
-							alert('Enter valid Phone Number for the entered Record. Phone Number should be numeric in the following format XXX-XXX-XXXX');
-							return false;
-						}
-						
-						if(document.createmember.citycode.value != '' && (!allnumeric(document.createmember.citycode.value) || document.createmember.citycode.value.length!=3)){
-							alert('Enter valid city Code for the entered Record. Phone number should be numeric in the following format XXX-XXX-XXXX');
-							return false;
-						}
+				if(document.createmember.areacode.value==null ||document.createmember.areacode.value == ''){
+					alert('Please enter Area Code');
+					return false;
+				}else if(!allnumeric(document.createmember.areacode.value) || document.createmember.areacode.value.length != 3){
+					alert('Enter valid Phone Number for the entered Record. Phone Number should be numeric in the following format XXX-XXX-XXXX');
+					return false;
+				}
+
+				if(document.createmember.citycode.value != '' && (!allnumeric(document.createmember.citycode.value) || document.createmember.citycode.value.length!=3)){
+					alert('Enter valid city Code for the entered Record. Phone number should be numeric in the following format XXX-XXX-XXXX');
+					return false;
+				}
 
 
-						if(document.createmember.phonenum.value != '' && (!allnumeric(document.createmember.phonenum.value) || document.createmember.phonenum.value.length!=4)){
-							alert('Enter valid phone number for the entered Record. Phone number should be numeric in the following format XXX-XXX-XXXX');
-							return false;
-						}
+				if(document.createmember.phonenum.value != '' && (!allnumeric(document.createmember.phonenum.value) || document.createmember.phonenum.value.length!=4)){
+					alert('Enter valid phone number for the entered Record. Phone number should be numeric in the following format XXX-XXX-XXXX');
+					return false;
+				}
 
-						if(document.createmember.address.value==null ||document.createmember.address.value == ''){
-							alert('Address Line 1 cannot be blank');
-							return false;
-						}
-						if(document.createmember.city.value==null ||document.createmember.city.value == ''){
-							alert('City value cannot be blank');
-							return false;
-						}
+				if(document.createmember.address.value==null ||document.createmember.address.value == ''){
+					alert('Address Line 1 cannot be blank');
+					return false;
+				}
+				if(document.createmember.city.value==null ||document.createmember.city.value == ''){
+					alert('City value cannot be blank');
+					return false;
+				}
 
-						if(document.createmember.stateId.value==null ||document.createmember.stateId.value == ''){
-							alert('State value cannot be blank');
-							return false;
-						}
-						
-						if(document.createmember.zip1.value==null ||document.createmember.zip1.value == ''){
-							alert('Please enter Zip Code');
-							return false;
-						}else if(!allnumeric(document.createmember.zip1.value) || document.createmember.zip1.value.length != 5){
-							alert('Enter valid Zip Code for the entered Record. Zip code should be numeric in the following format XXXXX OR XXXXX-XXXX');
-							return false;
-						}
-						
-						if(document.createmember.zip2.value != '' && (!allnumeric(document.createmember.zip2.value) || document.createmember.zip2.value.length!=4)){
-							alert('Enter valid Zip Code extension for the entered Record. Zip code should be numeric in the following format XXXXX OR XXXXX-XXXX');
-							return false;
-						}
-				    }
+				if(document.createmember.stateId.value==null ||document.createmember.stateId.value == ''){
+					alert('State value cannot be blank');
+					return false;
+				}
+
+				if(document.createmember.zip1.value==null ||document.createmember.zip1.value == ''){
+					alert('Please enter Zip Code');
+					return false;
+				}else if(!allnumeric(document.createmember.zip1.value) || document.createmember.zip1.value.length != 5){
+					alert('Enter valid Zip Code for the entered Record. Zip code should be numeric in the following format XXXXX OR XXXXX-XXXX');
+					return false;
+				}
+
+				if(document.createmember.zip2.value != '' && (!allnumeric(document.createmember.zip2.value) || document.createmember.zip2.value.length!=4)){
+					alert('Enter valid Zip Code extension for the entered Record. Zip code should be numeric in the following format XXXXX OR XXXXX-XXXX');
+					return false;
+				}
+			}
 			
 			
 			function DropDown(el) {
@@ -166,7 +168,7 @@
 							<div class="clear"></div>
 						</div>
 
-						<h3>Create Member</h3>
+						<h3>New User Registration</h3>
 					</div>
 				</div>
 				<div class="section group">
@@ -175,75 +177,82 @@
 						<header>
 							<h1 align="center">Register </h1>
 						</header>
-						<div style="font-weight:bold;" align="center">
-							<% if(insertedresults != null) {%>
+						<div class="fieldBlock" align="center">
+						<% if(insertedresults != null) {%>
+						<div class="singleTextBox" style="font-weight:bold;font-size:20px">
 							<%= insertedresults %>
+							</div>
 							<% } %>
-						</div>
-						<form name="createmember" onsubmit="return validateCreateMember()" action="/usercreatemember-submit" method="post">
-							<% for(var i in memberTypes) { %>
-								<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>"><%=memberTypes[i].name%>
-							<% } %>
-							
-							<div class="fieldBlock">
-								<input id="fname" name="firstname" class="doubleTextBox" placeholder="First Name" type="text"></input>
-								<input id="lname" name="lastname" class="doubleTextBox" placeholder="Last Name" type="text"></input>
-							</div>
-							
-							<div class="fieldBlock">
-								<input class="singleTextBox" id="email" maxlength="75" name="email" placeholder="E-mail Address" type="text"></input>
-							</div>
-	
-							<div class="fieldBlock">
-								<input name="citycode" class="tripleTextBox" placeholder="City Code" type="text"></input>
-								<input name="areacode" class="tripleTextBox" placeholder="Area Code" type="text"></input>
-								<input name="phonenum" class="tripleTextBox" style="width:143px" placeholder="Phone Number" type="text"></input>
-							</div>
-	
-							<div class="fieldBlock">
-								<input class="singleTextBox" id="address" name="address" maxlength="50" placeholder="Address Line 1" type="text"></input>
-							</div>
-	
-							<div class="fieldBlock">
-								<input class="singleTextBox" id="address2" name="address2" maxlength="50" placeholder="Address Line 2" type="text"></input>
-							</div>
-	
-							<div class="fieldBlock">
-								<input class="doubleTextBox" id="city" maxlength="50" name="city" placeholder="City" type="text"></input>
-								<select id="stateId" name="stateId" style="width:300px;"class="doubleTextBox">
-									<option value="">State</option>
-									<% for(var i in states) { %>
-									<option value="<%=states[i].id %>"><%=states[i].name %></option>
-									<% } %>
-								</select>
-							</div>
-	
-							<div class="fieldBlock">
-								<input id="zip1" maxlength="5" name="zip1" class="doubleTextBox" placeholder="Zip Code" type="text"></input>
-								<input id="zip2" class="doubleTextBox" maxlength="4" name="zip2" placeholder="Zip Extn" type="text"></input>
-							</div>
-	
-							<div class="fieldBlock">
-								<input class="singleTextBox" placeholder="Password" id="password" maxlength="45" name="password" type="password" />
-							</div>
-							<div class="fieldBlock" align="center">
-								<input name="Submit" class="loginButton singleTextBox" type="submit" value="Register" />
-							</div>
-						</form>
-						
 					</div>
+					
+					<form name="createmember" onsubmit="return validateCreateMember()" action="/usercreatemember-submit" method="post">
+						<div class="fieldBlock" align="center">
+							<div class="singleTextBox">
+						<% for(var i in memberTypes) { %>
+						<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>"><%=memberTypes[i].name%>
+						<% } %>
+						</div>
+					</div>
+						<div class="fieldBlock">
+							<input id="fname" name="firstname" class="doubleTextBox" placeholder="First Name" type="text"></input>
+							<input id="lname" name="lastname" class="doubleTextBox" placeholder="Last Name" type="text"></input>
+						</div>
+
+						<div class="fieldBlock">
+							<input class="singleTextBox" id="email" maxlength="75" name="email" placeholder="E-mail Address" type="text"></input>
+						</div>
+
+						<div class="fieldBlock">
+							<input name="citycode" class="tripleTextBox" placeholder="City Code" type="text"></input>
+							<input name="areacode" class="tripleTextBox" placeholder="Area Code" type="text"></input>
+							<input name="phonenum" class="tripleTextBox" style="width:143px" placeholder="Phone Number" type="text"></input>
+						</div>
+
+						<div class="fieldBlock">
+							<input class="singleTextBox" id="address" name="address" maxlength="50" placeholder="Address Line 1" type="text"></input>
+						</div>
+
+						<div class="fieldBlock">
+							<input class="singleTextBox" id="address2" name="address2" maxlength="50" placeholder="Address Line 2" type="text"></input>
+						</div>
+
+						<div class="fieldBlock">
+							<input class="doubleTextBox" id="city" maxlength="50" name="city" placeholder="City" type="text"></input>
+							<select id="stateId" name="stateId" style="width:300px;"class="doubleTextBox">
+								<option value="">State</option>
+								<% for(var i in states) { %>
+								<option value="<%=states[i].id %>"><%=states[i].name %></option>
+								<% } %>
+							</select>
+						</div>
+
+						<div class="fieldBlock">
+							<input id="zip1" maxlength="5" name="zip1" class="doubleTextBox" placeholder="Zip Code" type="text"></input>
+							<input id="zip2" class="doubleTextBox" maxlength="4" name="zip2" placeholder="Zip Extn" type="text"></input>
+						</div>
+
+						<div class="fieldBlock">
+							<input class="singleTextBox" placeholder="Password" id="password" maxlength="45" name="password" type="password" />
+						</div>
+						<br/>
+						<div class="fieldBlock" align="center">
+							<input name="Submit" class="submitButtonClass singleTextBox" type="submit" value="Submit" />
+						</div>
+					</form>
+
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<script type="text/javascript">
-	$(document).ready(function() {			
-		$().UItoTop({ easingType: 'easeOutQuart' });
+<script type="text/javascript">
+$(document).ready(function() {			
+	$().UItoTop({ easingType: 'easeOutQuart' });
 
-	});
-	</script>
-	<a href="#" id="toTop"><span id="`"> </span></a>
+});
+</script>
+<a href="#" id="toTop"><span id="`"> </span></a>
 </body>
 </html>
 

@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-US">
 <head>
 
@@ -11,76 +11,76 @@
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Varela+Round">
 	<script>
 	function fixmemberId(txtBox) {
-       if (txtBox == null) { 
-           return '' }
-       
-       if (txtBox.value.length == 9) {
-           txtBox.value = txtBox.value.substring(0, 3) + '-' + txtBox.value.substring(3, 5) + '-' + txtBox.value.substring(5, 9)
-       }
-       
-       return txtBox.value;
-   	}
-   	function validateLogin(login)   
-   {
-	 var pattern = /^\d{3}-\d{2}-\d{4}$/;
-     if(login.membershipNo.value==null ||login.membershipNo.value == ''){
-			alert('Membership number cannot be empty');
-			return false;
-	 }
-	if(login.password.value==null ||login.password.value == ''){
-		alert('Password cannot be empty');
-		return false;
-	}
-		
-		return true;
-	}
-	</script>
-</head>
+		if (txtBox == null) { 
+			return '' }
+			
+			if (txtBox.value.length == 9) {
+				txtBox.value = txtBox.value.substring(0, 3) + '-' + txtBox.value.substring(3, 5) + '-' + txtBox.value.substring(5, 9)
+			}
+			
+			return txtBox.value;
+		}
+		function validateLogin(login)   
+		{
+			var pattern = /^\d{3}-\d{2}-\d{4}$/;
+			if(login.membershipNo.value==null ||login.membershipNo.value == ''){
+				alert('Membership number cannot be empty');
+				return false;
+			}
+			if(login.password.value==null ||login.password.value == ''){
+				alert('Password cannot be empty');
+				return false;
+			}
+			
+			return true;
+		}
+		</script>
+	</head>
 
-<body>
-<div class="header">
-		<div class="headertop_desc">
-			<div class="wrap">
-				<div class="nav_list">
-					<ul>
-						<li align="center"><a href="/">Home</a></li>
-					</ul>
+	<body>
+		<div class="header">
+			<div class="headertop_desc">
+				<div class="wrap">
+					<div class="nav_list">
+						<ul>
+							<li align="center"><a href="/">Home</a></li>
+						</ul>
+					</div>
+					<div class="clear"></div>
 				</div>
-				<div class="clear"></div>
 			</div>
+
 		</div>
+		<div id="login">
 
-	</div>
-	<div id="login">
+			<h2><span class="fontawesome-lock"></span>Sign In</h2>
 
-		<h2><span class="fontawesome-lock"></span>Sign In</h2>
+			<form action="/validateLogin" method="POST" onsubmit="return validateLogin(this);">
 
-		<form action="/validateLogin" method="POST" onsubmit="return validateLogin(this);">
+				<fieldset>
 
-			<fieldset>
+					<div style="color:red; font-weight:bold;" align="center">
+						<% if(error != null) {%>
+						<%= error %>
+						<% } %>
+					</div>
+					<br/>
+					<p><label for="memNo">Email</label></p>
+					<p><input style="width:278px" type="memNo" name = "membershipNo" id="membershipNo"></p>
 
-				<div style="color:red; font-weight:bold;" align="center">
-				<% if(error != null) {%>
-				<%= error %>
-				<% } %>
-				</div>
-				<br/>
-				<p><label for="memNo">Email</label></p>
-				<p><input style="width:278px" type="memNo" name = "membershipNo" id="membershipNo"></p>
-
-				<p><label for="password">Password</label></p>
-				<p><input style="width:278px" type="password" name ="password" id="password"></p>
+					<p><label for="password">Password</label></p>
+					<p><input style="width:278px" type="password" name ="password" id="password"></p>
 					<div align=center>
-				<p><input type="submit" value="Sign In"></p>
-				<ul>
-				<li><a href="/usercreatemember">New User? Register!!</a></li>
-				</ul>
-			</div>
-			</fieldset>
+						<p><input type="submit" value="Sign In"></p>
+						<ul>
+							<li><a href="/usercreatemember">New User? Register!!</a></li>
+						</ul>
+					</div>
+				</fieldset>
 
-		</form>
+			</form>
 
-	</div> <!-- end login -->
+		</div> <!-- end login -->
 
-</body>	
-</html>
+	</body>	
+	</html>

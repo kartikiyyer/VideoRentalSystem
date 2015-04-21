@@ -4,29 +4,30 @@
   overflow: hidden;
   background: rgba(255,255,255,1);
   border-radius: 5px;
+  
 }
 
 .fieldBlock, textarea  {
  display: block;
  padding: 0;
  margin: 0;
- border: 0;
+ border: 1;
  clear: both;
  overflow: hidden;
 }
 
 header {
   height: 75px;
-  background: rgba(0,0,0,.05);
+  background: #e3690c ;
   line-height: 75px;
   padding-left: 20px;
   border-radius: 5px 5px 0 0;
-  
-  h1 {
-    font-size: 1.2em;
-    text-transform: uppercase;
-    color: rgba(51,51,51,.4);
-  }
+}
+
+header h1{
+  color: white ;
+  padding: 20px 2px 20px 2px;
+  font-size: 30px;
 }
 
 .doubleTextBox {
@@ -37,6 +38,7 @@ header {
   padding: 0 0 0 20px;
   border: 1px solid rgba(0,0,0,.1);
   height: 50px;
+  
 }
 
 .tripleTextBox {

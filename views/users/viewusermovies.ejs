@@ -1,12 +1,13 @@
 <!DOCTYPE HTML>
 <head>
-	<title>User</title>
+	<title>Video Listings</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
+			<link href="/css/styleLogin.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
 	<script type="text/javascript" src="/js/move-top.js"></script>
 	<script type="text/javascript" src="/js/easing.js"></script>
@@ -132,9 +133,9 @@
 									<input style="margin-top:17px" id="isAvailable" type="checkbox" name="isAvailable" checked></input>
 								</div>
 							</div>
-
+							<br/>
 							<div class="fieldBlock" align="center">
-								<input name="Filter" class="loginButton singleTextBox" type="submit" value="Filter"/>
+								<input name="Filter" class="submitButtonClass singleTextBox" type="submit" value="Filter"/>
 
 							</div>
 
@@ -164,8 +165,15 @@
 						%>
 						<div class="section group">
 							<%
+							if(i== numOfSections)
+										{
+										console.log("i" + i + "j" + j + "hi");
+											gridSize = (movies.length%5);
+											console.log(gridSize);
+										}
 							for(var j=0;j<gridSize;j++)
 								{
+
 									%>
 									<div class="grid_1_of_5 images_1_of_5">
 										<a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><img src="<%=movies[videoIndex].poster%>" alt="" /></a>
@@ -196,10 +204,7 @@
 										</div>
 										<%
 										videoIndex++;
-										if(i== numOfSections)
-											{
-												gridSize = (movies.length%5);
-											}
+									
 										}
 										%>
 									</div>

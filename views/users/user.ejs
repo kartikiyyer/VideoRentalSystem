@@ -1,12 +1,13 @@
 <!DOCTYPE HTML>
 <head>
-	<title>User</title>
+	<title>My Account Information</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/styleLogin.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
 	<script type="text/javascript" src="/js/move-top.js"></script>
 	<script type="text/javascript" src="/js/easing.js"></script>
@@ -86,7 +87,7 @@
 								<h1 align="center">My Account Information </h1>
 							</header>
 							<div class="fieldBlock">
-								<div class="doubleTextBox">Membership No:</div>
+								<div class="doubleTextBox" style="">Membership No</div>
 								<div class="doubleTextBox"><%= member.membership_no %></div>
 							</div>
 							<div class="fieldBlock">
@@ -121,8 +122,9 @@
 								<div class="doubleTextBox">Zip Ext</div>
 								<div class="doubleTextBox"><%= member.zip_ext %></div>
 							</div>
+							<br/>
 							<div class="fieldBlock" align="center">
-								<a href="/usereditmember/<%=member.membership_no %>?nocache=1" class="loginButton">Edit</a>
+								<a href="/usereditmember/<%=member.membership_no %>?nocache=1" class="submitButtonClass">Edit</a>
 							</div>
 						</form>
 					</div>

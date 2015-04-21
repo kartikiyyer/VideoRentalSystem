@@ -7,6 +7,7 @@
 	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/table_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/styleLogin.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
 	<script type="text/javascript" src="/js/move-top.js"></script>
 	<script type="text/javascript" src="/js/easing.js"></script>
@@ -103,10 +104,10 @@
 											<li><span>Rating:</span> &nbsp; <%= movie.rating %></li>
 											<li><span>Language:</span> &nbsp; <%= movie.language %></li>
 											<li><span>Original Language:</span> &nbsp; <%= movie.original_language %> </li>
-											<li><span>Availability:</span>&nbsp; <%= movie.available_copies %></li>
+											<li><span>Available Copies:</span>&nbsp; <%= movie.available_copies %></li>
 										</ul>
 									</div>
-									<div class="share-desc">
+									<div class="available">
 										<div class="share">
 											<p>Actors :</p><%= movie.actors %>		
 											<br/><p>Genre :</p><%= movie.categories %>		

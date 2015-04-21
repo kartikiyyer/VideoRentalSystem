@@ -1,17 +1,19 @@
 
 <!DOCTYPE HTML>
 <head>
-	<title>Admin</title>
+	<title>Create Member</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
 	<link href="/css/form_style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/styleLogin.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script> 
 	<script type="text/javascript" src="/js/move-top.js"></script>
 	<script type="text/javascript" src="/js/easing.js"></script>
 	<script type="text/javascript" src="/js/jquery.nivo.slider.js"></script>
 	<script type="text/javascript" src="/js/jquery.lightbox_me.js"></script>
+
 </head>
 <body>
 	<div class="header">
@@ -80,14 +82,14 @@
 			}
 			
 			
-			   
 
-				function validateIssueMovie()   
-			   {
-			     if(document.issuemovie.membershipNo.value ==null ||document.issuemovie.membershipNo.value == ''){
-						alert('Membership No. cannot be blank');
-						return false;
-					} 
+
+			function validateIssueMovie()   
+			{
+				if(document.issuemovie.membershipNo.value ==null ||document.issuemovie.membershipNo.value == ''){
+					alert('Membership No. cannot be blank');
+					return false;
+				} 
 				else if(!allnumeric(document.issuemovie.membershipNo.value))
 				{
 					alert("Membership No. should be numeric");
@@ -103,31 +105,31 @@
 					
 					return true;
 				}
-			    }
+			}
 			
-				function validateReturnMovie()   
-				   {
-				     if(document.returnmovie.membershipNo.value ==null ||document.returnmovie.membershipNo.value == ''){
-							alert('Membership No. cannot be blank');
-							return false;
-						} 
-					else if(!allnumeric(document.returnmovie.membershipNo.value))
-					{
-						alert("Membership No. should be numeric");
-						return false;
-					}
-					else if(document.returnmovie.membershipNo.value.length != 9 ) 
-					{
-						alert("Membership No. should be 9 Digits.");
-						return false;
-					}
-					else
-					{
-						
-						return true;
-					}
-				    }
-				
+			function validateReturnMovie()   
+			{
+				if(document.returnmovie.membershipNo.value ==null ||document.returnmovie.membershipNo.value == ''){
+					alert('Membership No. cannot be blank');
+					return false;
+				} 
+				else if(!allnumeric(document.returnmovie.membershipNo.value))
+				{
+					alert("Membership No. should be numeric");
+					return false;
+				}
+				else if(document.returnmovie.membershipNo.value.length != 9 ) 
+				{
+					alert("Membership No. should be 9 Digits.");
+					return false;
+				}
+				else
+				{
+
+					return true;
+				}
+			}
+
 			function validateEmail(mail)   
 			{  
 				if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))  
@@ -249,137 +251,139 @@
 
 	<!------------End Header ------------>
 	<!------------Popoups ------------>
-	<div id="issueMoviePopup" style="display:none">
+	<div id="issueMoviePopup" style="display:none;background:grey">
 
-		<h1 align="center">Issue Videos </h1>
-		
+		<h1 align="center" style="font-size:25px;font-weight:bold">Issue Videos </h1>
 		<form style="margin-top: 13px;" action="/issuemovie-submit" method="Post" name ="issuemovie" onsubmit="return validateIssueMovie()">
 			<div class="fieldBlock">
 				<input id="membershipNoIM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
 			</div>
-
-			<div class="fieldBlock">
-				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
+			<br/>
+			<div class="fieldBlock" align="center">
+				<input name="Submit" class="submitButtonClass" type="submit" value="Next>>" />
 			</div>			
 		</form>
 	</div>
 
-	<div id="submitMoviePopup" style="display:none">
-		<h1 align="center">Submit Videos </h1>
+	<div id="submitMoviePopup" style="display:none;background:grey">
+		<h1 align="center" style="font-size:25px;font-weight:bold">Submit Videos </h1>
 		<form style="margin-top: 13px;" action="/submitmovie-submit" method="POST" name="returnmovie" onsubmit="return validateReturnMovie()">
 			<div class="fieldBlock">
 				<input id="membershipNoSM" class="singleTextBox" placeholder="Membership No." maxlength="75" name="membershipNo" type="text"/>
 			</div>
-			<div class="fieldBlock">
-				<input name="Submit" class="loginButton" type="submit" value="Next>>" />
-			</div>			
-		</form>
-	</div>
+		</br>
+		<div class="fieldBlock" align="center">
+			<input name="Submit" class="submitButtonClass" type="submit" value="Next>>" />
+		</div>			
+	</form>
+</div>
 
-	<!------------End Popups ------------>
-	<div class="main">
-		<div class="wrap">
-			<div class="content">
-				<div class="content_top">
-					<div class="heading">
-						<div class="header_bottom_center">
+<!------------End Popups ------------>
+<div class="main">
+	<div class="wrap">
+		<div class="content">
+			<div class="content_top">
+				<div class="heading">
+					<div class="header_bottom_center">
 
-							<div class="clear"></div>
-						</div>
-
-						<h3 style="display:inline">Create Member</h3>
-						<h3 style="display:inline;float:right">Welcome <%= userDet.firstname %>!!!</h3>
+						<div class="clear"></div>
 					</div>
+
+					<h3 style="display:inline">Create Member</h3>
+					<h3 style="display:inline;float:right">Welcome <%= userDet.firstname %>!!!</h3>
 				</div>
-				<div class="section group">
+			</div>
+			<div class="section group">
 
-					<div class="container">
-						<header>
-							<h1 align="center">Create a New Member </h1>
-						</header>
-						<div style="color:orange; font-weight:bold;" align="center">
-							<% if(insertedresults != null) {%>
+				<div class="container">
+					<header>
+						<h1 align="center">Create a New Member </h1>
+					</header>
+					<div class="fieldBlock" align="center">
+						<% if(insertedresults != null) {%>
+						<div class="singleTextBox" style="font-weight:bold;font-size:20px">
 							<%= insertedresults %>
+							</div>
 							<% } %>
-						</div>
-						<form name="createmember" onsubmit="return validateCreateMember()" action="/createmember-submit" method="post">
-							<div class="fieldBlock">
-								<div class="doubleTextBox" align="center">
-									<div style="padding:0.5cm 0.5cm 0.5cm 0.5cm;">
-										<% for(var i in roles) { %>
-										<input type="radio" class="role" name="roleId" value="<%=roles[i].id %>"><%=roles[i].name%>
-										<% } %>
-									</div>
-								</div>
-								
-								<div id="memberType" class="doubleTextBox" align="center" hidden>
-									<div style="padding:0.5cm 0.5cm 0.5cm 0.5cm;">
-										<% for(var i in memberTypes) { %>
-										<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>"><%=memberTypes[i].name%>
-										<% } %>
-									</div>
-								</div>
-							</div>
-							<div class="fieldBlock">
-								<input id="fname" name="firstname" class="doubleTextBox" placeholder="First Name" type="text"></input>
-								<input id="lname" name="lastname" class="doubleTextBox" placeholder="Last Name" type="text"></input>
-							</div>
-							
-							<div class="fieldBlock">
-								<input class="singleTextBox" id="email" maxlength="75" name="email" placeholder="E-mail Address" type="text"></input>
-							</div>
-							
-							<div class="fieldBlock">
-								<input name="citycode" class="tripleTextBox" placeholder="City Code" type="text"></input>
-								<input name="areacode" class="tripleTextBox" placeholder="Area Code" type="text"></input>
-								<input name="phonenum" class="tripleTextBox" style="width:143px" placeholder="Phone Number" type="text"></input>
-							</div>
-							
-							<div class="fieldBlock">
-								<input class="singleTextBox" id="address" name="address" maxlength="50" placeholder="Address Line 1" type="text"></input>
-							</div>
-							
-							<div class="fieldBlock">
-								<input class="singleTextBox" id="address2" name="address2" maxlength="50" placeholder="Address Line 2" type="text"></input>
-							</div>
-							
-							<div class="fieldBlock">
-								<input class="doubleTextBox" id="city" maxlength="50" name="city" placeholder="City" type="text"></input>
-								<select id="stateId" name="stateId" style="width:300px;"class="doubleTextBox">
-									<option value="">State</option>
-									<% for(var i in states) { %>
-									<option value="<%=states[i].id %>"><%=states[i].name %></option>
-									<% } %>
-								</select>
-							</div>
-							
-							<div class="fieldBlock">
-								<input id="zip1" maxlength="5" name="zip1" class="doubleTextBox" placeholder="Zip Code" type="text"></input>
-								<input id="zip2" class="doubleTextBox" maxlength="4" name="zip2" placeholder="Zip Extn" type="text"></input>
-							</div>
-							
-							<div class="fieldBlock">
-								<input class="singleTextBox" placeholder="Password" id="password" maxlength="45" name="password" type="password" />
-							</div>
-							<div class="fieldBlock" align="center">
-								<input name="Submit" class="loginButton singleTextBox" type="submit" value="Register" />
-								<!--a href="login.html" class="loginButton singleTextBox">Register</a-->
-							</div>
-						</form>
-						
 					</div>
+					<form name="createmember" onsubmit="return validateCreateMember()" action="/createmember-submit" method="post">
+						<div class="fieldBlock">
+							<div class="doubleTextBox" align="center">
+								<div style="padding:0.5cm 0.5cm 0.5cm 0.5cm;">
+									<% for(var i in roles) { %>
+									<input type="radio" class="role" name="roleId" value="<%=roles[i].id %>"><%=roles[i].name%>
+									<% } %>
+								</div>
+							</div>
+
+							<div id="memberType" class="doubleTextBox" align="center" hidden>
+								<div style="padding:0.5cm 0.5cm 0.5cm 0.5cm;">
+									<% for(var i in memberTypes) { %>
+									<input type="radio" name="memberTypeId" value="<%=memberTypes[i].id %>"><%=memberTypes[i].name%>
+									<% } %>
+								</div>
+							</div>
+						</div>
+						<div class="fieldBlock">
+							<input id="fname" name="firstname" class="doubleTextBox" placeholder="First Name" type="text"></input>
+							<input id="lname" name="lastname" class="doubleTextBox" placeholder="Last Name" type="text"></input>
+						</div>
+
+						<div class="fieldBlock">
+							<input class="singleTextBox" id="email" maxlength="75" name="email" placeholder="E-mail Address" type="text"></input>
+						</div>
+
+						<div class="fieldBlock">
+							<input name="citycode" class="tripleTextBox" placeholder="City Code" type="text"></input>
+							<input name="areacode" class="tripleTextBox" placeholder="Area Code" type="text"></input>
+							<input name="phonenum" class="tripleTextBox" style="width:143px" placeholder="Phone Number" type="text"></input>
+						</div>
+
+						<div class="fieldBlock">
+							<input class="singleTextBox" id="address" name="address" maxlength="50" placeholder="Address Line 1" type="text"></input>
+						</div>
+
+						<div class="fieldBlock">
+							<input class="singleTextBox" id="address2" name="address2" maxlength="50" placeholder="Address Line 2" type="text"></input>
+						</div>
+
+						<div class="fieldBlock">
+							<input class="doubleTextBox" id="city" maxlength="50" name="city" placeholder="City" type="text"></input>
+							<select id="stateId" name="stateId" style="width:300px;"class="doubleTextBox">
+								<option value="">State</option>
+								<% for(var i in states) { %>
+								<option value="<%=states[i].id %>"><%=states[i].name %></option>
+								<% } %>
+							</select>
+						</div>
+
+						<div class="fieldBlock">
+							<input id="zip1" maxlength="5" name="zip1" class="doubleTextBox" placeholder="Zip Code" type="text"></input>
+							<input id="zip2" class="doubleTextBox" maxlength="4" name="zip2" placeholder="Zip Extn" type="text"></input>
+						</div>
+
+						<div class="fieldBlock">
+							<input class="singleTextBox" placeholder="Password" id="password" maxlength="45" name="password" type="password" />
+						</div>
+						<br/>
+						<div class="fieldBlock" align="center">
+							<input name="Submit" class="submitButtonClass singleTextBox" type="submit" value="Register" />
+						</div>
+					</form>
+
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<script type="text/javascript">
-	$(document).ready(function() {			
-		$().UItoTop({ easingType: 'easeOutQuart' });
+<script type="text/javascript">
+$(document).ready(function() {			
+	$().UItoTop({ easingType: 'easeOutQuart' });
 
-	});
-	</script>
-	<a href="#" id="toTop"><span id="`"> </span></a>
+});
+</script>
+<a href="#" id="toTop"><span id="`"> </span></a>
 </body>
 </html>
 
