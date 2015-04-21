@@ -905,3 +905,8 @@ exports.searchMovieUser = function(req,res) {
 		res.end();
 	}
 };
+
+
+exports.selectVideosScroll = function(req,res) {
+	
+};

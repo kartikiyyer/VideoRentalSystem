@@ -142,7 +142,11 @@ exports.createMemberSubmit = function(req,res) {
 								users.outstandingMovies=0;
 								users.memberTypeId=req.body.memberTypeId;
 								users.balanceAmount=0;
-								users.roleId=req.body.role;
+								users.roleId=req.body.roleId;
+								// Admin user
+								if(users.roleId == 1) {
+									users.memberTypeId = 1;
+								}
 								users.email = req.body.email;
 								users.areacode = req.body.areacode;
 								users.citycode = req.body.citycode;
@@ -218,7 +222,6 @@ exports.userCreateMemberSubmit = function(req,res) {
 						user.outstandingMovies=0;
 						user.memberTypeId=req.body.memberTypeId;
 						user.balanceAmount=0;
-						user.roleId=req.body.role;
 						user.email = req.body.email;
 						user.areacode = req.body.areacode;
 						user.citycode = req.body.citycode;
@@ -278,7 +281,7 @@ exports.index = function(req, res) {
 		res.end();*/
 		dbvideo.selectVideosForHome(function(videos,error){
 			if(error == null) {
-				console.log(videos);
+				//console.log(videos);
 				res.render('homepage', {"videos":videos});
 			}			
 		});
@@ -374,6 +377,9 @@ exports.editMemberSubmit = function(req, res){
 				users.area_code = req.body.areacode;
 				users.number = req.body.phonenum;
 				users.role_id = req.body.roleId;
+				if(users.role_id == 1) {
+					users.member_type_id = 1;
+				}
 				dbuser.selectRole(function(roles,error) {
 					dbuser.selectMemberTypes(function(memberTypes,error) {
 						dbuser.selectStates(function(states,error) {

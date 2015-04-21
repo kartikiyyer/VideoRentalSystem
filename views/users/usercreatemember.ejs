@@ -101,6 +101,11 @@
 							return false;
 						}
 
+						if(document.createmember.stateId.value==null ||document.createmember.stateId.value == ''){
+							alert('State value cannot be blank');
+							return false;
+						}
+						
 						if(document.createmember.zip1.value==null ||document.createmember.zip1.value == ''){
 							alert('Please enter Zip Code');
 							return false;

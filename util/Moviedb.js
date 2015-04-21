@@ -10,7 +10,7 @@ var cacheTimeout = 600000;
 function insertMovie(callback, movieDetails) {
 	var connection = mysql.createdbConnection();
 	// TODO: Insert in category and actor table
-	connection.query("INSERT INTO video (title, poster, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, video_type_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [movieDetails.title, movieDetails.poster, movieDetails.description, movieDetails.releaseYear, movieDetails.rentalRate, movieDetails.discount, movieDetails.availableCopies, movieDetails.formatId, movieDetails.languageId, movieDetails.originalLanguageId, movieDetails.length, movieDetails.replacementCost, movieDetails.rating, movieDetails.certificationId, movieDetails.videoTypeId], function(error, results) {
+	connection.query("INSERT INTO video (title, poster, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, video_type_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [movieDetails.title, movieDetails.poster, movieDetails.description, movieDetails.releaseYear, movieDetails.rentalRate, movieDetails.discount, movieDetails.availableCopies, movieDetails.formatId, movieDetails.languageId, movieDetails.originalLanguageId, movieDetails.length, movieDetails.replacementCost, movieDetails.rating, movieDetails.certificationId, movieDetails.videoTypeId], function(error, results) {
 		if(!error) {
 			if(results.length !== 0) {
 				console.log("Video details inserted");

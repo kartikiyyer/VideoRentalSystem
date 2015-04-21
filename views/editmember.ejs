@@ -143,10 +143,12 @@
 					alert('Role cannot be blank');
 					return false;
 				} 
-				if(document.createmember.memberTypeId.value==null ||document.createmember.memberTypeId.value == ''){
-					alert('Member Type cannot be blank');
-					return false;
-				} 
+				if(document.createmember.roleId.value!=null || ||document.createmember.roleId.value != '') {
+					if(document.createmember.memberTypeId.value==null ||document.createmember.memberTypeId.value == ''){
+						alert('Member Type cannot be blank');
+						return false;
+					}
+				}
 				if(document.createmember.fname.value==null ||document.createmember.fname.value == ''){
 					alert('Member First Name cannot be blank');
 					return false;
@@ -188,6 +190,11 @@
 				}
 				if(document.createmember.city.value==null ||document.createmember.city.value == ''){
 					alert('City value cannot be blank');
+					return false;
+				}
+				
+				if(document.createmember.stateId.value==null ||document.createmember.stateId.value == ''){
+					alert('State value cannot be blank');
 					return false;
 				}
 
