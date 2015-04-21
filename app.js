@@ -50,6 +50,10 @@ app.get("/deletemember/:id",user.deleteMember);
 app.get("/createmovie", video.createmovie);
 app.post('/createmovie-submit', video.createMovieSubmit);
 app.get("/listmovie",video.videoList);
+
+app.get("/listvideosnippet/:id",video.listVideoSnippet);
+app.get("/issuevideolistsnippet/:id",video.issueVideoListSnippet);
+
 app.post("/listmovie-submit",video.searchMovie);
 app.get("/movie/:id",video.showMovie);
 app.get("/editmovie/:id",video.editMovie);
@@ -72,6 +76,10 @@ app.post('/usercreatemember-submit', user.userCreateMemberSubmit);
 app.get("/usereditmember/:id",user.usereditMember);
 app.post("/usereditmember-submit",user.usereditMemberSubmit);
 app.get("/viewusermovies",video.listMovieUser);
+
+app.get("/viewuservideossnippet/:id",video.viewUserVideosSnippet);
+app.get("/userissuevideolistsnippet/:id",video.userIssueVideoListSnippet);
+
 app.post("/viewusermovies-submit",video.searchMovieUser);
 app.get("/usermovie/:id",video.showMovieUser);
 app.get("/user/:id",user.user);

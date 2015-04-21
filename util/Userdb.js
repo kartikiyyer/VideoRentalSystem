@@ -386,7 +386,7 @@ function selectUserBySearchCriteria(callback, membershipNo, firstname, lastname,
 	if(membershipNo != "") {
 		parameters[count++] = "%" + membershipNo + "%";
 		query += " AND ";
-		query +=" membership_no LIKE ?";
+		query +=" cred.membership_no LIKE ?";
 	}
 	if(firstname != "") {
 		query += " AND ";

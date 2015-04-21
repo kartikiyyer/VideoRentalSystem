@@ -230,7 +230,7 @@ exports.selectUsersCurrentlyIssuedMovie = selectUsersCurrentlyIssuedMovie;
  * @param callback
  */
 function selectMovies(callback) {
-	var query = "SELECT video.id, poster, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, certificate.name AS certification, video_type_id, video_type.name AS video_type FROM video INNER JOIN certificate ON certificate.id = video.certification_id INNER JOIN video_type ON video_type.id = video.video_type_id ORDER BY video.id LIMIT 500";
+	var query = "SELECT video.id, poster, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, certificate.name AS certification, video_type_id, video_type.name AS video_type FROM video INNER JOIN certificate ON certificate.id = video.certification_id INNER JOIN video_type ON video_type.id = video.video_type_id ORDER BY video.id LIMIT 20";
 	var success = 0;
 	cache.get(function(rows){
 		if(rows == null){
@@ -291,6 +291,76 @@ function selectMovies(callback) {
 }
 
 exports.selectMovies = selectMovies;
+
+
+/**
+ * Get all videos
+ * @param callback
+ */
+function selectVideosForSnippet(callback, videoId) {
+	var start = parseInt(videoId) + 1;
+	var end = parseInt(videoId) + 5;
+	var query = "SELECT video.id, poster, title, description, release_year, rental_rate, discount, available_copies, format_id, language_id, original_language_id, length, replacement_cost, rating, certification_id, certificate.name AS certification, video_type_id, video_type.name AS video_type FROM video INNER JOIN certificate ON certificate.id = video.certification_id INNER JOIN video_type ON video_type.id = video.video_type_id WHERE video.id BETWEEN ? AND ?";
+	var success = 0;
+	cache.get(function(rows){
+		if(rows == null){
+			var connection = mysql.createdbConnection();
+			connection.query(query, [start, end], function(error, results) {
+				if(!error) {
+					if(results.length !== 0) {
+						for(var x1 in results) {
+							connection.query("SELECT video_id, first_name, last_name FROM actor INNER JOIN video_actor ON actor.id = video_actor.actor_id WHERE video_id = ?",[results[x1].id], function(error1, results1) {
+								if(!error1) {										
+									connection.query("SELECT video_id, name FROM category INNER JOIN video_category ON category.id = video_category.category_id WHERE video_id = ?",[results1[0].video_id], function(error2, results2) {
+										if(!error2) {
+											for(var x3 in results) {
+												if(results[x3].id == results2[0].video_id) {
+													results[x3].actors = "";
+													results[x3].categories = "";
+													for(var x in results2) {
+														results[x3].categories += results2[x].name + ", ";
+													}
+													results[x3].categories = results[x3].categories.substr(0, results[x3].categories.length-2);
+													for(var x in results1) {
+														results[x3].actors += results1[x].first_name + " " + results1[x].last_name + ", ";
+													}
+													results[x3].actors = results[x3].actors.substr(0, results[x3].actors.length-2);
+													
+													success++;
+													break;
+												}
+											}
+										} else {
+											console.log(error2);
+										}
+										if(success == results.length) {
+											cache.put(query, results, cacheTimeout);
+											callback(results, error);
+										}
+									});
+								} else {
+									console.log(error1);
+									callback(results1, error1);
+								}
+								
+							});	
+						}
+					} else {
+						cache.put(query, results, cacheTimeout);
+						callback(results, error2);
+					}
+				} else {
+					console.log(error);
+				}
+			});
+			mysql.closedbConnection(connection);
+		} else {
+			callback(rows, null);
+		}
+	},query);
+}
+
+exports.selectVideosForSnippet = selectVideosForSnippet;
 
 
 /**

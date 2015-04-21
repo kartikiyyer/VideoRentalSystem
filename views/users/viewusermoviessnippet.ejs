@@ -1,0 +1,38 @@
+<tr>
+<td>
+<% for(var videoIndex in movies) { %>					
+<div class="grid_1_of_5 images_1_of_5">
+	<a href="/movie/<%=movies[videoIndex].id %>?nocache=1"><img src="<%=movies[videoIndex].poster%>" alt="" /></a>
+	<h2><a href="/usermovie/<%=movies[videoIndex].id %>?nocache=1"><%= movies[videoIndex].title %> (<%= movies[videoIndex].release_year %>)</a></h2>
+	<div class="price-details">
+		<div class="price-number">
+			<p><span class="rupees">$<%= movies[videoIndex].rental_rate %></span></p>
+		</div>
+	</div>
+	
+	<div style="display:inline;">
+		<p style="font-size:14px;color:red;float:right"><%= movies[videoIndex].certification %></p>
+	
+	</div>
+	<div class="clear"></div>
+	<div style="display:inline;">
+		<p style="font-size:14px;color:purple">Available Copies:<%= movies[videoIndex].available_copies %></p>
+	
+	</div>
+	<div class="clear"></div>
+	<div style="display:inline;">
+		<p style="font-size:14px;color:brown;"><%= movies[videoIndex].categories %></p>
+	</div>
+	<div class="clear"></div>
+	<div class="add-cart">								
+		<h4><a href="/usermovie/<%=movies[videoIndex].id %>?nocache=1">View Details</a>
+		</div>		 
+	</div>
+<% } %>
+</td>
+</tr>
+<tr>
+<td>
+	<a href="/viewuservideossnippet/<%= movies[movies.length-1].id%>">View More</a>
+</td>
+</tr>

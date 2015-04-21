@@ -12,7 +12,8 @@
 	<script type="text/javascript" src="/js/move-top.js"></script>
 	<script type="text/javascript" src="/js/easing.js"></script>
 	<script type="text/javascript" src="/js/jquery.nivo.slider.js"></script>
-		<script type="text/javascript" src="/js/jquery.lightbox_me.js"></script>
+	<script type="text/javascript" src="/js/jquery.lightbox_me.js"></script>
+	<script type="text/javascript" src="/js/jquery.jscroll.js"></script>
 </head>
 <body>
 	<div class="header">
@@ -115,6 +116,7 @@
 			}
 			
 			$(function() {
+				$('.scroll').jscroll();
 				
 				var dd = new DropDown( $('#dd') );
 				
@@ -176,7 +178,8 @@
 		</br>
 		<div class="fieldBlock" align="center">
 			<input name="Submit" class="submitButtonClass" type="submit" value="Next>>" />
-		</div>			
+		</div>
+		</form>			
 </div>
 
 <!------------End Popups ------------>
@@ -262,7 +265,15 @@
 						<h3>Video Listings</h3>
 					</div>
 				</div>
+				<% if(search == null) { 
+								%>
+				<div class="scroll">
+				<table>
+				<tr>
+				<td>
+				<% } %>
 				<%
+				var videoIndex = 0;
 				if(movies != null && movies.length > 0) {
 					var numOfSections = (movies.length / 5);
 					numOfSections = Math.floor(numOfSections);
@@ -329,6 +340,23 @@
 								<%
 								} }
 								%>
+								<% if(search == null) { 
+								%>
+								</td>
+								</tr>
+								<tr>
+								<td>
+								
+								<a href="/listvideosnippet/<%=movies[videoIndex-1].id %>">Add More</a>
+								
+								</td>
+								</tr>
+								
+								</table>
+								<% } 
+								%>
+								</div>
+								
 							</div>
 
 

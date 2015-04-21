@@ -21,7 +21,7 @@ exports.videoList = function(req,res) {
 								dbvideo.selectVideoTypes(function(videoTypes,error) {
 									// Fetch videos from database
 									dbvideo.selectMovies(function(videos,error) {
-										res.render('listmovie', {"userDet" : user,"movies": videos, "categories":categories, "releaseDates": releaseDates, "formats":formats, "languages":languages, "certificates":certificates, "videoTypes":videoTypes});
+										res.render('listmovie', {"userDet" : user,"movies": videos, "categories":categories, "releaseDates": releaseDates, "formats":formats, "languages":languages, "certificates":certificates, "videoTypes":videoTypes,"search":null});
 									});
 								});
 							});
@@ -39,6 +39,104 @@ exports.videoList = function(req,res) {
 		res.end();
 	}
 }
+
+
+/**
+ * List all video
+ */
+exports.listVideoSnippet = function(req,res) {
+	if(req.session.userdetails != null && req.session.userdetails != "") {	
+		var user = JSON.parse(req.session.userdetails);
+		if(user !=null) {
+			var videoId = req.params.id;
+			// Fetch videos from database
+			dbvideo.selectVideosForSnippet(function(videos,error) {
+				console.log(videos);
+				res.render('listmoviesnippet', {"movies": videos});
+			},videoId);
+		} else {
+			res.render("accessdenied");	
+		}
+	} else {
+		res.writeHead(301,
+				{Location: "/"}			
+		);
+		res.end();
+	}
+}
+
+/**
+ * List all video
+ */
+exports.issueVideoListSnippet = function(req,res) {
+	if(req.session.userdetails != null && req.session.userdetails != "") {	
+		var user = JSON.parse(req.session.userdetails);
+		if(user !=null) {
+			var videoId = req.params.id;
+			// Fetch videos from database
+			dbvideo.selectVideosForSnippet(function(videos,error) {
+				console.log(videos);
+				res.render('issuemovielistsnippet', {"movies": videos});
+			},videoId);
+		} else {
+			res.render("accessdenied");	
+		}
+	} else {
+		res.writeHead(301,
+				{Location: "/"}			
+		);
+		res.end();
+	}
+}
+
+/**
+ * List all video
+ */
+exports.viewUserVideosSnippet = function(req,res) {
+	if(req.session.userdetails != null && req.session.userdetails != "") {	
+		var user = JSON.parse(req.session.userdetails);
+		if(user !=null) {
+			var videoId = req.params.id;
+			// Fetch videos from database
+			dbvideo.selectVideosForSnippet(function(videos,error) {
+				console.log(videos);
+				res.render('\\users\\viewusermoviessnippet', {"movies": videos});
+			},videoId);
+		} else {
+			res.render("accessdenied");	
+		}
+	} else {
+		res.writeHead(301,
+				{Location: "/"}			
+		);
+		res.end();
+	}
+}
+
+/**
+ * List all video
+ */
+exports.userIssueVideoListSnippet = function(req,res) {
+	if(req.session.userdetails != null && req.session.userdetails != "") {	
+		var user = JSON.parse(req.session.userdetails);
+		if(user !=null) {
+			var videoId = req.params.id;
+			// Fetch videos from database
+			dbvideo.selectVideosForSnippet(function(videos,error) {
+				console.log(videos);
+				res.render('\\users\\userissuemovielistsnippet', {"movies": videos});
+			},videoId);
+		} else {
+			res.render("accessdenied");	
+		}
+	} else {
+		res.writeHead(301,
+				{Location: "/"}			
+		);
+		res.end();
+	}
+}
+
 
 /**
  * Display video
@@ -109,7 +207,7 @@ exports.searchMovie = function(req,res) {
 								dbvideo.selectVideoTypes(function(videoTypes,error) {
 									// Fetch movies from database
 									dbvideo.selectMovieBySearchCriteria(function(videos,error) {
-										res.render('listmovie', {"userDet" : user,"movies": videos, "categories":categories, "releaseDates": releaseDates, "formats":formats, "languages":languages, "certificates":certificates, "videoTypes":videoTypes});
+										res.render('listmovie', {"userDet" : user,"movies": videos, "categories":categories, "releaseDates": releaseDates, "formats":formats, "languages":languages, "certificates":certificates, "videoTypes":videoTypes,"search":true});
 									}, title, releaseYear, categoryIdsString, rentalRateMin, rentalRateMax, isAvailable, certificationId, videoTypeId);
 								});
 							});
@@ -796,7 +894,7 @@ exports.listMovieUser = function(req,res) {
 								dbvideo.selectVideoTypes(function(videoTypes,error) {
 									// Fetch movies from database
 									dbvideo.selectMovies(function(videos,error) {
-										res.render('\\users\\viewusermovies', {"userDet" : user,"movies": videos, "categories":categories, "releaseDates": releaseDates, "formats":formats, "languages":languages, "certificates":certificates, "videoTypes":videoTypes});
+										res.render('\\users\\viewusermovies', {"userDet" : user,"movies": videos, "categories":categories, "releaseDates": releaseDates, "formats":formats, "languages":languages, "certificates":certificates, "videoTypes":videoTypes,"search":null});
 									});
 								});
 							});
@@ -887,7 +985,7 @@ exports.searchMovieUser = function(req,res) {
 								dbvideo.selectVideoTypes(function(videoTypes,error) {
 									// Fetch movies from database
 									dbvideo.selectMovieBySearchCriteria(function(videos,error) {
-										res.render('\\users\\viewusermovies', {"userDet" : user,"movies": videos, "categories":categories, "releaseDates": releaseDates, "formats":formats, "languages":languages, "certificates":certificates, "videoTypes":videoTypes});
+										res.render('\\users\\viewusermovies', {"userDet" : user,"movies": videos, "categories":categories, "releaseDates": releaseDates, "formats":formats, "languages":languages, "certificates":certificates, "videoTypes":videoTypes, "search":true});
 									}, title, releaseYear, categoryIdsString, rentalRateMin, rentalRateMax, isAvailable, certificationId, videoTypeId);
 								});
 							});
@@ -904,9 +1002,4 @@ exports.searchMovieUser = function(req,res) {
 		);
 		res.end();
 	}
-};
-
-
-exports.selectVideosScroll = function(req,res) {
-	
 };
