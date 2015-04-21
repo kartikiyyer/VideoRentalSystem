@@ -268,13 +268,18 @@
 					numOfSections = Math.floor(numOfSections);
 					var videoIndex = 0;
 					var gridSize=5;
-					if(movies.length < gridSize) {
-						gridSize = movies.length;
-					}
+					
+					console.log(numOfSections + " " + movies.length);
 					for(var i=0;i<=numOfSections;i++) {
 						%>
 						<div class="section group">
 							<%
+								if(i== numOfSections)
+										{
+										console.log("i" + i + "j" + j + "hi");
+											gridSize = (movies.length%5);
+											console.log(gridSize);
+										}
 							for(var j=0;j<gridSize;j++)
 								{
 								
@@ -317,10 +322,7 @@
 									</div>
 									<%
 									videoIndex++;
-									if(i== numOfSections)
-										{
-											gridSize = (movies.length%5);
-										}
+									
 									}
 									%>
 								</div>
